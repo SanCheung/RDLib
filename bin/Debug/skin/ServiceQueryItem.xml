@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<Window>
+  <HBox name="main" childpadding="3">
+    <Text name="txtInfo" showhtml="true" text="{f 0}{c #ff0000}hello world!{/c}{/f}hello world!" align="left" font="1" />
+    
+    <Center width="120" >
+      <Edit name="ed" height="30" normalimage ="file='ctrl/edit.png' corner='4,4,4,4'" />
+    </Center>
+
+    <Center width="240" >
+      <Progress name="pr" hor="true" min="0" max="100"
+                progressforecolor="#ff5CB85C"
+                progressforecolor1="#ff5BC0DE"
+                bkcolor="#ffEEEEEE" widht="240" height="14" />
+    </Center> 
+    
+    <Center width="120" >
+      <Button name="bn" width="120" height="30" text="响应" 
+              normalimage="file='ctrl/btn_normal.png' corner='4,4,4,4'"
+              hotimage="file='ctrl/btn_highlight.png' corner='4,4,4,4'" 
+              pushedimage="file='ctrl/btn_down.png' corner='4,4,4,4'" />
+    </Center>
+
+    <Control width="20" />
+  </HBox>
+
+</Window>

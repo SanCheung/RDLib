@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" ?>
+<Window size="900,600" mininfo="640,480"  caption="0,0,0,48" sizebox="4,4,6,6" font="5" >
+  <!--Include & Default-->
+  <Include source="ctrl/scrollbar.xml" />
+  <Include source="font.xml" />
+  <Include source="ctrl.xml" />
+
+  <HBox>
+    <VBox bkcolor="#ffAFAFAF" inset="10,10,10,10" childpadding="10" width="200" >
+        <Control height="20"/>
+        <Button name="bn1" text="测试1" hottextcolor1="#FFFF0000"/>
+        <Button name="bn2" text="测试2" hottextcolor1="#FFFF0000"/>
+        <Button name="bn3" text="测试3" hottextcolor1="#FFFF0000"/>
+        <Button name="bn4" text="测试4" hottextcolor1="#FFFF0000"/>
+        <Button name="bn5" text="测试5" hottextcolor1="#FFFF0000"/>
+        <Button name="bn6" text="测试6" hottextcolor1="#FFFF0000"/>
+        <Button name="bn7" text="测试7" hottextcolor1="#FFFF0000"/>
+        <Control />
+    </VBox>
+    <VBox bkcolor="#ffFFAFAF" >
+      
+    </VBox>
+  </HBox>
+</Window>

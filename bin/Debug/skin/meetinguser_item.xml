@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Window>
+
+  <HBox height="26" maxheight="26">
+    <Control width ="5" />
+
+    <Center width="29">
+      <Switch name="sw"  width="16" height="16"
+              closeimage="file='test/checkbox.png' source='0,0,16,16'"
+              openimage="file='test/checkbox.png' source='0,16,16,32'"  />
+    </Center>
+    
+    <Label name="lb" textpadding="4,0,0,0" text="name" align="left" />
+
+    <Control />
+  </HBox>
+
+</Window>

@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" ?>
+<!--roundcorner="1,1"-->
+<Window size="900,600" mininfo="640,480"  caption="0,0,0,48" sizebox="4,4,6,6" roundcorner="1,1"  >
+  <!--Include & Default-->
+  <Font name="宋体" size="14" />
+  <Font name="宋体" size="12" />
+  
+  <Include source="ctrl/scrollbar.xml" />
+  <Include source="font.xml" />
+  <!--<Include source="ctrl.xml" />-->
+
+  <VBox bkcolor="#ffFFFFFF">
+    <!--top-->
+    <HBox height="30" >
+      <Control />
+      <Button name="bn1" width="30" height="30" text="关闭" hottextcolor1="#FFFF0000" font="0" />
+      <Control width="6" />
+    </HBox>
+
+    <Control height="2" bkcolor="#FFfa6d00" />
+    
+    <HBox>
+      <!--left-->
+      <VBox width="240" childpadding="1" name="vlLeftBar" >
+        <Option name="bnL1" text="汇报材料" height="40" font="0" group="g1" selected="true"
+                normalimage="swh/level1-normal.png" selectedimage="swh/level1-hover.png" hotimage="swh/level1-hover.png" />
+
+        <Option name="bnL2" text="案件信息" height="40" font="0" group="g1"
+                normalimage="swh/level1-normal.png" selectedimage="swh/level1-hover.png" hotimage="swh/level1-hover.png" />
+
+        <VBox name="vlL2Sub" visible="false" >
+          <HBox height="40" >
+            <Control width="1" />
+            <Option name="bnL2-1" text="基本信息" height="40" font="1" group="g2"
+                normalimage="swh/level2-normal.png" selectedimage="swh/level2-hover.png" hotimage="swh/level2-hover.png" />
+          </HBox>
+
+          <Control height="1" />
+          <HBox height="40" >
+            <Control width="1" />
+            <Option name="bnL2-2" text="开庭信息" height="40" font="1" group="g2"
+                normalimage="swh/level2-normal.png" selectedimage="swh/level2-hover.png" hotimage="swh/level2-hover.png" />
+          </HBox>
+
+          <Control height="1" />
+          <HBox height="40" >
+            <Control width="1" />
+            <Option name="bnL2-3" text="电子卷宗" height="40" font="1" group="g2"
+                normalimage="swh/level2-normal.png" selectedimage="swh/level2-hover.png" hotimage="swh/level2-hover.png" />
+          </HBox>
+
+          <Control height="1" />
+          <HBox height="40" >
+            <Control width="1" />
+            <Option name="bnL2-4" text="文书信息" height="40" font="1" group="g2"
+                normalimage="swh/level2-normal.png" selectedimage="swh/level2-hover.png" hotimage="swh/level2-hover.png" />
+          </HBox>
+
+          <Control />
+        </VBox>
+
+        <Option name="bnL3" text="法律法规" height="40" font="0" group="g1"
+                normalimage="swh/level1-normal.png" selectedimage="swh/level1-hover.png" hotimage="swh/level1-hover.png" />
+        <Option name="bnL4" text="庭审录像" height="40" font="0"  group="g1"
+                normalimage="swh/level1-normal.png" selectedimage="swh/level1-hover.png" hotimage="swh/level1-hover.png" />
+      </VBox>
+
+      <Control width="1" bkcolor="#FFfa6d00" />
+      <VBox width="32" >
+        <Control />
+        <Button height="104" name="bnLeftThumb" 
+                normalimage="swh/left-normal.png" hotimage="swh/left-hover.png" pushedimage="swh/left-hover.png" />
+        <Control />
+      </VBox>
+
+      <Control />
+    </HBox>
+  </VBox>
+</Window>

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" ?>
+<Window size="1000,720" mininfo="640,480"  caption="0,0,0,48" sizebox="4,4,6,6" font="5" >
+  <!--Include & Default-->
+  <Include source="ctrl/scrollbar.xml" />
+  <Include source="font.xml" />
+  <Include source="ctrl.xml" />
+  
+  <VerticalLayout bkcolor="#ffFF7F7F" >
+    <Control />
+    <HBox height="30" >
+      <Control />
+      <Label name="info" text="hello" />
+      <Control />
+    </HBox>
+    <HBox height="30" childpadding="10"  >
+      <Control />
+      <Label name="lbInfo" width="100" />
+      <Button width="80" name="bn0" text="click 0" />
+      <Button width="80" name="bn1" text="click 1" />
+      <Button width="80" name="bn2" text="click 2" />
+      <Button width="80" name="bn3" text="click 3" />
+      <Button width="80" name="bn4" text="click 4" />
+      <Control />
+    </HBox>
+  </VerticalLayout>
+</Window>

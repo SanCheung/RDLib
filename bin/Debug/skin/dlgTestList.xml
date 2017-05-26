@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" ?>
+<Window size="900,600" mininfo="640,480"  caption="0,0,0,48" sizebox="4,4,6,6" font="5" roundcorner="1,1" >
+  <!--Include & Default-->
+  <Include source="sb/sb.xml" />
+  <Include source="font.xml" />
+  <Include source="ctrl.xml" />
+
+  <HBox>
+    <HBox width="200" maxwidth="300" minwidth="100" sepwidth="10" sepimm="true" >
+      <VBox bkcolor="#ffAFAFAF" inset="10,0,10,0" childpadding="1"  >
+          <Control height="20"/>
+          <Button name="bn1" text="测试List" hottextcolor1="#FFFF0000"/>
+          <Button name="bn2" text="测试SeatSetting" hottextcolor1="#FFFF0000"/>
+          <Button name="bn3" text="测试SeatArrange" hottextcolor1="#FFFF0000"/>
+          <Button name="bn4" text="测试4" hottextcolor1="#FFFF0000"/>
+          <Button name="bn5" text="测试5" hottextcolor1="#FFFF0000"/>
+          <Button name="bn6" text="测试6" hottextcolor1="#FFFF0000"/>
+          <Button name="bn7" text="测试7" hottextcolor1="#FFFF0000"/>
+          <Control  height="10"/>
+          <List name="list3" inset="1,1,1,1" bkcolor="#ffffffff" header="hidden"
+                    vscrollbar111="true" itemalign="left" itemlinecolorxxx="0xFF7f7f7f"
+                    bordercolor111="0xFF7f7f7f" >
+            <ListHeaderItem text="1" />
+          </List>
+      </VBox>      
+    </HBox>
+
+    <VBox bkcolor="#ffEFEFEF" inset="5,5,5,5" >
+      <Label height="15" name="info" />
+      <VBox sepheight="10" sepimm="true" >
+        <List name="list" inset="1,1,1,1" bkcolor="#ffffffff" header11="hidden"
+            vscrollbar="true" itemalign="left" itemlinecolor="0xFF7f7f7f"
+            bordercolor="0xFF7f7f7f" >
+          <ListHeaderItem text="1" width="80" />
+          <ListHeaderItem text="1" width="80" />
+          <ListHeaderItem text="1" width="80" />
+          <ListHeaderItem text="1" width="80" />
+          <ListHeaderItem text="1" width="80" />
+        </List>
+      </VBox>
+      <Control height="10" />
+
+      <VBox>
+        <List name="list2" inset="1,1,1,1" bkcolor="#ffffffff" header111="hidden"
+          vscrollbar="true" hscrollbar="true" itemalign="left" itemlinecolor="0xFF7f7f7f"
+          bordercolor="0xFF7f7f7f" itemhotbkcolor="0xffe9ffe9" >
+          <ListHeaderItem text="1" width="200" />
+          <ListHeaderItem text="1" width="120" />
+          <ListHeaderItem text="1" width="120" />
+          <ListHeaderItem dragable="false" text="1" width="80" />
+        </List>
+      </VBox>
+    </VBox>
+  </HBox>
+</Window>

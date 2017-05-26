@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" ?>
+<Window sizebox="4,4,6,6" font="1" >
+  <!--Include & Default-->
+  <Include source="ctrl/scrollbar.xml" />
+  <Font name="Microsoft YaHei" size="48" />
+  <Font name="Microsoft YaHei" size="13" />
+  <Font name="黑体" bold="true" size="14" />
+  <Include source="ctrl.xml" />
+  <Default name="Option" value="normalimage=&quot;file='option2.png' source='0,0,210,42'&quot; selectedimage=&quot;file='option2.png' source='210,0,420,42'&quot; font=&quot;2&quot; width=&quot;210&quot; height=&quot;42&quot; textcolor=&quot;#ffFFFFFF&quot;" />
+
+  <VBox bkcolor="#ffCFCFCF" inset="10,10,10,5" childpadding="2" >
+    <Control height="5" />
+    <Label text="系统设置" font="2" />
+    <HBox height="20" >
+      <Label text="当前用户：" />
+      <Label name="lbAdmin" text="无" />
+    </HBox> 
+    
+    <Option name="opLeft0" group="OgIndex" selected ="true" text="登录账户管理" />
+    
+    <Option name="opLeft1" group="OgIndex" text="硬件设置" />
+    <Option name="opLeft2" group="OgIndex" text="会议室定义" />
+    <Option name="opLeft3" group="OgIndex" text="首页定制" />
+    <Option name="opLeft4" group="OgIndex" text="桌牌设置" />
+    
+    <Option name="opLeft10" group="OgIndex" text="归档设置(尚未实现)" visible="false" />
+
+    <Control height="5" />
+    <Label text="会议管理" font="2" />
+
+    <HBox height="20" >
+      <Label text="正在编辑的会议：" />
+      <Label name="lbMeeting" text="无" />
+    </HBox>
+    
+    <Option name="opLeft5" group="OgIndex" text="会议管理" />
+    <Option name="opLeft6" group="OgIndex" text="与会者管理" />
+    <Option name="opLeft7" group="OgIndex" text="文件管理" />
+    <Option name="opLeft8" group="OgIndex" text="视频管理" />
+    <Option name="opLeft9" group="OgIndex" text="投票设置" />
+
+    <Control height="5" />
+    <Label text="即时操作" font="2" />
+    <Option name="opLeft11" group="OgIndex" text="刷电子屏" />
+    <Control />
+    <HBox height="30" >
+      <Control />
+      <Button name="bnLogin" text="重新登录" />
+      <Control />
+    </HBox>
+    
+    <Control height="10"/>
+  </VBox>
+</Window>

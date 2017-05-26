@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Window>
+  <VBox name="main" inset="2,2,2,2" >
+    <Label name="title" text="关于投票设计..." font="2" />
+    <HBox>
+      <Label name="time" width="80" text="2016-11-28" font="0" />
+      <Control />
+      <Label name="state" width="40" text="进行中" font="0" />
+    </HBox>
+    <Button name="bnClose" bkimage="close.png" visible="false" pos="0,0,11,11" float="true"/>
+  </VBox>
+
+</Window>

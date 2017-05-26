@@ -1,0 +1,14 @@
+env = Environment()
+
+if bool(ARGUMENTS.get("debug", 0)):
+	LIBS = [ "v8_g", "pthread" ]
+	CXXFLAGS = [ "-O0", "-g", "-pipe", "-L/usr/local/lib", "-I/usr/local/include" ]
+else:
+	LIBS = [ "v8", "pthread" ]
+	CXXFLAGS = [ "-O2", "-pipe", "-L/usr/local/lib", "-I/usr/local/include" ]
+
+env.Append(
+	LIBS = LIBS,
+	CXXFLAGS = CXXFLAGS
+)
+env.Program("example-shellcpv8", "example-shellcpv8.cc")

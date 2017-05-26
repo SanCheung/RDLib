@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Window>
+  <VBox name="main" inset="2,2,2,2" >
+    <Button name="bn" text="hello world!"               
+            normalimage="file='ctrl/btn_normal.png' corner='4,4,4,4'"
+            hotimage="file='ctrl/btn_highlight.png' corner='4,4,4,4'" 
+            pushedimage="file='ctrl/btn_down.png' corner='4,4,4,4'" />
+  </VBox>
+
+</Window>

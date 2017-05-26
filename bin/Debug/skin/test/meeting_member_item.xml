@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Window>
+
+  <HorizontalLayout height="26" maxheight="26">
+    <Control width ="5" />
+    <VerticalLayout width="10" >
+      <Control height="7" />
+      <Label name="LabelVAD" visible="false" width="10" height="10" text="●" textcolor="#FF207f20" font="9" />
+    </VerticalLayout> 
+    
+    <Center width="16">
+      <Label name="LabelLogo" width="16" height="16" bkimage="test/user.png"  />
+    </Center>
+    <Label name="LabelMemberName" width="100" textpadding="4,0,0,0" text="name" align="left" font="3" />
+
+    <Control />
+
+    
+    <Center width="29">
+     <!-- 
+     <Switch name="SwitchCloseMicrophone"  width="29" height="24" 
+              openimage="file='float_switch.png' source='0,0,29,24'" 
+              closeimage="file='float_switch.png' source='0,24,29,48'"  />
+      -->
+      <Switch name="SwitchCloseMicrophone"  width="16" height="16"
+              closeimage="file='test/checkbox.png' source='0,0,16,16'"
+              openimage="file='test/checkbox.png' source='0,16,16,32'"  />
+    </Center>
+
+    <Label visible="false" width="16" height="17" bkimage="file='test/mic.png' source='0,0,16,17'" />
+  </HorizontalLayout>
+
+</Window>

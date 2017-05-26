@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8197B50B-FCB0-4DCE-AC25-FC0EF89E9F1E}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>RDLib</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)temp\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;RDLIB_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../XdBase</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\$(Configuration)</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)libs\$(Configuration)\$(TargetName).lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;RDLIB_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AppData.h" />
+    <ClInclude Include="ButtonUI.h" />
+    <ClInclude Include="CheckBoxUI.h" />
+    <ClInclude Include="DialogBase.h" />
+    <ClInclude Include="LabelUI.h" />
+    <ClInclude Include="OptionUI.h" />
+    <ClInclude Include="PaintManagerUI.h" />
+    <ClInclude Include="ProgressUI.h" />
+    <ClInclude Include="rddefine.h" />
+    <ClInclude Include="rdLib.h" />
+    <ClInclude Include="ScrollBarUI.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StringPtrMap.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextUI.h" />
+    <ClInclude Include="UICombo.h" />
+    <ClInclude Include="UIContainer.h" />
+    <ClInclude Include="UIControl.h" />
+    <ClInclude Include="UIDelegate.h" />
+    <ClInclude Include="UIDlgBuilder.h" />
+    <ClInclude Include="UIEdit.h" />
+    <ClInclude Include="UIList.h" />
+    <ClInclude Include="UIMarkup.h" />
+    <ClInclude Include="UIRender.h" />
+    <ClInclude Include="WindowWnd.h" />
+    <ClInclude Include="WndShadow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AppData.cpp" />
+    <ClCompile Include="ButtonUI.cpp" />
+    <ClCompile Include="CheckBoxUI.cpp" />
+    <ClCompile Include="DialogBase.cpp" />
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="LabelUI.cpp" />
+    <ClCompile Include="OptionUI.cpp" />
+    <ClCompile Include="PaintManagerUI.cpp" />
+    <ClCompile Include="ProgressUI.cpp" />
+    <ClCompile Include="RDLib.cpp" />
+    <ClCompile Include="ScrollBarUI.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="StringPtrMap.cpp" />
+    <ClCompile Include="TextUI.cpp" />
+    <ClCompile Include="UICombo.cpp" />
+    <ClCompile Include="UIContainer.cpp" />
+    <ClCompile Include="UIControl.cpp" />
+    <ClCompile Include="UIDelegate.cpp" />
+    <ClCompile Include="UIDlgBuilder.cpp" />
+    <ClCompile Include="UIEdit.cpp" />
+    <ClCompile Include="UIList.cpp" />
+    <ClCompile Include="UIMarkup.cpp" />
+    <ClCompile Include="UIRender.cpp" />
+    <ClCompile Include="WindowWnd.cpp" />
+    <ClCompile Include="WndShadow.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

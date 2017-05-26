@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DefaultConfigs>
+    <Default name="VScrollBar" value="button1normalimage=&quot;sb/normal-button1.png&quot; button1hotimage=&quot;sb/hot-button1.png&quot; button1pushedimage=&quot;sb/pushed-button1.png&quot; button1disabledimage=&quot;sb/disabled-button1.png&quot; button2normalimage=&quot;sb/normal-button2.png&quot; button2hotimage=&quot;sb/hot-button2.png&quot; button2pushedimage=&quot;sb/pushed-button2.png&quot; button2disabledimage=&quot;sb/disabled-button2.png&quot; thumbnormalimage=&quot;sb/normal-rail.png&quot; thumbhotimage=&quot;sb/normal-rail.png&quot; thumbpushedimage=&quot;sb/normal-rail.png&quot; thumbdisabledimage=&quot;sb/normal-rail.png&quot; bknormalimage=&quot;sb/normal-bk.png&quot; bkhotimage=&quot;sb/normal-bk.png&quot; bkpushedimage=&quot;sb/normal-bk.png&quot; bkdisabledimage=&quot;sb/normal-bk.png&quot;" />
+</DefaultConfigs>
