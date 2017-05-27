@@ -29,7 +29,10 @@
 
 #pragma once
 
-#include "map"
+class RDLIB_API CWndShadow;
+
+template class RDLIB_API less<HWND>;
+template class RDLIB_API map<HWND, CWndShadow*>;
 
 //namespace DuiLib
 //{

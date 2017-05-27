@@ -122,8 +122,10 @@ bool CComboUIEx::SelectItem(int iIndex, bool bTakeFocus /* = false */)
 		m_iCurSel = -1;
 	}
 	if( iIndex < 0 ) return false;
-	if( m_items.GetSize() == 0 ) return false;
-	if( iIndex >= m_items.GetSize() ) iIndex = m_items.GetSize() - 1;
+
+	int n = (int)m_items.size(); //m_items.GetSize()
+	if( n == 0 ) return false;
+	if( iIndex >= n ) iIndex = n - 1;
 	CControlUI* pControl = static_cast<CControlUI*>(m_items[iIndex]);
 	if( !pControl /*|| !pControl->IsVisible() || !pControl->IsEnabled() */) return false;
 	IListItemUI* pListItem = static_cast<IListItemUI*>(pControl->GetInterface(_T("ListItem")));

@@ -20,8 +20,11 @@
 //#include "v8.h"
 //using namespace v8;
 //#pragma comment( lib, "v8.lib" )
+//#include "js_macros.h"
 
-#include "js_macros.h"
+#include <vector>
+using namespace std;
+
 
 
 #pragma comment( lib, "comctl32.lib" ) 

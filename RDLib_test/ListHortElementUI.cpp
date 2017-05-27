@@ -22,8 +22,9 @@ void CListHortElementUI::SetPos( RECT rc )
 		return;
 
 	TListInfoUI* pInfo = m_pOwner->GetListInfo();
-	int nCount = m_items.GetSize();
-	for (int i = 0; i < nCount; i++)
+
+	int n = (int)m_items.size(); //m_items.GetSize()
+	for (int i = 0; i < n; i++)
 	{
 		CControlUI *pHorizontalLayout = static_cast<CControlUI*>(m_items[i]);
 		CListHeaderItemUI *pHeaderItem = static_cast<CListHeaderItemUI*>(m_pHeader->GetItemAt(i));

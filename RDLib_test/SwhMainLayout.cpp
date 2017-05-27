@@ -24,6 +24,7 @@ LRESULT CSwhMainLayout::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 
 void CSwhMainLayout::Init()
 {
+	m_pVLHandle = FindCtrl<CVerticalLayoutUI>( L"vlHandle" );
 }
 
 void CSwhMainLayout::Notify( TNotifyUI& msg )
@@ -37,10 +38,19 @@ void CSwhMainLayout::Notify( TNotifyUI& msg )
 		{
 			PostQuitMessage( 1 );
 		}
-		else if( strSenderName == L"bnLeftThumb" )
+		else if( strSenderName == L"bnLeftHandle" )
 		{
 			CVerticalLayoutUI *pVL = FindCtrl<CVerticalLayoutUI>( L"vlLeftBar" );
-			pVL->SetVisible( !pVL->IsVisible() );
+			
+			bool	bShow = !pVL->IsVisible();
+			pVL->SetVisible( bShow );
+
+			int x = bShow?pVL->GetWidth():0;
+			int y = pVL->GetY();
+			int w = 32;
+			int h = pVL->GetHeight();
+			RECT	rt = { x, y, x+w, y+h };
+			m_pVLHandle->SetPos( rt );
 		}
 	}
 	else if( strType == L"selectchanged" )

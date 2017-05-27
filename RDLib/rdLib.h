@@ -33,6 +33,15 @@
 #define MIN min
 #define CLAMP(x,a,b) (MIN(b,MAX(a,x)))
 
+#include <vector>
+#include <map>
+#include <memory>
+#include <list>
+using namespace std;
+
+template class RDLIB_API allocator<void*>;
+template class RDLIB_API vector<void*>;
+//template class RDLIB_API map<wstring, void*>;
 
 #include "XdBaseLib.h"
 #pragma comment( lib, "XdBase.lib" )

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" ?>
 <!--roundcorner="1,1"-->
-<Window size="900,600" mininfo="640,480"  caption="0,0,0,48" sizebox="4,4,6,6" roundcorner="1,1"  >
+<Window size="900,600" caption="0,0,0,30" sizebox="4,4,6,6" roundcorner="1,1"  >
   <!--Include & Default-->
   <Font name="宋体" size="14" />
   <Font name="宋体" size="12" />
@@ -8,6 +8,8 @@
   <Include source="ctrl/scrollbar.xml" />
   <Include source="font.xml" />
   <!--<Include source="ctrl.xml" />-->
+  <Default name="Combo" value="normalimage=&quot;file='ctrl/Combo_nor.bmp' corner='2,2,24,2'&quot; hotimage=&quot;file='ctrl/Combo_over.bmp' corner='2,2,24,2'&quot; pushedimage=&quot;file='ctrl/Combo_over.bmp' corner='2,2,24,2'&quot; disabledimage=&quot;file='ctrl/Combo_disabled.bmp' corner='2,2,24,2'&quot;" />
+
 
   <VBox bkcolor="#ffFFFFFF">
     <!--top-->
@@ -65,15 +67,38 @@
                 normalimage="swh/level1-normal.png" selectedimage="swh/level1-hover.png" hotimage="swh/level1-hover.png" />
       </VBox>
 
-      <Control width="1" bkcolor="#FFfa6d00" />
-      <VBox width="32" >
+
+      <VBox bkcolor="#ff719471">
         <Control />
-        <Button height="104" name="bnLeftThumb" 
-                normalimage="swh/left-normal.png" hotimage="swh/left-hover.png" pushedimage="swh/left-hover.png" />
+        <Combo name="cbClient" width="200" height="20" itemtextpadding="10,0,20,0">
+          <ListLabelElement text="北京" />
+          <ListLabelElement text="上海" />
+          <ListLabelElement text="广州" />
+          <ListLabelElement text="深圳" />
+          <ListLabelElement text="杭州" />
+          <ListLabelElement text="西安" />
+          <ListLabelElement text="成都" />
+        </Combo>
+        <Control />
+        <HBox height="30" >
+          <Control />
+          <Edit width="280" name="edAccount" normalimage ="file='ctrl/edit.png' corner='4,4,4,4'" />
+          <Control />
+        </HBox>
         <Control />
       </VBox>
 
-      <Control />
+      <Control width="1" bkcolor="#FFfa6d00" />
+      
+      <HBox name="vlHandle" pos="240,30,272,600" float="true" >
+        <Control width="1" bkcolor="#FFfa6d00" />
+        <VBox >
+          <Control />
+          <Button height="104" name="bnLeftHandle" normalimage="swh/left-normal.png" hotimage="swh/left-hover.png" pushedimage="swh/left-hover.png" />
+          <Control />
+        </VBox>
+      </HBox>
+      
     </HBox>
   </VBox>
 </Window>

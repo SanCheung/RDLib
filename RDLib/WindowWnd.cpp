@@ -321,9 +321,22 @@ HWND CWindowWnd::Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD 
 
 HWND CWindowWnd::Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle, int x, int y, int cx, int cy, HMENU hMenu)
 {
-	if( GetSuperClassName() != NULL && !RegisterSuperclass() ) return NULL;
-	if( GetSuperClassName() == NULL && !RegisterWindowClass() ) return NULL;
-	m_hWnd = ::CreateWindowEx(dwExStyle, GetWindowClassName(), pstrName, dwStyle, x, y, cx, cy, hwndParent, hMenu, CAppData::GetInstance(), this);
+	LPCTSTR	strSuperClassName = GetSuperClassName();
+	if( strSuperClassName == NULL )
+	{
+		if( !RegisterWindowClass() )
+			return NULL;
+	}
+	else
+	{
+		if( !RegisterSuperclass() )
+			return NULL;
+	}
+
+	//if( GetSuperClassName() != NULL && !RegisterSuperclass() ) return NULL;
+	//if( GetSuperClassName() == NULL && !RegisterWindowClass() ) return NULL;
+	m_hWnd = ::CreateWindowEx(dwExStyle, GetWindowClassName(), pstrName, dwStyle, 
+		x, y, cx, cy, hwndParent, hMenu, CAppData::GetInstance(), this);
 	DWORD dwError=GetLastError();
 
 	ASSERT(m_hWnd!=NULL);
@@ -424,12 +437,14 @@ bool CWindowWnd::RegisterWindowClass()
 
 bool CWindowWnd::RegisterSuperclass()
 {
+	LPCTSTR	strSuperClassName = GetSuperClassName();
+
 	// Get the class information from an existing
 	// window so we can subclass it later on...
 	WNDCLASSEX wc = { 0 };
 	wc.cbSize = sizeof(WNDCLASSEX);
-	if( !::GetClassInfoEx(NULL, GetSuperClassName(), &wc) ) {
-		if( !::GetClassInfoEx(CAppData::GetInstance(), GetSuperClassName(), &wc) ) {
+	if( !::GetClassInfoEx(NULL, strSuperClassName, &wc) ) {
+		if( !::GetClassInfoEx(CAppData::GetInstance(), strSuperClassName, &wc) ) {
 			ASSERT(!"Unable to locate window class");
 			return NULL;
 		}
@@ -519,16 +534,16 @@ bool CWindowWnd::MoveWindow( int x, int y, int width, int height, bool repaint/*
 	return (::MoveWindow(m_hWnd, x, y, width, height, repaint?TRUE:FALSE) == TRUE);
 }
 
-void CWindowWnd::ResizeClient(int cx /*= -1*/, int cy /*= -1*/)
-{
-	ASSERT(::IsWindow(m_hWnd));
-	RECT rc = { 0 };
-	if( !::GetClientRect(m_hWnd, &rc) ) return;
-	if( cx != -1 ) rc.right = cx;
-	if( cy != -1 ) rc.bottom = cy;
-	if( !::AdjustWindowRectEx(&rc, GetWindowStyle(m_hWnd), (!(GetWindowStyle(m_hWnd) & WS_CHILD) && (::GetMenu(m_hWnd) != NULL)), GetWindowExStyle(m_hWnd)) ) return;
-	::SetWindowPos(m_hWnd, NULL, 0, 0, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE);
-}
+//void CWindowWnd::ResizeClient(int cx /*= -1*/, int cy /*= -1*/)
+//{
+//	ASSERT(::IsWindow(m_hWnd));
+//	RECT rc = { 0 };
+//	if( !::GetClientRect(m_hWnd, &rc) ) return;
+//	if( cx != -1 ) rc.right = cx;
+//	if( cy != -1 ) rc.bottom = cy;
+//	if( !::AdjustWindowRectEx(&rc, GetWindowStyle(m_hWnd), (!(GetWindowStyle(m_hWnd) & WS_CHILD) && (::GetMenu(m_hWnd) != NULL)), GetWindowExStyle(m_hWnd)) ) return;
+//	::SetWindowPos(m_hWnd, NULL, 0, 0, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOMOVE | SWP_NOACTIVATE);
+//}
 
 LRESULT CWindowWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

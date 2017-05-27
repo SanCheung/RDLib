@@ -41,7 +41,7 @@ void* CDelegateBase::GetObject()
 
 CEventSource::~CEventSource()
 {
-    for( int i = 0; i < m_aDelegates.GetSize(); i++ ) {
+    for( int i = 0; i < (int)m_aDelegates.size(); i++ ) {
         CDelegateBase* pObject = static_cast<CDelegateBase*>(m_aDelegates[i]);
         if( pObject) delete pObject;
     }
@@ -49,17 +49,17 @@ CEventSource::~CEventSource()
 
 CEventSource::operator bool()
 {
-    return m_aDelegates.GetSize() > 0;
+    return m_aDelegates.size() > 0;
 }
 
 void CEventSource::operator+= (CDelegateBase& d)
 { 
-    for( int i = 0; i < m_aDelegates.GetSize(); i++ ) {
+    for( int i = 0; i < (int)m_aDelegates.size(); i++ ) {
         CDelegateBase* pObject = static_cast<CDelegateBase*>(m_aDelegates[i]);
         if( pObject && pObject->Equals(d) ) return;
     }
 
-    m_aDelegates.Add(d.Copy());
+    m_aDelegates.push_back(d.Copy());
 }
 
 void CEventSource::operator+= (FnType pFn)
@@ -69,11 +69,12 @@ void CEventSource::operator+= (FnType pFn)
 
 void CEventSource::operator-= (CDelegateBase& d) 
 {
-    for( int i = 0; i < m_aDelegates.GetSize(); i++ ) {
+    for( int i = 0; i < (int)m_aDelegates.size(); i++ ) {
         CDelegateBase* pObject = static_cast<CDelegateBase*>(m_aDelegates[i]);
         if( pObject && pObject->Equals(d) ) {
             delete pObject;
-            m_aDelegates.Remove(i);
+            //m_aDelegates.Remove(i);
+			m_aDelegates.erase( m_aDelegates.begin()+i );
             return;
         }
     }
@@ -85,7 +86,7 @@ void CEventSource::operator-= (FnType pFn)
 
 bool CEventSource::operator() (void* param) 
 {
-    for( int i = 0; i < m_aDelegates.GetSize(); i++ ) {
+    for( int i = 0; i < (int)m_aDelegates.size(); i++ ) {
         CDelegateBase* pObject = static_cast<CDelegateBase*>(m_aDelegates[i]);
         if( pObject && !(*pObject)(param) ) return false;
     }

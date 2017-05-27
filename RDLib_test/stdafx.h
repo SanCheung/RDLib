@@ -22,11 +22,6 @@
 #include <objidl.h>
 #pragma comment( lib, "atlsd.lib" )
 
-#include <vector>
-#include <map>
-#include <memory>
-#include <list>
-using namespace std;
 
 //#include "v8.h"
 //using namespace v8;

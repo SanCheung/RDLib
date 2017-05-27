@@ -9,5 +9,8 @@ public:
 
 	LRESULT OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled );
 	void	Init();
+
+
+	CVerticalLayoutUI	*m_pVLHandle;
 };
 

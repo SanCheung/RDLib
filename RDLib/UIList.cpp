@@ -888,7 +888,9 @@ void CListBodyUI::SetScrollPos(SIZE szPos)
     if( cx == 0 && cy == 0 ) return;
 
     RECT rcPos;
-    for( int it2 = 0; it2 < m_items.GetSize(); it2++ ) {
+	int n = (int)m_items.size();
+    //for( int it2 = 0; it2 < m_items.GetSize(); it2++ ) {
+	for( int it2 = 0; it2 < n; it2++ ) {
         CControlUI* pControl = static_cast<CControlUI*>(m_items[it2]);
         if( !pControl->IsVisible() ) continue;
         if( pControl->IsFloat() ) continue;
@@ -962,7 +964,10 @@ void CListBodyUI::SetPos(RECT rc)
     int nAdjustables = 0;
     int cyFixed = 0;
     int nEstimateNum = 0;
-    for( int it1 = 0; it1 < m_items.GetSize(); it1++ ) {
+
+	int n = (int)m_items.size();
+	//for( int it1 = 0; it1 < m_items.GetSize(); it1++ ) {
+	for( int it1 = 0; it1 < n; it1++ ) {
         CControlUI* pControl = static_cast<CControlUI*>(m_items[it1]);
         if( !pControl->IsVisible() ) continue;
         if( pControl->IsFloat() ) continue;
@@ -1006,9 +1011,12 @@ void CListBodyUI::SetPos(RECT rc)
     if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() ) {
         iPosX -= m_pHorizontalScrollBar->GetScrollPos();
     }
+
     int iAdjustable = 0;
     int cyFixedRemaining = cyFixed;
-    for( int it2 = 0; it2 < m_items.GetSize(); it2++ ) {
+	n = (int)m_items.size();
+	//for( int it2 = 0; it2 < m_items.GetSize(); it2++ ) {
+	for( int it2 = 0; it2 < n; it2++ ) {
         CControlUI* pControl = static_cast<CControlUI*>(m_items[it2]);
         if( !pControl->IsVisible() ) continue;
         if( pControl->IsFloat() ) {
@@ -1110,10 +1118,13 @@ LPVOID CListHeaderUI::GetInterface(LPCTSTR pstrName)
 
 SIZE CListHeaderUI::EstimateSize(SIZE szAvailable)
 {
+	int n = (int)m_items.size();
+
     SIZE cXY = {0, m_cxyFixed.cy};
 	if( cXY.cy == 0 && m_pManager != NULL )
 	{
-		for( int it = 0; it < m_items.GetSize(); it++ )
+		//for( int it = 0; it < m_items.GetSize(); it++ )
+		for( int it = 0; it < n; it++ )
 		{
 			cXY.cy = MAX(cXY.cy,static_cast<CControlUI*>(m_items[it])->EstimateSize(szAvailable).cy);
 		}
@@ -1122,7 +1133,8 @@ SIZE CListHeaderUI::EstimateSize(SIZE szAvailable)
 		cXY.cy = 20;
 	}
 
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
+    //for( int it = 0; it < m_items.GetSize(); it++ ) {
+	for( int it = 0; it < n; it++ ) {
         cXY.cx +=  static_cast<CControlUI*>(m_items[it])->EstimateSize(szAvailable).cx;
     }
 

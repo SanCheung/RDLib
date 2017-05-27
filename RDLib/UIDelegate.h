@@ -94,7 +94,8 @@ public:
     bool operator() (void* param);
 
 protected:
-    CStdPtrArray m_aDelegates;
+    //CStdPtrArray m_aDelegates;
+	vector<void*>	m_aDelegates;
 };
 
 //} // namespace DuiLib

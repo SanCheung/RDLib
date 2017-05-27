@@ -102,7 +102,12 @@ protected:
 	virtual void ProcessVScrollbar(RECT rc, int cyRequired);
 
 protected:
-    CStdPtrArray m_items;
+    //CStdPtrArray  m_items;
+	vector<void*>	m_items;
+
+
+
+
     RECT m_rcInset;
     int m_iChildPadding;
     bool m_bAutoDestroy;
@@ -254,16 +259,22 @@ public:
 	{
 		return CContainerUI::Add(pControl);
 	}
+
+
 	void SetPos(RECT rc)
 	{
 		CControlUI::SetPos(rc);
-		if( m_items.IsEmpty() ) return;
+		//if( m_items.IsEmpty() ) return;
+		if( m_items.empty() ) return;
+
 		rc.left += m_rcInset.left;
 		rc.top += m_rcInset.top;
 		rc.right -= m_rcInset.right;
 		rc.bottom -= m_rcInset.bottom;
 
-		for( int it = 0; it < m_items.GetSize(); it++ ) {
+		int n = (int)m_items.size();
+		//for( int it = 0; it < m_items.GetSize(); it++ ) {
+		for( int it = 0; it < n; it++ ) {
 			CControlUI* pControl = static_cast<CControlUI*>(m_items[it]);
 			if( !pControl->IsVisible() ) continue;
 			if( pControl->IsFloat() ) {

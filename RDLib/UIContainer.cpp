@@ -46,13 +46,18 @@ LPVOID CContainerUI::GetInterface(LPCTSTR pstrName)
 
 CControlUI* CContainerUI::GetItemAt(int iIndex) const
 {
-    if( iIndex < 0 || iIndex >= m_items.GetSize() ) return NULL;
+	int n = (int)m_items.size();
+    //if( iIndex < 0 || iIndex >= m_items.GetSize() ) 
+    if( iIndex < 0 || iIndex >= n )
+		return NULL;
     return static_cast<CControlUI*>(m_items[iIndex]);
 }
 
 int CContainerUI::GetItemIndex(CControlUI* pControl) const
 {
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
+	int n = (int)m_items.size();
+    //for( int it = 0; it < m_items.GetSize(); it++ ) {
+	for( int it = 0; it < n; it++ ) {
         if( static_cast<CControlUI*>(m_items[it]) == pControl ) {
             return it;
         }
@@ -63,20 +68,30 @@ int CContainerUI::GetItemIndex(CControlUI* pControl) const
 
 bool CContainerUI::SetItemIndex(CControlUI* pControl, int iIndex)
 {
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
-        if( static_cast<CControlUI*>(m_items[it]) == pControl ) {
-            NeedUpdate();            
-            m_items.Remove(it);
-            return m_items.InsertAt(iIndex, pControl);
-        }
-    }
+	//for( int it = 0; it < m_items.GetSize(); it++ ) {
+	//	if( static_cast<CControlUI*>(m_items[it]) == pControl ) {
+	//		NeedUpdate();            
+	//		m_items.Remove(it);
+	//		return m_items.InsertAt(iIndex, pControl);
+	//	}
+	//}
+
+	for( auto it = m_items.begin(); it != m_items.end(); ++it ) {
+		CControlUI *p = static_cast<CControlUI*>(*it);
+		if(  p == pControl ) {
+			NeedUpdate();
+			m_items.erase( it );
+			m_items.insert( it, pControl );
+		}
+	}
 
     return false;
 }
 
 int CContainerUI::GetCount() const
 {
-    return m_items.GetSize();
+    //return m_items.GetSize();
+	return (int)m_items.size();
 }
 
 bool CContainerUI::Add(CControlUI* pControl)
@@ -86,7 +101,9 @@ bool CContainerUI::Add(CControlUI* pControl)
     if( m_pManager != NULL ) m_pManager->InitControls(pControl, this);
     if( IsVisible() ) NeedUpdate();
     else pControl->SetInternVisible(false);
-    return m_items.Add(pControl);   
+    //return m_items.Add(pControl);   
+	m_items.push_back(pControl);
+	return true;
 }
 
 bool CContainerUI::AddAt(CControlUI* pControl, int iIndex)
@@ -94,23 +111,34 @@ bool CContainerUI::AddAt(CControlUI* pControl, int iIndex)
     if( pControl == NULL) return false;
 
     if( m_pManager != NULL ) m_pManager->InitControls(pControl, this);
-    if( IsVisible() ) NeedUpdate();
-    else pControl->SetInternVisible(false);
-    return m_items.InsertAt(iIndex, pControl);
+    if( IsVisible() ) 
+		NeedUpdate();
+    else 
+		pControl->SetInternVisible(false);
+    
+	//return m_items.InsertAt(iIndex, pControl);
+	m_items.insert( m_items.begin() + iIndex, pControl);
+	return true;
 }
 
 bool CContainerUI::Remove(CControlUI* pControl)
 {
     if( pControl == NULL) return false;
 
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
+	int n = (int)m_items.size(); //m_items.GetSize()
+    for( int it = 0; it < n; it++ ) {
         if( static_cast<CControlUI*>(m_items[it]) == pControl ) {
             NeedUpdate();
             if( m_bAutoDestroy ) {
-                if( m_bDelayedDestroy && m_pManager ) m_pManager->AddDelayedCleanup(pControl);             
-                else delete pControl;
+                if( m_bDelayedDestroy && m_pManager ) 
+					m_pManager->AddDelayedCleanup(pControl);             
+                else 
+					delete pControl;
             }
-            return m_items.Remove(it);
+
+            //m_items.Remove(it);
+			m_items.erase( m_items.begin()+it );
+			return true;
         }
     }
     return false;
@@ -128,13 +156,15 @@ bool CContainerUI::RemoveAt(int iIndex)
 
 void CContainerUI::RemoveAll( bool bNeedUpdate )
 {
-    for( int it = 0; m_bAutoDestroy && it < m_items.GetSize(); it++ ) {
+	int n = (int)m_items.size(); //m_items.GetSize()
+    for( int it = 0; m_bAutoDestroy && it < n; it++ ) {
         if( m_bDelayedDestroy && m_pManager ) 
 			m_pManager->AddDelayedCleanup(static_cast<CControlUI*>(m_items[it]));             
         else 
 			delete static_cast<CControlUI*>(m_items[it]);
     }
-    m_items.Empty();
+    //m_items.Empty();
+	m_items.clear();
 
 	if( bNeedUpdate )
 		NeedUpdate();
@@ -196,7 +226,9 @@ void CContainerUI::SetVisible(bool bVisible)
 {
     if( m_bVisible == bVisible ) return;
     CControlUI::SetVisible(bVisible);
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
+
+	int n = (int)m_items.size(); //m_items.GetSize()
+    for( int it = 0; it < n; it++ ) {
         static_cast<CControlUI*>(m_items[it])->SetInternVisible(IsVisible());
     }
 }
@@ -204,8 +236,9 @@ void CContainerUI::SetVisible(bool bVisible)
 void CContainerUI::SetInternVisible(bool bVisible)
 {
     CControlUI::SetInternVisible(bVisible);
-    if( m_items.IsEmpty() ) return;
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
+    //if( m_items.IsEmpty() ) return;
+	int n = (int)m_items.size(); //m_items.GetSize()
+    for( int it = 0; it < n; it++ ) {
         static_cast<CControlUI*>(m_items[it])->SetInternVisible(IsVisible());
     }
 }
@@ -345,8 +378,10 @@ void CContainerUI::SetScrollPos(SIZE szPos)
 
     if( cx == 0 && cy == 0 ) return;
 
+	int n = (int)m_items.size(); //m_items.GetSize()
+
     RECT rcPos;
-    for( int it2 = 0; it2 < m_items.GetSize(); it2++ ) {
+    for( int it2 = 0; it2 < n; it2++ ) {
         CControlUI* pControl = static_cast<CControlUI*>(m_items[it2]);
         if( !pControl->IsVisible() ) continue;
         if( pControl->IsFloat() ) continue;
@@ -535,13 +570,16 @@ int CContainerUI::FindSelectable(int iIndex, bool bForward /*= true*/) const
 void CContainerUI::SetPos(RECT rc)
 {
     CControlUI::SetPos(rc);
-    if( m_items.IsEmpty() ) return;
+
+    //if( m_items.IsEmpty() ) return;
+
     rc.left += m_rcInset.left;
     rc.top += m_rcInset.top;
     rc.right -= m_rcInset.right;
     rc.bottom -= m_rcInset.bottom;
 
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
+	int n = (int)m_items.size(); //m_items.GetSize()
+    for( int it = 0; it < n; it++ ) {
         CControlUI* pControl = static_cast<CControlUI*>(m_items[it]);
         if( !pControl->IsVisible() ) continue;
         if( pControl->IsFloat() ) {
@@ -594,7 +632,8 @@ void CContainerUI::SetAttribute(LPCTSTR pstrName, LPCTSTR pstrValue)
 
 void CContainerUI::SetManager(CPaintManagerUI* pManager, CControlUI* pParent, bool bInit)
 {
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
+	int n = (int)m_items.size(); //m_items.GetSize()
+    for( int it = 0; it < n; it++ ) {
         static_cast<CControlUI*>(m_items[it])->SetManager(pManager, this, bInit);
     }
     
@@ -632,6 +671,9 @@ CControlUI* CContainerUI::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT u
         CControlUI* pControl = CControlUI::FindControl(Proc, pData, uFlags);
         if( pControl != NULL ) return pControl;
     }
+
+	int n = (int)m_items.size(); //m_items.GetSize()
+
     RECT rc = m_rcItem;
     rc.left += m_rcInset.left;
     rc.top += m_rcInset.top;
@@ -640,7 +682,7 @@ CControlUI* CContainerUI::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT u
     if( m_pVerticalScrollBar && m_pVerticalScrollBar->IsVisible() ) rc.right -= m_pVerticalScrollBar->GetFixedWidth();
     if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() ) rc.bottom -= m_pHorizontalScrollBar->GetFixedHeight();
     if( (uFlags & UIFIND_TOP_FIRST) != 0 ) {
-        for( int it = m_items.GetSize() - 1; it >= 0; it-- ) {
+        for( int it = n - 1; it >= 0; it-- ) {
             CControlUI* pControl = static_cast<CControlUI*>(m_items[it])->FindControl(Proc, pData, uFlags);
             if( pControl != NULL ) {
                 if( (uFlags & UIFIND_HITTEST) != 0 && !pControl->IsFloat() && !::PtInRect(&rc, *(static_cast<LPPOINT>(pData))) )
@@ -651,7 +693,7 @@ CControlUI* CContainerUI::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT u
         }
     }
     else {
-        for( int it = 0; it < m_items.GetSize(); it++ ) {
+        for( int it = 0; it < n; it++ ) {
             CControlUI* pControl = static_cast<CControlUI*>(m_items[it])->FindControl(Proc, pData, uFlags);
             if( pControl != NULL ) {
                 if( (uFlags & UIFIND_HITTEST) != 0 && !pControl->IsFloat() && !::PtInRect(&rc, *(static_cast<LPPOINT>(pData))) )
@@ -679,7 +721,8 @@ void CContainerUI::DoPaint(HDC hDC, const RECT& rcPaint)
     CRenderClip::GenerateClip(hDC, rcTemp, clip);
     CControlUI::DoPaint(hDC, rcPaint);
 
-    if( m_items.GetSize() > 0 ) {
+	int n = (int)m_items.size(); //m_items.GetSize()
+    if( n > 0 ) {
         RECT rc = m_rcItem;
         rc.left += m_rcInset.left;
         rc.top += m_rcInset.top;
@@ -689,7 +732,7 @@ void CContainerUI::DoPaint(HDC hDC, const RECT& rcPaint)
         if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() ) rc.bottom -= m_pHorizontalScrollBar->GetFixedHeight();
 
         if( !::IntersectRect(&rcTemp, &rcPaint, &rc) ) {
-            for( int it = 0; it < m_items.GetSize(); it++ ) {
+            for( int it = 0; it < n; it++ ) {
                 CControlUI* pControl = static_cast<CControlUI*>(m_items[it]);
                 if( !pControl->IsVisible() ) continue;
                 if( !::IntersectRect(&rcTemp, &rcPaint, &pControl->GetPos()) ) continue;
@@ -702,7 +745,7 @@ void CContainerUI::DoPaint(HDC hDC, const RECT& rcPaint)
         else {
             CRenderClip childClip;
             CRenderClip::GenerateClip(hDC, rcTemp, childClip);
-            for( int it = 0; it < m_items.GetSize(); it++ ) {
+            for( int it = 0; it < n; it++ ) {
                 CControlUI* pControl = static_cast<CControlUI*>(m_items[it]);
                 if( !pControl->IsVisible() ) continue;
                 if( !::IntersectRect(&rcTemp, &rcPaint, &pControl->GetPos()) ) continue;
@@ -736,7 +779,8 @@ void CContainerUI::DoPaint(HDC hDC, const RECT& rcPaint)
 void CContainerUI::SetFloatPos(int iIndex)
 {
     // 因为CControlUI::SetPos对float的操作影响，这里不能对float组件添加滚动条的影响
-    if( iIndex < 0 || iIndex >= m_items.GetSize() ) return;
+	int n = (int)m_items.size(); //m_items.GetSize()
+    if( iIndex < 0 || iIndex >= n ) return;
 
     CControlUI* pControl = static_cast<CControlUI*>(m_items[iIndex]);
 
@@ -966,7 +1010,8 @@ void CVerticalLayoutUI::SetPos(RECT rc)
 	if( m_pHorizontalScrollBar && m_pHorizontalScrollBar->IsVisible() )
 		rc.bottom -= m_pHorizontalScrollBar->GetFixedHeight();
 
-	if( m_items.GetSize() == 0) {
+	int n = (int)m_items.size(); //m_items.GetSize()
+	if( n == 0) {
 		ProcessScrollBar(rc, 0, 0); //如果有滚动条,则把滚动条给hide掉
 		return;
 	}
@@ -980,7 +1025,7 @@ void CVerticalLayoutUI::SetPos(RECT rc)
 	int nAdjustables = 0; //有几个高度为0的控件,他们最后平分剩下的高度
 	int cyFixed = 0; //已经分配出去的高度总和
 	int nEstimateNum = 0;
-	for( int it1 = 0; it1 < m_items.GetSize(); it1++ ) 
+	for( int it1 = 0; it1 < n; it1++ ) 
 	{
 		CControlUI* pControl = static_cast<CControlUI*>(m_items[it1]);
 		if( !pControl->IsVisible() ) continue;
@@ -1018,7 +1063,7 @@ void CVerticalLayoutUI::SetPos(RECT rc)
 
 	int iAdjustable = 0;
 	int cyFixedRemaining = cyFixed;
-	for( int it2 = 0; it2 < m_items.GetSize(); it2++ ) {
+	for( int it2 = 0; it2 < n; it2++ ) {
 		CControlUI* pControl = static_cast<CControlUI*>(m_items[it2]);
 		if( !pControl->IsVisible() ) continue;
 		if( pControl->IsFloat() ) {
@@ -1267,7 +1312,9 @@ void CHorizontalLayoutUI::SetPos(RECT rc)
 	rc.right -= m_rcInset.right;
 	rc.bottom -= m_rcInset.bottom;
 
-	if( m_items.GetSize() == 0) {
+	int n = (int)m_items.size(); //m_items.GetSize()
+
+	if( n == 0) {
 		ProcessScrollBar(rc, 0, 0);
 		return;
 	}
@@ -1283,7 +1330,7 @@ void CHorizontalLayoutUI::SetPos(RECT rc)
 	int nAdjustables = 0;
 	int cxFixed = 0;
 	int nEstimateNum = 0;
-	for( int it1 = 0; it1 < m_items.GetSize(); it1++ ) {
+	for( int it1 = 0; it1 < n; it1++ ) {
 		CControlUI* pControl = static_cast<CControlUI*>(m_items[it1]);
 		if( !pControl->IsVisible() ) continue;
 		if( pControl->IsFloat() ) continue;
@@ -1313,7 +1360,7 @@ void CHorizontalLayoutUI::SetPos(RECT rc)
 	}
 	int iAdjustable = 0;
 	int cxFixedRemaining = cxFixed;
-	for( int it2 = 0; it2 < m_items.GetSize(); it2++ ) {
+	for( int it2 = 0; it2 < n; it2++ ) {
 		CControlUI* pControl = static_cast<CControlUI*>(m_items[it2]);
 		if( !pControl->IsVisible() ) continue;
 		if( pControl->IsFloat() ) {
@@ -1577,7 +1624,8 @@ void CTileLayoutUI::SetPos(RECT rc)
     rc.right -= m_rcInset.right;
     rc.bottom -= m_rcInset.bottom;
 
-    if( m_items.GetSize() == 0) {
+	int n = (int)m_items.size(); //m_items.GetSize()
+    if( n == 0) {
         ProcessScrollBar(rc, 0, 0);
         return;
     }
@@ -1605,7 +1653,7 @@ void CTileLayoutUI::SetPos(RECT rc)
         iPosX -= m_pHorizontalScrollBar->GetScrollPos();
         ptTile.x = iPosX;
     }
-    for( int it1 = 0; it1 < m_items.GetSize(); it1++ ) {
+    for( int it1 = 0; it1 < n; it1++ ) {
         CControlUI* pControl = static_cast<CControlUI*>(m_items[it1]);
         if( !pControl->IsVisible() ) continue;
         if( pControl->IsFloat() ) {
@@ -1618,7 +1666,7 @@ void CTileLayoutUI::SetPos(RECT rc)
         if( (iCount % m_nColumns) == 0 )
         {
             int iIndex = iCount;
-            for( int it2 = it1; it2 < m_items.GetSize(); it2++ ) {
+            for( int it2 = it1; it2 < n; it2++ ) {
                 CControlUI* pLineControl = static_cast<CControlUI*>(m_items[it2]);
                 if( !pLineControl->IsVisible() ) continue;
                 if( pLineControl->IsFloat() ) continue;
@@ -1785,12 +1833,15 @@ int CTabLayoutUI::GetCurSel() const
 
 bool CTabLayoutUI::SelectItem(int iIndex)
 {
-    if( iIndex < 0 || iIndex >= m_items.GetSize() ) return false;
+	int n = (int)m_items.size();
+    if( iIndex < 0 || iIndex >= n ) return false;
     if( iIndex == m_iCurSel ) return true;
 
     int iOldSel = m_iCurSel;
     m_iCurSel = iIndex;
-    for( int it = 0; it < m_items.GetSize(); it++ )
+
+
+    for( int it = 0; it < n; it++ )
     {
         if( it == iIndex ) {
             GetItemAt(it)->SetVisible(true);
@@ -1826,7 +1877,9 @@ void CTabLayoutUI::SetPos(RECT rc)
     rc.right -= m_rcInset.right;
     rc.bottom -= m_rcInset.bottom;
 
-    for( int it = 0; it < m_items.GetSize(); it++ ) {
+	int n = (int)m_items.size();
+    //for( int it = 0; it < m_items.GetSize(); it++ ) {
+    for( int it = 0; it < n; it++ ) {
         CControlUI* pControl = static_cast<CControlUI*>(m_items[it]);
         if( !pControl->IsVisible() ) continue;
         if( pControl->IsFloat() ) {
