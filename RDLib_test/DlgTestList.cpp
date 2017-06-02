@@ -34,7 +34,12 @@ void CDlgTestList::Init()
 
 LRESULT CDlgTestList::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	PostQuitMessage( 0 );
+	HWND hParent = GetParent( m_hWnd );
+	if( hParent != NULL && ::IsWindow( hParent ) )
+		EndModal( 0 );
+	else
+		PostQuitMessage( 0 );
+
 	return 0;
 }
 

@@ -78,10 +78,12 @@ bool CContainerUI::SetItemIndex(CControlUI* pControl, int iIndex)
 
 	for( auto it = m_items.begin(); it != m_items.end(); ++it ) {
 		CControlUI *p = static_cast<CControlUI*>(*it);
-		if(  p == pControl ) {
+		if(  p == pControl )
+		{
 			NeedUpdate();
-			m_items.erase( it );
-			m_items.insert( it, pControl );
+			(*it) = pControl;
+			//m_items.erase( it );
+			//m_items.insert( it, pControl );
 		}
 	}
 

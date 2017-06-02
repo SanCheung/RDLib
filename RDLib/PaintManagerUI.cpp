@@ -43,30 +43,30 @@ HPEN m_hUpdateRectPen = NULL;
 
 CPaintManagerUI::CPaintManagerUI() :
 m_hWndPaint(NULL),
-m_hDcPaint(NULL),
-m_hDcOffscreen(NULL),
-m_hDcBackground(NULL),
-m_hbmpOffscreen(NULL),
-m_hbmpBackground(NULL),
-m_hwndTooltip(NULL),
-m_bShowUpdateRect(false),
-m_uTimerID(0x1000),
-m_pRoot(NULL),
-m_pFocus(NULL),
-m_pEventHover(NULL),
-m_pEventClick(NULL),
-m_pEventKey(NULL),
-m_bFirstLayout(true),
-m_bFocusNeeded(false),
-m_bUpdateNeeded(false),
-m_bMouseTracking(false),
-m_bMouseCapture(false),
-m_bOffscreenPaint(true),
-m_bAlphaBackground(false),
-m_bWindowAttached(false),
-m_nOpacity(255),
-m_pParentResourcePM(NULL),
-m_bExiting(false)
+	m_hDcPaint(NULL),
+	m_hDcOffscreen(NULL),
+	m_hDcBackground(NULL),
+	m_hbmpOffscreen(NULL),
+	m_hbmpBackground(NULL),
+	m_hwndTooltip(NULL),
+	m_bShowUpdateRect(false),
+	m_uTimerID(0x1000),
+	m_pRoot(NULL),
+	m_pFocus(NULL),
+	m_pEventHover(NULL),
+	m_pEventClick(NULL),
+	m_pEventKey(NULL),
+	m_bFirstLayout(true),
+	m_bFocusNeeded(false),
+	m_bUpdateNeeded(false),
+	m_bMouseTracking(false),
+	m_bMouseCapture(false),
+	m_bOffscreenPaint(true),
+	m_bAlphaBackground(false),
+	m_bWindowAttached(false),
+	m_nOpacity(255),
+	m_pParentResourcePM(NULL),
+	m_bExiting(false)
 {
 	m_dwBorderColor = 0;
     m_dwDefaultDisabledColor = 0xFFA7A6AA;
@@ -118,9 +118,15 @@ m_bExiting(false)
 CPaintManagerUI::~CPaintManagerUI()
 {
     // Delete the control-tree structures
-    for( int i = 0; i < m_aDelayedCleanup.GetSize(); i++ ) delete static_cast<CControlUI*>(m_aDelayedCleanup[i]);
-    for( int i = 0; i < m_aAsyncNotify.GetSize(); i++ ) delete static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
-    m_mNameHash.Resize(0);
+    for( int i = 0; i < (int)m_aDelayedCleanup.size(); i++ ) 
+		delete static_cast<CControlUI*>(m_aDelayedCleanup[i]);
+
+    for( int i = 0; i < (int)m_aAsyncNotify.size(); i++ )
+		delete static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
+	m_aAsyncNotify.clear();
+
+    //m_mNameHash.Resize(0);
+	m_mNameHash.clear();
     delete m_pRoot;
 
     ::DeleteObject(m_DefaultFontInfo.hFont);
@@ -136,8 +142,11 @@ CPaintManagerUI::~CPaintManagerUI()
     if( m_hDcBackground != NULL ) ::DeleteDC(m_hDcBackground);
     if( m_hbmpOffscreen != NULL ) ::DeleteObject(m_hbmpOffscreen);
     if( m_hbmpBackground != NULL ) ::DeleteObject(m_hbmpBackground);
-    if( m_hDcPaint != NULL ) ::ReleaseDC(m_hWndPaint, m_hDcPaint);
-    CAppData::m_arPreMessages.Remove( CAppData::m_arPreMessages.Find(this) );
+    if( m_hDcPaint != NULL ) 
+		::ReleaseDC(m_hWndPaint, m_hDcPaint);
+
+    //CAppData::m_arPreMessages.Remove( CAppData::m_arPreMessages.Find(this) );
+	CAppData::RemovePreMsg( this );
 }
 
 void CPaintManagerUI::Init(HWND hWnd)
@@ -157,7 +166,8 @@ void CPaintManagerUI::Init(HWND hWnd)
 
 
     // We'll want to filter messages globally too
-    CAppData::m_arPreMessages.Add(this);
+    //CAppData::m_arPreMessages.Add(this);
+	CAppData::m_arPreMessages.push_back(this);
 
 	//InitBlueAllDefine();
 }
@@ -266,14 +276,16 @@ void CPaintManagerUI::SetShowUpdateRect(bool show)
 
 bool CPaintManagerUI::PreMessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LRESULT& /*lRes*/)
 {
-    for( int i = 0; i < m_aPreMessageFilters.GetSize(); i++ ) 
+    for( int i = 0; i < (int)m_aPreMessageFilters.size(); i++ ) 
     {
         bool bHandled = false;
-        LRESULT lResult = static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
-        if( bHandled ) {
+		IMessageFilterUI* pMF = static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i]);
+
+        LRESULT lResult = pMF->MessageHandler(uMsg, wParam, lParam, bHandled);
+        if( bHandled )
             return true;
-        }
     }
+
     switch( uMsg ) {
     case WM_KEYDOWN:
         {
@@ -334,34 +346,49 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
     if( m_hWndPaint == NULL ) return false;
     
     TNotifyUI* pMsg = NULL;
-    while( pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify.GetAt(0)) ) {
-        m_aAsyncNotify.Remove(0);
-        if( pMsg->pSender != NULL ) {
-            if( pMsg->pSender->OnNotify ) pMsg->pSender->OnNotify(pMsg);
+	//while( pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify.GetAt(0)) )
+	//{
+	//	m_aAsyncNotify.Remove(0);
+
+	while( !m_aAsyncNotify.empty() )
+	{
+		pMsg = static_cast<TNotifyUI*>( m_aAsyncNotify.front() );
+		m_aAsyncNotify.pop_front();
+
+        if( pMsg->pSender != NULL )
+		{
+            if( pMsg->pSender->OnNotify ) 
+				pMsg->pSender->OnNotify(pMsg);
         }
-        for( int j = 0; j < m_aNotifiers.GetSize(); j++ ) {
+
+        for( int j = 0; j < (int)m_aNotifiers.size(); j++ )
+		{
             static_cast<INotifyUI*>(m_aNotifiers[j])->Notify(*pMsg);
         }
         delete pMsg;
     }
     
     // Cycle through listeners
-    for( int i = 0; i < m_aMessageFilters.GetSize(); i++ ) 
+    for( int i = 0; i < (int)m_aMessageFilters.size(); i++ ) 
     {
         bool bHandled = false;
-        LRESULT lResult = static_cast<IMessageFilterUI*>(m_aMessageFilters[i])->MessageHandler(uMsg, wParam, lParam, bHandled);
-        if( bHandled ) {
+
+		IMessageFilterUI *pMF = static_cast<IMessageFilterUI*>(m_aMessageFilters[i]);
+        LRESULT lResult = pMF->MessageHandler(uMsg, wParam, lParam, bHandled);
+        if( bHandled )
+		{
             lRes = lResult;
             return true;
         }
     }
     // Custom handling of events
-    switch( uMsg ) {
-    case WM_APP + 1:
+    switch( uMsg )
+	{
+    case WM_RDLIB_CLEANUP:
         {
-            for( int i = 0; i < m_aDelayedCleanup.GetSize(); i++ ) 
+            for( int i = 0; i < (int)m_aDelayedCleanup.size(); i++ ) 
                 delete static_cast<CControlUI*>(m_aDelayedCleanup[i]);
-            m_aDelayedCleanup.Empty();
+            m_aDelayedCleanup.clear();
         }
         break;
     case WM_CLOSE:
@@ -467,9 +494,13 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
         return true;
     case WM_TIMER:
         {
-            for( int i = 0; i < m_aTimers.GetSize(); i++ ) {
+            for( int i = 0; i < (int)m_aTimers.size(); i++ )
+			{
                 const TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
-                if( pTimer->hWnd == m_hWndPaint && pTimer->uWinTimer == LOWORD(wParam) && pTimer->bKilled == false) {
+                if( pTimer->hWnd == m_hWndPaint && 
+					pTimer->uWinTimer == LOWORD(wParam) && 
+					pTimer->bKilled == false) 
+				{
                     TEventUI event = { 0 };
                     event.Type = UIEVENT_TIMER;
                     event.pSender = pTimer->pSender;
@@ -892,13 +923,32 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
         break;
     }
 
+	//if( m_aAsyncNotify.size() > 0 ::IsWindow( m_hWndPaint ) )
+	//{
+	//	TRACE( L"PM::MessageHandler m_aAsyncNotify.size() %X---", m_aAsyncNotify.size() );
+	//}
+
+	// UICombo crash!
+	if( !::IsWindow( m_hWndPaint ) )
+		return 0;
+
     pMsg = NULL;
-    while( pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify.GetAt(0)) ) {
-        m_aAsyncNotify.Remove(0);
-        if( pMsg->pSender != NULL ) {
+    //while( pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify.GetAt(0)) )
+	//{
+    //    m_aAsyncNotify.Remove(0);
+	//while( m_aAsyncNotify.size() > 0 && m_aAsyncNotify.size() < 0xffff )
+	while( !m_aAsyncNotify.empty() )
+	{
+		pMsg = static_cast<TNotifyUI*>( m_aAsyncNotify.front() );
+		m_aAsyncNotify.pop_front();
+
+        if( pMsg->pSender != NULL )
+		{
             if( pMsg->pSender->OnNotify ) pMsg->pSender->OnNotify(pMsg);
         }
-        for( int j = 0; j < m_aNotifiers.GetSize(); j++ ) {
+
+        for( int j = 0; j < (int)m_aNotifiers.size(); j++ )
+		{
             static_cast<INotifyUI*>(m_aNotifiers[j])->Notify(*pMsg);
         }
         delete pMsg;
@@ -928,16 +978,17 @@ bool CPaintManagerUI::AttachDialog(CControlUI* pControl)
     // Remove the existing control-tree. We might have gotten inside this function as
     // a result of an event fired or similar, so we cannot just delete the objects and
     // pull the internal memory of the calling code. We'll delay the cleanup.
-    if( m_pRoot != NULL ) {
-        m_aPostPaintControls.Empty();
+    if( m_pRoot != NULL ) 
+	{
+        //m_aPostPaintControls.Empty();
+		m_aPostPaintControls.clear();
         AddDelayedCleanup(m_pRoot);
     }
+
     // Set the dialog root element
     m_pRoot = pControl;
-	//TODO hf [2012-8-17 14:53:55] 请在完成后,删除TODO标签,注释视情况留下
-	/*
-		窗口圆角边框
-	*/
+
+	//窗口圆角边框
 	if (m_dwBorderColor != 0 && m_pRoot)
 	{
 		// 2017
@@ -983,72 +1034,129 @@ void CPaintManagerUI::ReapObjects(CControlUI* pControl)
     if( pControl == m_pEventClick ) m_pEventClick = NULL;
     if( pControl == m_pFocus ) m_pFocus = NULL;
     KillTimer(pControl);
-    const CStringW& sName = pControl->GetName();
-    if( !sName.IsEmpty() ) {
-        if( pControl == FindControl(sName) ) m_mNameHash.Remove(sName);
+    
+	//const CStringW& sName = pControl->GetName();
+	wstring sName = pControl->GetName();
+    if( !sName.empty() )
+	{
+        if( pControl == FindControl( sName.c_str() ) )
+		{
+			//m_mNameHash.Remove(sName);
+			m_mNameHash.erase( sName );
+		}
     }
-    for( int i = 0; i < m_aAsyncNotify.GetSize(); i++ ) {
+    for( int i = 0; i < (int)m_aAsyncNotify.size(); i++ )
+	{
         TNotifyUI* pMsg = static_cast<TNotifyUI*>(m_aAsyncNotify[i]);
-        if( pMsg->pSender == pControl ) pMsg->pSender = NULL;
+        if( pMsg->pSender == pControl ) 
+			pMsg->pSender = NULL;
     }    
 }
 
 bool CPaintManagerUI::AddOptionGroup(LPCTSTR pStrGroupName, CControlUI* pControl)
 {
-    LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
-    if( lp ) {
-        CStdPtrArray* aOptionGroup = static_cast<CStdPtrArray*>(lp);
-        for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
-            if( static_cast<CControlUI*>(aOptionGroup->GetAt(i)) == pControl ) {
-                return false;
-            }
-        }
-        aOptionGroup->Add(pControl);
-    }
-    else {
-        CStdPtrArray* aOptionGroup = new CStdPtrArray(6);
-        aOptionGroup->Add(pControl);
-        m_mOptionGroup.Insert(pStrGroupName, aOptionGroup);
-    }
-    return true;
+	auto	it = m_mOptionGroup.find( pStrGroupName );
+	if( it == m_mOptionGroup.end() )
+	{
+		vectorv	*aOptionGroup = new vectorv;
+		aOptionGroup->push_back( pControl );
+		m_mOptionGroup.insert( pairsv( pStrGroupName, aOptionGroup ) );
+		return true;
+	}
+
+	vectorv	*aOptionGroup = static_cast<vectorv *>(it->second);
+	for( auto it2 = aOptionGroup->begin(); it2 != aOptionGroup->end(); ++it2 )
+	{
+		if( *it2 == pControl )
+			return false;
+	}
+
+	aOptionGroup->push_back(pControl);
+	return true;
+
+ //   LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
+ //   if( lp ) 
+	//{
+ //       CStdPtrArray* aOptionGroup = static_cast<CStdPtrArray*>(lp);
+ //       for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
+ //           if( static_cast<CControlUI*>(aOptionGroup->GetAt(i)) == pControl ) {
+ //               return false;
+ //           }
+ //       }
+ //       aOptionGroup->Add(pControl);
+ //   }
+ //   else {
+ //       CStdPtrArray* aOptionGroup = new CStdPtrArray(6);
+ //       aOptionGroup->Add(pControl);
+ //       m_mOptionGroup.Insert(pStrGroupName, aOptionGroup);
+ //   }
+ //   return true;
 }
 
-CStdPtrArray* CPaintManagerUI::GetOptionGroup(LPCTSTR pStrGroupName)
+vectorv* CPaintManagerUI::GetOptionGroup(LPCTSTR pStrGroupName)
 {
-    LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
-    if( lp ) return static_cast<CStdPtrArray*>(lp);
-    return NULL;
+	auto it = m_mOptionGroup.find( pStrGroupName );
+	if( it == m_mOptionGroup.end() )
+		return NULL;
+
+	return static_cast<vectorv *>( it->second );
+
+    //LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
+    //if( lp ) return static_cast<CStdPtrArray*>(lp);
+    //return NULL;
 }
 
 void CPaintManagerUI::RemoveOptionGroup(LPCTSTR pStrGroupName, CControlUI* pControl)
 {
-	LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
-	if( lp ) {
-		CStdPtrArray* aOptionGroup = static_cast<CStdPtrArray*>(lp);
-		if( aOptionGroup == NULL ) return;
-		for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
-			if( static_cast<CControlUI*>(aOptionGroup->GetAt(i)) == pControl ) {
-				aOptionGroup->Remove(i);
-				break;
+	vectorv *v = GetOptionGroup( pStrGroupName );
+	if( v != NULL )
+	{
+		for( auto it2 = v->begin(); it2 != v->end(); ++it2 )
+		{
+			if( *it2 == pControl )
+			{
+				v->erase( it2 );
+				return;
 			}
 		}
-		if( aOptionGroup->IsEmpty() ) {
-			delete aOptionGroup;
-			m_mOptionGroup.Remove(pStrGroupName);
-		}
 	}
+
+	//LPVOID lp = m_mOptionGroup.Find(pStrGroupName);
+	//if( lp ) {
+	//	CStdPtrArray* aOptionGroup = static_cast<CStdPtrArray*>(lp);
+	//	if( aOptionGroup == NULL ) return;
+	//	for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
+	//		if( static_cast<CControlUI*>(aOptionGroup->GetAt(i)) == pControl ) {
+	//			aOptionGroup->Remove(i);
+	//			break;
+	//		}
+	//	}
+	//	if( aOptionGroup->IsEmpty() ) {
+	//		delete aOptionGroup;
+	//		m_mOptionGroup.Remove(pStrGroupName);
+	//	}
+	//}
 }
 
 void CPaintManagerUI::RemoveAllOptionGroups()
 {
-	CStdPtrArray* aOptionGroup;
-	for( int i = 0; i< m_mOptionGroup.GetSize(); i++ ) {
-		if(LPCTSTR key = m_mOptionGroup.GetAt(i)) {
-			aOptionGroup = static_cast<CStdPtrArray*>(m_mOptionGroup.Find(key));
-			delete aOptionGroup;
-		}
+	//CStdPtrArray* aOptionGroup;
+	//for( int i = 0; i< m_mOptionGroup.GetSize(); i++ ) {
+	//	if(LPCTSTR key = m_mOptionGroup.GetAt(i)) {
+	//		aOptionGroup = static_cast<CStdPtrArray*>(m_mOptionGroup.Find(key));
+	//		delete aOptionGroup;
+	//	}
+	//}
+	//m_mOptionGroup.RemoveAll();
+
+	vectorv		*v;
+	for( auto it = m_mOptionGroup.begin(); it != m_mOptionGroup.end(); ++it )
+	{
+		v = static_cast<vectorv *>( it->second );
+		delete v;
 	}
-	m_mOptionGroup.RemoveAll();
+
+	m_mOptionGroup.clear();
 }
 
 
@@ -1137,13 +1245,15 @@ bool CPaintManagerUI::SetTimer(CControlUI* pControl, UINT nTimerID, UINT uElapse
 {
     ASSERT(pControl!=NULL);
     ASSERT(uElapse>0);
-    for( int i = 0; i< m_aTimers.GetSize(); i++ ) {
+    for( int i = 0; i< (int)m_aTimers.size(); i++ ) 
+	{
         TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
         if( pTimer->pSender == pControl
             && pTimer->hWnd == m_hWndPaint
             && pTimer->nLocalID == nTimerID ) {
             if( pTimer->bKilled == true ) {
-                if( ::SetTimer(m_hWndPaint, pTimer->uWinTimer, uElapse, NULL) ) {
+                if( ::SetTimer(m_hWndPaint, pTimer->uWinTimer, uElapse, NULL) )
+				{
                     pTimer->bKilled = false;
                     return true;
                 }
@@ -1162,20 +1272,26 @@ bool CPaintManagerUI::SetTimer(CControlUI* pControl, UINT nTimerID, UINT uElapse
     pTimer->nLocalID = nTimerID;
     pTimer->uWinTimer = m_uTimerID;
     pTimer->bKilled = false;
-    return m_aTimers.Add(pTimer);
+    //return m_aTimers.Add(pTimer);
+	m_aTimers.push_back( pTimer );
+	return true;
 }
 
 bool CPaintManagerUI::KillTimer(CControlUI* pControl, UINT nTimerID)
 {
     ASSERT(pControl!=NULL);
-    for( int i = 0; i< m_aTimers.GetSize(); i++ ) {
+    for( int i = 0; i< (int)m_aTimers.size(); i++ )
+	{
         TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
         if( pTimer->pSender == pControl
             && pTimer->hWnd == m_hWndPaint
             && pTimer->nLocalID == nTimerID )
         {
-            if( pTimer->bKilled == false ) {
-                if( ::IsWindow(m_hWndPaint) ) ::KillTimer(pTimer->hWnd, pTimer->uWinTimer);
+            if( pTimer->bKilled == false )
+			{
+                if( ::IsWindow(m_hWndPaint) ) 
+					::KillTimer(pTimer->hWnd, pTimer->uWinTimer);
+
                 pTimer->bKilled = true;
                 return true;
             }
@@ -1186,32 +1302,51 @@ bool CPaintManagerUI::KillTimer(CControlUI* pControl, UINT nTimerID)
 
 void CPaintManagerUI::KillTimer(CControlUI* pControl)
 {
-    ASSERT(pControl!=NULL);
-    int count = m_aTimers.GetSize();
-    for( int i = 0, j = 0; i < count; i++ ) {
-        TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i - j]);
-        if( pTimer->pSender == pControl && pTimer->hWnd == m_hWndPaint ) {
-            if( pTimer->bKilled == false ) ::KillTimer(pTimer->hWnd, pTimer->uWinTimer);
-            delete pTimer;
-            m_aTimers.Remove(i - j);
-            j++;
-        }
-    }
+	ASSERT(pControl!=NULL);
+	//int count = (int)m_aTimers.size();
+	//for( int i = 0, j = 0; i < count; i++ ) {
+	//	TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i - j]);
+	//	if( pTimer->pSender == pControl && pTimer->hWnd == m_hWndPaint ) {
+	//		if( pTimer->bKilled == false ) ::KillTimer(pTimer->hWnd, pTimer->uWinTimer);
+	//		delete pTimer;
+	//		m_aTimers.Remove(i - j);
+	//		j++;
+	//	}
+	//}
+	for( auto it = m_aTimers.begin(); it != m_aTimers.end(); )
+	{
+		TIMERINFO* pTimer = static_cast<TIMERINFO*>(*it);
+		if( pTimer->pSender == pControl && pTimer->hWnd == m_hWndPaint )
+		{
+			if( pTimer->bKilled == false ) 
+				::KillTimer(pTimer->hWnd, pTimer->uWinTimer);
+
+			delete pTimer;
+			pTimer = NULL;
+			it = m_aTimers.erase( it );
+		}
+		else 
+			++it;
+	}
 }
 
 void CPaintManagerUI::RemoveAllTimers()
 {
-    for( int i = 0; i < m_aTimers.GetSize(); i++ ) {
+    for( int i = 0; i < (int)m_aTimers.size(); i++ ) 
+	{
         TIMERINFO* pTimer = static_cast<TIMERINFO*>(m_aTimers[i]);
-        if( pTimer->hWnd == m_hWndPaint ) {
-            if( pTimer->bKilled == false ) {
-                if( ::IsWindow(m_hWndPaint) ) ::KillTimer(m_hWndPaint, pTimer->uWinTimer);
+        if( pTimer->hWnd == m_hWndPaint )
+		{
+            if( pTimer->bKilled == false )
+			{
+                if( ::IsWindow(m_hWndPaint) )
+					::KillTimer(m_hWndPaint, pTimer->uWinTimer);
             }
             delete pTimer;
         }
     }
 
-    m_aTimers.Empty();
+    m_aTimers.clear();
 }
 
 void CPaintManagerUI::SetCapture()
@@ -1264,84 +1399,134 @@ bool CPaintManagerUI::SetNextTabControl(bool bForward)
 
 bool CPaintManagerUI::AddNotifier(INotifyUI* pNotifier)
 {
-    ASSERT(m_aNotifiers.Find(pNotifier)<0);
-    return m_aNotifiers.Add(pNotifier);
+    //ASSERT(m_aNotifiers.Find(pNotifier)<0);
+    //return m_aNotifiers.Add(pNotifier);
+
+	m_aNotifiers.push_back( pNotifier );
+	return true;
 }
 
 bool CPaintManagerUI::RemoveNotifier(INotifyUI* pNotifier)
 {
-    for( int i = 0; i < m_aNotifiers.GetSize(); i++ ) {
-        if( static_cast<INotifyUI*>(m_aNotifiers[i]) == pNotifier ) {
-            return m_aNotifiers.Remove(i);
-        }
-    }
-    return false;
+    //for( int i = 0; i < (int)m_aNotifiers.size(); i++ ) {
+    //    if( static_cast<INotifyUI*>(m_aNotifiers[i]) == pNotifier ) {
+    //        return m_aNotifiers.Remove(i);
+    //    }
+    //}
+    //return false;
+
+	for( auto it = m_aNotifiers.begin(); it != m_aNotifiers.end(); ++it )
+	{
+		if( (*it) == pNotifier )
+		{
+			m_aNotifiers.erase( it );
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool CPaintManagerUI::AddPreMessageFilter(IMessageFilterUI* pFilter)
 {
-    ASSERT(m_aPreMessageFilters.Find(pFilter)<0);
-    return m_aPreMessageFilters.Add(pFilter);
+    //ASSERT(m_aPreMessageFilters.Find(pFilter)<0);
+    //return m_aPreMessageFilters.Add(pFilter);
+	m_aPreMessageFilters.push_back( pFilter );
+	return true;
 }
 
 bool CPaintManagerUI::RemovePreMessageFilter(IMessageFilterUI* pFilter)
 {
-    for( int i = 0; i < m_aPreMessageFilters.GetSize(); i++ ) {
-        if( static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i]) == pFilter ) {
-            return m_aPreMessageFilters.Remove(i);
-        }
-    }
-    return false;
+    //for( int i = 0; i < (int)m_aPreMessageFilters.size(); i++ ) {
+    //    if( static_cast<IMessageFilterUI*>(m_aPreMessageFilters[i]) == pFilter ) {
+    //        return m_aPreMessageFilters.Remove(i);
+    //    }
+    //}
+    //return false;
+	for( auto it = m_aPreMessageFilters.begin();
+		 it != m_aPreMessageFilters.end(); 
+		 ++it )
+	{
+		m_aPreMessageFilters.erase( it );
+		return true;
+	}
+
+	return false;
 }
 
 bool CPaintManagerUI::AddMessageFilter(IMessageFilterUI* pFilter)
 {
-    ASSERT(m_aMessageFilters.Find(pFilter)<0);
-    return m_aMessageFilters.Add(pFilter);
+    //ASSERT(m_aMessageFilters.Find(pFilter)<0);
+    //return m_aMessageFilters.Add(pFilter);
+	m_aMessageFilters.push_back( pFilter );
+	return true;
 }
 
 bool CPaintManagerUI::RemoveMessageFilter(IMessageFilterUI* pFilter)
 {
-    for( int i = 0; i < m_aMessageFilters.GetSize(); i++ ) {
-        if( static_cast<IMessageFilterUI*>(m_aMessageFilters[i]) == pFilter ) {
-            return m_aMessageFilters.Remove(i);
-        }
-    }
-    return false;
+    //for( int i = 0; i < (int)m_aMessageFilters.size(); i++ ) {
+    //    if( static_cast<IMessageFilterUI*>(m_aMessageFilters[i]) == pFilter ) {
+    //        return m_aMessageFilters.Remove(i);
+    //    }
+    //}
+    //return false;
+	for( auto it = m_aMessageFilters.begin(); it != m_aMessageFilters.end(); ++it )
+	{
+		if( (*it) == pFilter )
+		{
+			m_aMessageFilters.erase( it );
+			return true;
+		}
+	}
+
+	return false;
 }
 
 int CPaintManagerUI::GetPostPaintCount() const
 {
-    return m_aPostPaintControls.GetSize();
+    return m_aPostPaintControls.size();
 }
 
 bool CPaintManagerUI::AddPostPaint(CControlUI* pControl)
 {
-    ASSERT(m_aPostPaintControls.Find(pControl) < 0);
-    return m_aPostPaintControls.Add(pControl);
+    //ASSERT(m_aPostPaintControls.Find(pControl) < 0);
+    //return m_aPostPaintControls.Add(pControl);
+	m_aPostPaintControls.push_back( pControl );
+	return true;
 }
 
 bool CPaintManagerUI::RemovePostPaint(CControlUI* pControl)
 {
-    for( int i = 0; i < m_aPostPaintControls.GetSize(); i++ ) {
-        if( static_cast<CControlUI*>(m_aPostPaintControls[i]) == pControl ) {
-            return m_aPostPaintControls.Remove(i);
-        }
-    }
-    return false;
+    //for( int i = 0; i < m_aPostPaintControls.GetSize(); i++ ) {
+    //    if( static_cast<CControlUI*>(m_aPostPaintControls[i]) == pControl ) {
+    //        return m_aPostPaintControls.Remove(i);
+    //    }
+    //}
+    //return false;
+
+	for( auto it = m_aPostPaintControls.begin(); it != m_aPostPaintControls.end(); ++it )
+	{
+		if( (*it) == pControl )
+		{
+			m_aPostPaintControls.erase( it );
+			return true;
+		}
+	}
+
+	return false;
 }
 
-bool CPaintManagerUI::SetPostPaintIndex(CControlUI* pControl, int iIndex)
-{
-    RemovePostPaint(pControl);
-    return m_aPostPaintControls.InsertAt(iIndex, pControl);
-}
+//bool CPaintManagerUI::SetPostPaintIndex(CControlUI* pControl, int iIndex)
+//{
+//    RemovePostPaint(pControl);
+//    return m_aPostPaintControls.InsertAt(iIndex, pControl);
+//}
 
 void CPaintManagerUI::AddDelayedCleanup(CControlUI* pControl)
 {
     pControl->SetManager(this, NULL, false);
-    m_aDelayedCleanup.Add(pControl);
-    ::PostMessage(m_hWndPaint, WM_APP + 1, 0, 0L);
+    m_aDelayedCleanup.push_back(pControl);
+    ::PostMessage(m_hWndPaint, WM_RDLIB_CLEANUP, 0, 0L);
 }
 
 void CPaintManagerUI::SendNotify(CControlUI* pControl, LPCTSTR pstrMessage, WPARAM wParam /*= 0*/, LPARAM lParam /*= 0*/, bool bAsync /*= false*/)
@@ -1358,17 +1543,24 @@ void CPaintManagerUI::SendNotify(TNotifyUI& Msg, bool bAsync /*= false*/)
 {
     Msg.ptMouse = m_ptLastMousePos;
     Msg.dwTimestamp = ::GetTickCount();
-    if( !bAsync ) {
+    if( !bAsync ) 
+	{
         // Send to all listeners 
 		//是不是应该某个处理了就不往下传递???
-        if( Msg.pSender != NULL ) {
-            if( Msg.pSender->OnNotify ) Msg.pSender->OnNotify(&Msg);
+        if( Msg.pSender != NULL ) 
+		{
+            if( Msg.pSender->OnNotify ) 
+				Msg.pSender->OnNotify(&Msg);
         }
-        for( int i = 0; i < m_aNotifiers.GetSize(); i++ ) {
-            static_cast<INotifyUI*>(m_aNotifiers[i])->Notify(Msg);
+
+        for( int i = 0; i < (int)m_aNotifiers.size(); i++ )
+        {
+            INotifyUI* pNtf = static_cast<INotifyUI*>(m_aNotifiers[i]);
+			pNtf->Notify(Msg);
         }
     }
-    else {
+    else 
+	{
         TNotifyUI *pMsg = new TNotifyUI;
         pMsg->pSender = Msg.pSender;
         pMsg->sType = Msg.sType;
@@ -1376,7 +1568,8 @@ void CPaintManagerUI::SendNotify(TNotifyUI& Msg, bool bAsync /*= false*/)
         pMsg->lParam = Msg.lParam;
         pMsg->ptMouse = Msg.ptMouse;
         pMsg->dwTimestamp = Msg.dwTimestamp;
-        m_aAsyncNotify.Add(pMsg);
+        //m_aAsyncNotify.Add(pMsg);
+		m_aAsyncNotify.push_back(pMsg);
     }
 }
 
@@ -2034,8 +2227,13 @@ CControlUI* CPaintManagerUI::FindControl(POINT pt) const
 
 CControlUI* CPaintManagerUI::FindControl(LPCTSTR pstrName) const
 {
-    ASSERT(m_pRoot);
-    return static_cast<CControlUI*>(m_mNameHash.Find(pstrName));
+    //ASSERT(m_pRoot);
+    //return static_cast<CControlUI*>(m_mNameHash.Find(pstrName));
+	mapsv::const_iterator it = m_mNameHash.find( pstrName );
+	if( it == m_mNameHash.end() )
+		return NULL;
+
+	return static_cast<CControlUI*>( it->second );
 }
 
 CControlUI* CPaintManagerUI::FindSubControlByPoint(CControlUI* pParent, POINT pt) const
@@ -2056,20 +2254,21 @@ CControlUI* CPaintManagerUI::FindSubControlByClass(CControlUI* pParent, LPCTSTR 
 {
     if( pParent == NULL ) pParent = GetRoot();
     ASSERT(pParent);
-    m_aFoundControls.Resize(iIndex + 1);
+    //m_aFoundControls.Resize(iIndex + 1);
     return pParent->FindControl(__FindControlFromClass, (LPVOID)pstrClass, UIFIND_ALL);
 }
 
-CStdPtrArray* CPaintManagerUI::FindSubControlsByClass(CControlUI* pParent, LPCTSTR pstrClass)
+vectorv* CPaintManagerUI::FindSubControlsByClass(CControlUI* pParent, LPCTSTR pstrClass)
 {
     if( pParent == NULL ) pParent = GetRoot();
     ASSERT(pParent);
-    m_aFoundControls.Empty();
+    //m_aFoundControls.Empty();
+	m_aFoundControls.clear();
     pParent->FindControl(__FindControlsFromClass, (LPVOID)pstrClass, UIFIND_ALL);
     return &m_aFoundControls;
 }
 
-CStdPtrArray* CPaintManagerUI::GetSubControlsByClass()
+vectorv* CPaintManagerUI::GetSubControlsByClass()
 {
     return &m_aFoundControls;
 }
@@ -2077,10 +2276,16 @@ CStdPtrArray* CPaintManagerUI::GetSubControlsByClass()
 CControlUI* CALLBACK CPaintManagerUI::__FindControlFromNameHash(CControlUI* pThis, LPVOID pData)
 {
     CPaintManagerUI* pManager = static_cast<CPaintManagerUI*>(pData);
-    const CStringW& sName = pThis->GetName();
-    if( sName.IsEmpty() ) return NULL;
+    //const CStringW& sName = pThis->GetName();
+    //if( sName.IsEmpty() ) return NULL;
     // Add this control to the hash list
-    pManager->m_mNameHash.Set(sName, pThis);
+//    pManager->m_mNameHash.Set(sName, pThis);
+
+	LPCTSTR	sName = pThis->GetName();
+	if( _tcslen(sName) == 0 )
+		return NULL;
+
+	pManager->m_mNameHash.insert( pairsv(sName, pThis) );
     return NULL; // Attempt to add all controls
 }
 
@@ -2137,16 +2342,20 @@ CControlUI* CALLBACK CPaintManagerUI::__FindControlFromClass(CControlUI* pThis, 
 {
     LPCTSTR pstrType = static_cast<LPCTSTR>(pData);
     LPCTSTR pType = pThis->GetClass();
-    CStdPtrArray* pFoundControls = pThis->GetManager()->GetSubControlsByClass();
+
+    vectorv* pFoundControls = pThis->GetManager()->GetSubControlsByClass();
     if( EQUSTR(pstrType, _T("*")) || EQUSTR(pstrType, pType) )
 	{
-        int iIndex = -1;
-        while( pFoundControls->GetAt(++iIndex) != NULL ) ;
-        if( iIndex < pFoundControls->GetSize() ) 
-			pFoundControls->SetAt(iIndex, pThis);
+        //int iIndex = -1;
+		//while( pFoundControls->GetAt(++iIndex) != NULL );
+		//if( iIndex < pFoundControls->GetSize() ) 
+		//	pFoundControls->SetAt(iIndex, pThis);
+		pFoundControls->push_back( pThis );
     }
-    if( pFoundControls->GetAt(pFoundControls->GetSize() - 1) != NULL ) return pThis; 
-    return NULL;
+
+    //if( pFoundControls->GetAt(pFoundControls->GetSize() - 1) != NULL ) return pThis; 
+    //return NULL;
+	return pThis;
 }
 
 CControlUI* CALLBACK CPaintManagerUI::__FindControlsFromClass(CControlUI* pThis, LPVOID pData)
@@ -2154,7 +2363,8 @@ CControlUI* CALLBACK CPaintManagerUI::__FindControlsFromClass(CControlUI* pThis,
     LPCTSTR pstrType = static_cast<LPCTSTR>(pData);
     LPCTSTR pType = pThis->GetClass();
     if( EQUSTR(pstrType, _T("*")) || EQUSTR(pstrType, pType) ) 
-        pThis->GetManager()->GetSubControlsByClass()->Add((LPVOID)pThis);
+        //pThis->GetManager()->GetSubControlsByClass()->Add((LPVOID)pThis);
+		pThis->GetManager()->GetSubControlsByClass()->push_back((LPVOID)pThis);
     return NULL;
 }
 
@@ -2381,7 +2591,7 @@ void CPaintManagerUI::OnPaint()
 
 		m_pRoot->DoPaint(m_hDcOffscreen, ps.rcPaint);
 
-		for( int i = 0; i < m_aPostPaintControls.GetSize(); i++ )
+		for( int i = 0; i < (int)m_aPostPaintControls.size(); i++ )
 		{
 			CControlUI* pPostPaintControl = static_cast<CControlUI*>(m_aPostPaintControls[i]);
 			pPostPaintControl->DoPostPaint(m_hDcOffscreen, ps.rcPaint);

@@ -39,7 +39,7 @@ public:
 	static void SetHSL(bool bUseHSL, short H, short S, short L); // H:0~360, S:0~200, L:0~200 
 	static void ReloadSkin();
 	static bool LoadPlugin(LPCTSTR pstrModuleName);
-	static CStdPtrArray* GetPlugins();
+	//static CStdPtrArray* GetPlugins();
 
 	static void SetThisDllInstance(HINSTANCE hInstance)
 	{
@@ -65,8 +65,10 @@ protected:
 	static short m_L;
 
 public:
-	static CStdPtrArray m_arPreMessages;
-	static CStdPtrArray m_arPlugins;
+	static vectorv	m_arPreMessages;
+	static setv		m_arPlugins;
+
+	static void RemovePreMsg( void *pPM );
 
 };
 

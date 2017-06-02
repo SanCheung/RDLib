@@ -450,17 +450,28 @@ CControlUI* CDialogBuilder::_Parse(CMarkupNode* pRoot, CControlUI* pParent, CPai
             // User-supplied control factory
             if( pControl == NULL )
 			{
-                CStdPtrArray* pPlugins = CAppData::GetPlugins();
-                LPCREATECONTROL lpCreateControl = NULL;
-                for( int i = 0; i < pPlugins->GetSize(); ++i )
+				//LPCREATECONTROL lpCreateControl = NULL;
+				//CStdPtrArray* pPlugins = CAppData::GetPlugins();
+				//for( int i = 0; i < pPlugins->GetSize(); ++i )
+				//{
+				//	lpCreateControl = (LPCREATECONTROL)pPlugins->GetAt(i);
+				//	if( lpCreateControl != NULL ) 
+				//	{
+				//		pControl = lpCreateControl(pstrClass);
+				//		if( pControl != NULL ) break;
+				//	}
+				//}
+				for( auto it = CAppData::m_arPlugins.begin(); 
+					it != CAppData::m_arPlugins.end();
+					++it )
 				{
-                    lpCreateControl = (LPCREATECONTROL)pPlugins->GetAt(i);
-                    if( lpCreateControl != NULL ) 
+					LPCREATECONTROL lpCreateControl = (LPCREATECONTROL)(*it);
+					if( lpCreateControl != NULL )
 					{
-                        pControl = lpCreateControl(pstrClass);
-                        if( pControl != NULL ) break;
-                    }
-                }
+						pControl = lpCreateControl(pstrClass);
+						if( pControl != NULL ) break;
+					}
+				}
             }
 
             if( pControl == NULL && m_pCallback != NULL )

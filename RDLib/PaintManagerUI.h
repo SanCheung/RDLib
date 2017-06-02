@@ -2,6 +2,8 @@
 
 #include "StringPtrMap.h"
 
+#define			WM_RDLIB_CLEANUP			WM_APP+1
+
 typedef CControlUI* (*LPCREATECONTROL)(LPCTSTR pstrType);
 
 
@@ -105,7 +107,8 @@ public:
 	void ReapObjects(CControlUI* pControl);
 
 	bool AddOptionGroup(LPCTSTR pStrGroupName, CControlUI* pControl);
-	CStdPtrArray* GetOptionGroup(LPCTSTR pStrGroupName);
+	//CStdPtrArray* GetOptionGroup(LPCTSTR pStrGroupName);
+	vectorv* GetOptionGroup(LPCTSTR pStrGroupName);
 	void RemoveOptionGroup(LPCTSTR pStrGroupName, CControlUI* pControl);
 	void RemoveAllOptionGroups();
 
@@ -138,7 +141,7 @@ public:
 	int GetPostPaintCount() const;
 	bool AddPostPaint(CControlUI* pControl);
 	bool RemovePostPaint(CControlUI* pControl);
-	bool SetPostPaintIndex(CControlUI* pControl, int iIndex);
+	//bool SetPostPaintIndex(CControlUI* pControl, int iIndex);
 
 	void AddDelayedCleanup(CControlUI* pControl);
 
@@ -152,8 +155,8 @@ public:
 	CControlUI* FindSubControlByPoint(CControlUI* pParent, POINT pt) const;
 	CControlUI* FindSubControlByName(CControlUI* pParent, LPCTSTR pstrName) const;
 	CControlUI* FindSubControlByClass(CControlUI* pParent, LPCTSTR pstrClass, int iIndex = 0);
-	CStdPtrArray* FindSubControlsByClass(CControlUI* pParent, LPCTSTR pstrClass);
-	CStdPtrArray* GetSubControlsByClass();
+	vectorv* FindSubControlsByClass(CControlUI* pParent, LPCTSTR pstrClass);
+	vectorv* GetSubControlsByClass();
 
 	//static void MessageLoop();
 	//static bool TranslateMessage(const LPMSG pMsg);
@@ -217,18 +220,49 @@ private:
 	bool m_bMouseTracking;
 	bool m_bMouseCapture;
 	bool m_bWindowAttached;
-	//
-	CStdPtrArray m_aNotifiers;
-	CStdPtrArray m_aTimers;
-	CStdPtrArray m_aPreMessageFilters;
-	CStdPtrArray m_aMessageFilters;
-	CStdPtrArray m_aPostPaintControls;
-	CStdPtrArray m_aDelayedCleanup;
-	CStdPtrArray m_aAsyncNotify;
-	CStdPtrArray m_aFoundControls;
 
-	CStringPtrMap m_mNameHash;
-	CStringPtrMap m_mOptionGroup;
+
+	// 通知者
+	vectorv		m_aNotifiers;
+	
+	// 计时器
+	vectorv		m_aTimers;
+	
+	// 预处理消息
+	vectorv		m_aPreMessageFilters;
+
+	// 消息
+	vectorv		m_aMessageFilters;
+
+	// 预绘制控件
+	vectorv		m_aPostPaintControls;
+
+	// 延迟删除
+	vectorv		m_aDelayedCleanup;
+
+	// 消息缓冲
+	dequev		m_aAsyncNotify;
+
+	// 控件查找缓冲
+	vectorv		m_aFoundControls;
+
+	// 名字映射表
+	mapsv		m_mNameHash;
+
+	// 选项卡分组表
+	mapsv		m_mOptionGroup;
+
+
+	//CStdPtrArray m_aNotifiers;
+	//CStdPtrArray m_aTimers;
+	//CStdPtrArray m_aPreMessageFilters;
+	//CStdPtrArray m_aMessageFilters;
+	//CStdPtrArray m_aPostPaintControls;
+	//CStdPtrArray m_aDelayedCleanup;
+	//CStdPtrArray m_aAsyncNotify;
+	//CStdPtrArray m_aFoundControls;
+	//CStringPtrMap m_mNameHash;
+	//CStringPtrMap m_mOptionGroup;
 
 	//
 	CPaintManagerUI* m_pParentResourcePM;

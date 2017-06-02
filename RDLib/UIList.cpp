@@ -1877,7 +1877,7 @@ void CListLabelElementUI::DoEvent(TEventUI& event)
     {
         if( IsEnabled() ) {
             Select();
-            m_pManager->SendNotify(this, _T("itemclick")); 
+            m_pManager->SendNotify(this, _T("itemclick") ); 
 			Invalidate();
         }
         return;
@@ -1987,12 +1987,21 @@ CListTextElementUI::CListTextElementUI() : m_nLinks(0), m_nHoverLink(-1), m_pOwn
 
 CListTextElementUI::~CListTextElementUI()
 {
-    CStringW* pText;
-    for( int it = 0; it < m_aTexts.GetSize(); it++ ) {
-        pText = static_cast<CStringW*>(m_aTexts[it]);
-        if( pText ) delete pText;
-    }
-    m_aTexts.Empty();
+    //CStringW* pText;
+    //for( int it = 0; it < m_aTexts.GetSize(); it++ ) {
+    //    pText = static_cast<CStringW*>(m_aTexts[it]);
+    //    if( pText ) delete pText;
+    //}
+    //m_aTexts.Empty();
+
+	CStringW* pText;
+	for( int i = 0; i < (int)m_aTexts.size(); i++ )
+	{
+		pText = static_cast<CStringW*>(m_aTexts[i]);
+		if( pText ) delete pText;
+	}
+
+	m_aTexts.clear();
 }
 
 LPCTSTR CListTextElementUI::GetClass() const
@@ -2015,7 +2024,8 @@ UINT CListTextElementUI::GetControlFlags() const
 
 LPCTSTR CListTextElementUI::GetText(int iIndex) const
 {
-    CStringW* pText = static_cast<CStringW*>(m_aTexts.GetAt(iIndex));
+	CStringW* pText = static_cast<CStringW*>(m_aTexts[iIndex]);
+    //CStringW* pText = static_cast<CStringW*>(m_aTexts.GetAt(iIndex));
     if( pText ) 
 		return *pText;
     
@@ -2026,8 +2036,13 @@ void CListTextElementUI::SetText(int iIndex, LPCTSTR pstrText)
 {
     if( m_pOwner == NULL ) return;
     TListInfoUI* pInfo = m_pOwner->GetListInfo();
-    if( iIndex < 0 || iIndex >= pInfo->nColumns ) return;
-    while( m_aTexts.GetSize() < pInfo->nColumns ) { m_aTexts.Add(NULL); }
+    if( iIndex < 0 || iIndex >= pInfo->nColumns )
+		return;
+
+    while( (int)m_aTexts.size() < pInfo->nColumns )
+	{ 
+		m_aTexts.push_back(NULL);
+	}
 
     CStringW* pText = static_cast<CStringW*>(m_aTexts[iIndex]);
     if( (pText == NULL && pstrText == NULL) || (pText && *pText == pstrText) ) return;
@@ -2036,7 +2051,8 @@ void CListTextElementUI::SetText(int iIndex, LPCTSTR pstrText)
 		//pText->Assign(pstrText);
 		*pText = pstrText;
 	else
-		m_aTexts.SetAt(iIndex, new CStringW(pstrText));
+		//m_aTexts.SetAt(iIndex, new CStringW(pstrText));
+		m_aTexts[iIndex] = new CStringW(pstrText);
     Invalidate();
 }
 

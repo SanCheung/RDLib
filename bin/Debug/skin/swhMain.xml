@@ -15,6 +15,8 @@
     <!--top-->
     <HBox height="30" >
       <Control />
+      <Button name="bn2" width="30" height="30" text="Test" hottextcolor1="#FFFF0000" font="0" />
+      <Control />
       <Button name="bn1" width="30" height="30" text="关闭" hottextcolor1="#FFFF0000" font="0" />
       <Control width="6" />
     </HBox>

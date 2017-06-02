@@ -37,11 +37,33 @@
 #include <map>
 #include <memory>
 #include <list>
+#include <set>
+#include <deque>
+#include <string>
 using namespace std;
 
 template class RDLIB_API allocator<void*>;
 template class RDLIB_API vector<void*>;
-//template class RDLIB_API map<wstring, void*>;
+
+typedef vector<void*>		vectorv;
+typedef vectorv::iterator	vectorv_it;
+
+typedef deque<void*>		dequev;
+
+template struct RDLIB_API less<void*>;
+template class RDLIB_API set<void*>;
+
+typedef set<void*>		setv;
+
+template class	RDLIB_API	allocator<LPCTSTR>;
+template struct RDLIB_API	less<LPCTSTR>;
+template class	RDLIB_API	map<LPCTSTR, void*>;
+template class	RDLIB_API	pair<LPCTSTR, void*>;
+
+typedef map<wstring, void*>	mapsv;
+typedef pair<wstring, void*>	pairsv;
+
+
 
 #include "XdBaseLib.h"
 #pragma comment( lib, "XdBase.lib" )

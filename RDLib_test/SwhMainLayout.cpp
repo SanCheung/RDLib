@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "SwhMainLayout.h"
+#include "DlgTestList.h"
 
 
 CSwhMainLayout::CSwhMainLayout(void)
@@ -52,11 +53,29 @@ void CSwhMainLayout::Notify( TNotifyUI& msg )
 			RECT	rt = { x, y, x+w, y+h };
 			m_pVLHandle->SetPos( rt );
 		}
+		else if( strSenderName == L"bn2" ) 
+		{
+			CDlgTestList dlg;
+			dlg.DoModal( GetHWND(), L"hello" );
+		}
 	}
 	else if( strType == L"selectchanged" )
 	{
 		CCheckBoxUI *pCk = FindCtrl<CCheckBoxUI>( L"bnL2" );
 		CVerticalLayoutUI *pVL = FindCtrl<CVerticalLayoutUI>( L"vlL2Sub" );
 		pVL->SetVisible( pCk->IsCheck() );
+	}
+	else if( strType == L"itemselect" )
+	{
+		CComboUI		*pCb = (CComboUI *)msg.pSender;
+		
+		CStringW		str = L"....";
+
+		int nIndex = pCb->GetCurSel();
+		if( nIndex >= 0 && nIndex < pCb->GetCount() )
+			str = pCb->GetItemAt(nIndex)->GetText();
+		
+		MsgBox( str );
+		OutputDebugString( str+L"-----------\n" );
 	}
 }

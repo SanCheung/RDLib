@@ -78,13 +78,21 @@ void COptionUI::Selected(bool bSelected)
 	if( m_pManager != NULL ) {
 		if( !m_sGroupName.IsEmpty() ) {
 			if( m_bSelected ) {
-				CStdPtrArray* aOptionGroup = m_pManager->GetOptionGroup(m_sGroupName);
-				for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
-					COptionUI* pControl = static_cast<COptionUI*>(aOptionGroup->GetAt(i));
-					if( pControl != this ) {
+				//CStdPtrArray* aOptionGroup = m_pManager->GetOptionGroup(m_sGroupName);
+				//for( int i = 0; i < aOptionGroup->GetSize(); i++ ) {
+				//	COptionUI* pControl = static_cast<COptionUI*>(aOptionGroup->GetAt(i));
+				//	if( pControl != this ) {
+				//		pControl->Selected(false);
+				//	}
+				//}
+				vectorv *v = m_pManager->GetOptionGroup( m_sGroupName );
+				for( auto it = v->begin(); it != v->end(); ++it )
+				{
+					COptionUI *pControl = static_cast<COptionUI*>( *it );
+					if( pControl != this )
 						pControl->Selected(false);
-					}
 				}
+
 				m_pManager->SendNotify(this, _T("selectchanged"));
 			}
 		}

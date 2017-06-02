@@ -478,8 +478,10 @@ LRESULT CALLBACK CWindowWnd::__WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 			return lRes;
 		}
 	}
+
 	//20170106
-	if( pThis != NULL && IsWindow( pThis->m_hWnd ) ) {
+	if( pThis != NULL && IsWindow( pThis->m_hWnd ) )
+	{
 		//if( pThis != NULL ) {
 		return pThis->HandleMessage(uMsg, wParam, lParam);
 	} 

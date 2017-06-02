@@ -31,7 +31,8 @@
 
 class RDLIB_API CWndShadow;
 
-template class RDLIB_API less<HWND>;
+template struct RDLIB_API less<HWND>;
+template class RDLIB_API allocator< pair<const HWND, CWndShadow*> >;
 template class RDLIB_API map<HWND, CWndShadow*>;
 
 //namespace DuiLib

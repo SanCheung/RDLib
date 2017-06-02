@@ -20,8 +20,8 @@ short CAppData::m_H = 180;
 short CAppData::m_S = 100;
 short CAppData::m_L = 100;
 
-CStdPtrArray CAppData::m_arPreMessages;
-CStdPtrArray CAppData::m_arPlugins;
+vectorv CAppData::m_arPreMessages;
+setv	CAppData::m_arPlugins;
 
 CAppData::CAppData()
 {
@@ -30,7 +30,8 @@ CAppData::CAppData()
 
 CAppData::~CAppData()
 {
-	m_arPreMessages.Remove(m_arPreMessages.Find(this));
+	//m_arPreMessages.Remove(m_arPreMessages.Find(this));
+	RemovePreMsg( this );
 }
 
 HINSTANCE CAppData::GetInstance()
@@ -158,7 +159,7 @@ void CAppData::SetHSL(bool bUseHSL, short H, short S, short L)
 	m_H = CLAMP(H, 0, 360);
 	m_S = CLAMP(S, 0, 200);
 	m_L = CLAMP(L, 0, 200);
-	for( int i = 0; i < m_arPreMessages.GetSize(); i++ ) 
+	for( int i = 0; i < (int)m_arPreMessages.size(); i++ ) 
 	{
 		CPaintManagerUI* pManager = static_cast<CPaintManagerUI*>(m_arPreMessages[i]);
 		if( pManager != NULL && pManager->GetRoot() != NULL )
@@ -168,7 +169,7 @@ void CAppData::SetHSL(bool bUseHSL, short H, short S, short L)
 
 void CAppData::ReloadSkin()
 {
-	for( int i = 0; i < m_arPreMessages.GetSize(); i++ ) {
+	for( int i = 0; i < (int)m_arPreMessages.size(); i++ ) {
 		CPaintManagerUI* pManager = static_cast<CPaintManagerUI*>(m_arPreMessages[i]);
 		pManager->ReloadAllImages();
 	}
@@ -186,20 +187,25 @@ bool CAppData::LoadPlugin(LPCTSTR pstrModuleName)
 		LPCREATECONTROL lpCreateControl = (LPCREATECONTROL)::GetProcAddress(hModule, "CreateControl");
 		if( lpCreateControl != NULL )
 		{
-			if( m_arPlugins.Find(lpCreateControl) >= 0 ) 
+			//if( m_arPlugins.Find(lpCreateControl) >= 0 ) 
+			//	return true;
+
+			auto it = m_arPlugins.find( lpCreateControl );
+			if( it != m_arPlugins.end() )
 				return true;
 
-			m_arPlugins.Add(lpCreateControl);
+			//m_arPlugins.Add(lpCreateControl);
+			m_arPlugins.insert(lpCreateControl);
 			return true;
 		}
 	}
 	return false;
 }
 
-CStdPtrArray* CAppData::GetPlugins()
-{
-	return &m_arPlugins;
-}
+//CStdPtrArray* CAppData::GetPlugins()
+//{
+//	return &m_arPlugins;
+//}
 
 void CAppData::MessageLoop()
 {
@@ -222,7 +228,7 @@ bool CAppData::TranslateMessage(const LPMSG pMsg)
 	HWND hWndParent = ::GetParent(pMsg->hwnd);
 	UINT uStyle = GetWindowStyle(pMsg->hwnd);
 	LRESULT lRes = 0;
-	for( int i = 0; i < m_arPreMessages.GetSize(); i++ ) 
+	for( int i = 0; i < (int)m_arPreMessages.size(); i++ ) 
 	{
 		CPaintManagerUI* pT = static_cast<CPaintManagerUI*>(m_arPreMessages[i]);        
 		HWND hTempParent = hWndParent;
@@ -250,5 +256,19 @@ void CAppData::Term()
 	{
 		CloseZip((HZIP)m_hResourceZip);
 		m_hResourceZip = NULL;
+	}
+}
+
+void CAppData::RemovePreMsg( void *pPM )
+{
+	for( vectorv_it it = m_arPreMessages.begin(); 
+		it != m_arPreMessages.end(); 
+		++it )
+	{
+		if( *it == pPM )
+		{
+			m_arPreMessages.erase( it );
+			return;
+		}
 	}
 }
