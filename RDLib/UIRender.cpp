@@ -1190,9 +1190,12 @@ void CRenderEngine::DrawHtmlText(HDC hDC, CPaintManagerUI* pManager, RECT& rc, L
 
     bool bDraw = (uStyle & DT_CALCRECT) == 0;
 
-    CStdPtrArray aFontArray(10);
-    CStdPtrArray aColorArray(10);
-    CStdPtrArray aPIndentArray(10);
+	CStdPtrArray aFontArray(10);
+	CStdPtrArray aColorArray(10);
+	CStdPtrArray aPIndentArray(10);
+	//vectorv		aFontArray;
+	//vectorv		aColorArray;
+	//vectorv		aPIndentArray;
 
     RECT rcClip = { 0 };
     ::GetClipBox(hDC, &rcClip);
@@ -1243,7 +1246,8 @@ void CRenderEngine::DrawHtmlText(HDC hDC, CPaintManagerUI* pManager, RECT& rc, L
 
     POINT pt = { rc.left, rc.top };
     int iLinkIndex = 0;
-    int cyLine = pTm->tmHeight + pTm->tmExternalLeading + (int)aPIndentArray.GetAt(aPIndentArray.GetSize() - 1);
+    //int cyLine = pTm->tmHeight + pTm->tmExternalLeading + (int)aPIndentArray.GetAt(aPIndentArray.GetSize() - 1);
+	int cyLine = pTm->tmHeight + pTm->tmExternalLeading + (int)aPIndentArray.GetAt(aPIndentArray.GetSize() - 1);
     int cyMinHeight = 0;
     int cxMaxWidth = 0;
     POINT ptLinkStart = { 0 };

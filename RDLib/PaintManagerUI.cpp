@@ -1694,7 +1694,7 @@ void CPaintManagerUI::SetDefaultFont(LPCTSTR pStrFontName, int nSize, bool bBold
 
 DWORD CPaintManagerUI::GetCustomFontCount() const
 {
-    return m_aCustomFonts.GetSize();
+    return (int)m_aCustomFonts.size();
 }
 
 HFONT CPaintManagerUI::AddFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic)
@@ -1726,52 +1726,57 @@ HFONT CPaintManagerUI::AddFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool
         ::GetTextMetrics(m_hDcPaint, &pFontInfo->tm);
         ::SelectObject(m_hDcPaint, hOldFont);
     }
-    if( !m_aCustomFonts.Add(pFontInfo) ) {
-        ::DeleteObject(hFont);
-        delete pFontInfo;
-        return NULL;
-    }
+
+
+	m_aCustomFonts.push_back( pFontInfo );
+    //if( !m_aCustomFonts.Add(pFontInfo) ) {
+    //    ::DeleteObject(hFont);
+    //    delete pFontInfo;
+    //    return NULL;
+    //}
 
     return hFont;
 }
 
-HFONT CPaintManagerUI::AddFontAt(int index, LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic)
-{
-    LOGFONT lf = { 0 };
-    ::GetObject(::GetStockObject(DEFAULT_GUI_FONT), sizeof(LOGFONT), &lf);
-    _tcscpy(lf.lfFaceName, pStrFontName);
-    lf.lfCharSet = DEFAULT_CHARSET;
-    lf.lfHeight = -nSize;
-    if( bBold ) lf.lfWeight += FW_BOLD;
-    if( bUnderline ) lf.lfUnderline = TRUE;
-    if( bItalic ) lf.lfItalic = TRUE;
-	lf.lfQuality  = CLEARTYPE_QUALITY; //尽可能使用truetype
-    HFONT hFont = ::CreateFontIndirect(&lf);
-    if( hFont == NULL ) return NULL;
-
-    TFontInfo* pFontInfo = new TFontInfo;
-    if( !pFontInfo ) return false;
-    ::ZeroMemory(pFontInfo, sizeof(TFontInfo));
-    pFontInfo->hFont = hFont;
-    //pFontInfo->sFontName = pStrFontName;
-	wcscpy( pFontInfo->sFontName, pStrFontName );
-    pFontInfo->iSize = nSize;
-    pFontInfo->bBold = bBold;
-    pFontInfo->bUnderline = bUnderline;
-    pFontInfo->bItalic = bItalic;
-    if( m_hDcPaint ) {
-        HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, hFont);
-        ::GetTextMetrics(m_hDcPaint, &pFontInfo->tm);
-        ::SelectObject(m_hDcPaint, hOldFont);
-    }
-    if( !m_aCustomFonts.InsertAt(index, pFontInfo) ) {
-        ::DeleteObject(hFont);
-        delete pFontInfo;
-        return NULL;
-    }
-
-    return hFont;
-}
+//HFONT CPaintManagerUI::AddFontAt(int index, LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic)
+//{
+//    LOGFONT lf = { 0 };
+//    ::GetObject(::GetStockObject(DEFAULT_GUI_FONT), sizeof(LOGFONT), &lf);
+//    _tcscpy(lf.lfFaceName, pStrFontName);
+//    lf.lfCharSet = DEFAULT_CHARSET;
+//    lf.lfHeight = -nSize;
+//    if( bBold ) lf.lfWeight += FW_BOLD;
+//    if( bUnderline ) lf.lfUnderline = TRUE;
+//    if( bItalic ) lf.lfItalic = TRUE;
+//	lf.lfQuality  = CLEARTYPE_QUALITY; //尽可能使用truetype
+//    HFONT hFont = ::CreateFontIndirect(&lf);
+//    if( hFont == NULL ) return NULL;
+//
+//    TFontInfo* pFontInfo = new TFontInfo;
+//    if( !pFontInfo ) return false;
+//    ::ZeroMemory(pFontInfo, sizeof(TFontInfo));
+//    pFontInfo->hFont = hFont;
+//    //pFontInfo->sFontName = pStrFontName;
+//	wcscpy( pFontInfo->sFontName, pStrFontName );
+//    pFontInfo->iSize = nSize;
+//    pFontInfo->bBold = bBold;
+//    pFontInfo->bUnderline = bUnderline;
+//    pFontInfo->bItalic = bItalic;
+//    if( m_hDcPaint ) {
+//        HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, hFont);
+//        ::GetTextMetrics(m_hDcPaint, &pFontInfo->tm);
+//        ::SelectObject(m_hDcPaint, hOldFont);
+//    }
+//
+//	m_aCustomFonts[index] = pFontInfo;
+//    //if( !m_aCustomFonts.InsertAt(index, pFontInfo) ) {
+//    //    ::DeleteObject(hFont);
+//    //    delete pFontInfo;
+//    //    return NULL;
+//    //}
+//
+//    return hFont;
+//}
 
 HFONT CPaintManagerUI::CloneFont( HFONT hFont )
 {
@@ -1784,7 +1789,7 @@ HFONT CPaintManagerUI::CloneFont( HFONT hFont )
 	}
 	else
 	{
-		for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+		for( int it = 0; it < (int)m_aCustomFonts.size(); it++ ) {
 			pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
 			if( pFontInfo->hFont == hFont )
 			{
@@ -1816,7 +1821,7 @@ HFONT CPaintManagerUI::CloneFont( HFONT hFont )
 
 HFONT CPaintManagerUI::GetFont(int index)
 {
-    if( index < 0 || index >= m_aCustomFonts.GetSize() )
+    if( index < 0 || index >= (int)m_aCustomFonts.size() )
 	{
 		if( m_pParentResourcePM )
 			return m_pParentResourcePM->GetFont( index );
@@ -1831,7 +1836,8 @@ HFONT CPaintManagerUI::GetFont(int index)
 HFONT CPaintManagerUI::GetFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic)
 {
     TFontInfo* pFontInfo = NULL;
-    for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+    for( int it = 0; it < (int)m_aCustomFonts.size(); it++ )
+	{
         pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
         if( pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
             pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic) 
@@ -1844,7 +1850,8 @@ HFONT CPaintManagerUI::GetFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool
 bool CPaintManagerUI::FindFont(HFONT hFont)
 {
     TFontInfo* pFontInfo = NULL;
-    for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+    for( int it = 0; it < (int)m_aCustomFonts.size(); it++ )
+	{
         pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
         if( pFontInfo->hFont == hFont ) return true;
     }
@@ -1855,7 +1862,8 @@ bool CPaintManagerUI::FindFont(HFONT hFont)
 bool CPaintManagerUI::FindFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic)
 {
     TFontInfo* pFontInfo = NULL;
-    for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+    for( int it = 0; it < (int)m_aCustomFonts.size(); it++ )
+	{
         pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
         if( pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
             pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic) 
@@ -1868,9 +1876,10 @@ bool CPaintManagerUI::FindFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool
 int CPaintManagerUI::GetFontIndex(HFONT hFont)
 {
     TFontInfo* pFontInfo = NULL;
-    for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+    for( int it = 0; it < (int)m_aCustomFonts.size(); it++ ) {
         pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
-        if( pFontInfo->hFont == hFont ) return it;
+        if( pFontInfo->hFont == hFont ) 
+			return it;
     }
     return -1;
 }
@@ -1878,10 +1887,13 @@ int CPaintManagerUI::GetFontIndex(HFONT hFont)
 int CPaintManagerUI::GetFontIndex(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic)
 {
     TFontInfo* pFontInfo = NULL;
-    for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+    for( int it = 0; it < (int)m_aCustomFonts.size(); it++ ) {
         pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
-        if( pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
-            pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic) 
+        if( pFontInfo->sFontName == pStrFontName &&
+			pFontInfo->iSize == nSize && 
+            pFontInfo->bBold == bBold && 
+			pFontInfo->bUnderline == bUnderline && 
+			pFontInfo->bItalic == bItalic ) 
             return it;
     }
     return -1;
@@ -1890,10 +1902,14 @@ int CPaintManagerUI::GetFontIndex(LPCTSTR pStrFontName, int nSize, bool bBold, b
 int CPaintManagerUI::GetFontIndexEx( LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic )
 {
 	TFontInfo* pFontInfo = NULL;
-	for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+	for( int it = 0; it < (int)m_aCustomFonts.size(); it++ )
+	{
 		pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
-		if( pFontInfo->sFontName == pStrFontName && pFontInfo->iSize == nSize && 
-			pFontInfo->bBold == bBold && pFontInfo->bUnderline == bUnderline && pFontInfo->bItalic == bItalic) 
+		if( pFontInfo->sFontName == pStrFontName && 
+			pFontInfo->iSize == nSize && 
+			pFontInfo->bBold == bBold && 
+			pFontInfo->bUnderline == bUnderline && 
+			pFontInfo->bItalic == bItalic) 
 			return it;
 	}
 
@@ -1925,56 +1941,82 @@ int CPaintManagerUI::GetFontIndexEx( LPCTSTR pStrFontName, int nSize, bool bBold
 		::GetTextMetrics(m_hDcPaint, &pFontInfo->tm);
 		::SelectObject(m_hDcPaint, hOldFont);
 	}
-	if( !m_aCustomFonts.Add(pFontInfo) ) {
-		::DeleteObject(hFont);
-		delete pFontInfo;
-		return -1;
-	}
 
-	return m_aCustomFonts.GetSize()-1;
+	m_aCustomFonts.push_back( pFontInfo );
+	//if( !m_aCustomFonts.Add(pFontInfo) )
+	//{
+	//	::DeleteObject(hFont);
+	//	delete pFontInfo;
+	//	return -1;
+	//}
+
+	return (int)m_aCustomFonts.size()-1;
 }
 
 
 bool CPaintManagerUI::RemoveFont(HFONT hFont)
 {
     TFontInfo* pFontInfo = NULL;
-    for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
-        pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
-        if( pFontInfo->hFont == hFont ) {
-            ::DeleteObject(pFontInfo->hFont);
-            delete pFontInfo;
-            return m_aCustomFonts.Remove(it);
-        }
-    }
+ //   for( int it = 0; it < (int)m_aCustomFonts.size(); it++ ) 
+ //	  {
+ //       pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
+ //       if( pFontInfo->hFont == hFont )
+ //	      {
+ //           ::DeleteObject(pFontInfo->hFont);
+ //           delete pFontInfo;
+ //           return m_aCustomFonts.Remove(it);
+ //       }
+ //   }
+
+	for( auto it = m_aCustomFonts.begin(); it != m_aCustomFonts.end(); ++it )
+	{
+		pFontInfo = static_cast<TFontInfo*>(*it);
+		if( pFontInfo->hFont == hFont )
+		{
+			::DeleteObject(pFontInfo->hFont);
+			delete pFontInfo;
+			m_aCustomFonts.erase( it );
+			return true;
+		}
+	}
 
     return false;
 }
 
 bool CPaintManagerUI::RemoveFontAt(int index)
 {
-    if( index < 0 || index >= m_aCustomFonts.GetSize() ) return false;
+    if( index < 0 || index >= (int)m_aCustomFonts.size() ) 
+		return false;
+
     TFontInfo* pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[index]);
     ::DeleteObject(pFontInfo->hFont);
     delete pFontInfo;
-    return m_aCustomFonts.Remove(index);
+
+    //return m_aCustomFonts.Remove(index);
+	m_aCustomFonts.erase( m_aCustomFonts.begin() + index );
+	return true;
 }
 
 void CPaintManagerUI::RemoveAllFonts()
 {
     TFontInfo* pFontInfo;
-    for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+    for( int it = 0; it < (int)m_aCustomFonts.size(); it++ )
+	{
         pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
         ::DeleteObject(pFontInfo->hFont);
         delete pFontInfo;
     }
-    m_aCustomFonts.Empty();
+    m_aCustomFonts.clear();
 }
 
 TFontInfo* CPaintManagerUI::GetFontInfo(int index)
 {
-    if( index < 0 || index >= m_aCustomFonts.GetSize() ) return GetDefaultFontInfo();
+    if( index < 0 || index >= (int)m_aCustomFonts.size() ) 
+		return GetDefaultFontInfo();
+
     TFontInfo* pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[index]);
-    if( pFontInfo->tm.tmHeight == 0 ) {
+    if( pFontInfo->tm.tmHeight == 0 )
+	{
         HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, pFontInfo->hFont);
         ::GetTextMetrics(m_hDcPaint, &pFontInfo->tm);
         ::SelectObject(m_hDcPaint, hOldFont);
@@ -1985,10 +2027,13 @@ TFontInfo* CPaintManagerUI::GetFontInfo(int index)
 TFontInfo* CPaintManagerUI::GetFontInfo(HFONT hFont)
 {
     TFontInfo* pFontInfo = NULL;
-    for( int it = 0; it < m_aCustomFonts.GetSize(); it++ ) {
+    for( int it = 0; it < (int)m_aCustomFonts.size(); it++ )
+	{
         pFontInfo = static_cast<TFontInfo*>(m_aCustomFonts[it]);
-        if( pFontInfo->hFont == hFont ) {
-            if( pFontInfo->tm.tmHeight == 0 ) {
+        if( pFontInfo->hFont == hFont )
+		{
+            if( pFontInfo->tm.tmHeight == 0 )
+			{
                 HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, pFontInfo->hFont);
                 ::GetTextMetrics(m_hDcPaint, &pFontInfo->tm);
                 ::SelectObject(m_hDcPaint, hOldFont);
@@ -2003,17 +2048,28 @@ TFontInfo* CPaintManagerUI::GetFontInfo(HFONT hFont)
 
 const TImageInfo* CPaintManagerUI::GetImage(LPCTSTR bitmap)
 {
-    TImageInfo* data = static_cast<TImageInfo*>(m_mImageHash.Find(bitmap));
-    if( !data && m_pParentResourcePM ) return m_pParentResourcePM->GetImage(bitmap);
-    else return data;
+	void *v = mapsv_find( m_mImageHash, bitmap );
+	if( nullptr == v ) return nullptr;
+	TImageInfo* data = static_cast<TImageInfo*>(v);
+    //TImageInfo* data = static_cast<TImageInfo*>(m_mImageHash.Find(bitmap));
+    if( !data && m_pParentResourcePM ) 
+		return m_pParentResourcePM->GetImage(bitmap);
+    else 
+		return data;
 }
 
 const TImageInfo* CPaintManagerUI::GetImageEx(LPCTSTR bitmap, LPCTSTR type, DWORD mask)
 {
-    TImageInfo* data = static_cast<TImageInfo*>(m_mImageHash.Find(bitmap));
-    if( !data ) {
-        if( AddImage(bitmap, type, mask) ) {
-            data = static_cast<TImageInfo*>(m_mImageHash.Find(bitmap));
+	TImageInfo* data = static_cast<TImageInfo*>(mapsv_find( m_mImageHash, bitmap ));
+
+    //TImageInfo* data = static_cast<TImageInfo*>(m_mImageHash.Find(bitmap));
+    if( !data )
+	{
+        if( AddImage(bitmap, type, mask) ) 
+		{
+            //data = static_cast<TImageInfo*>(m_mImageHash.Find(bitmap));
+			void *v = mapsv_find( m_mImageHash, bitmap );
+			data = static_cast<TImageInfo*>(v);
         }
     }
 
@@ -2024,7 +2080,8 @@ const TImageInfo* CPaintManagerUI::AddImage(LPCTSTR bitmap, LPCTSTR type, DWORD 
 {
     TImageInfo* data = NULL;
     if( type != NULL ) {
-        if( isdigit(*bitmap) ) {
+        if( isdigit(*bitmap) ) 
+		{
             LPTSTR pstr = NULL;
             int iIndex = _tcstol(bitmap, &pstr, 10);
             data = CRenderEngine::LoadImage(iIndex, type, mask);
@@ -2039,11 +2096,12 @@ const TImageInfo* CPaintManagerUI::AddImage(LPCTSTR bitmap, LPCTSTR type, DWORD 
 		//data->sResType = type;
 		wcscpy( data->sResType, type );
     data->dwMask = mask;
-    if( !m_mImageHash.Insert(bitmap, data) ) {
-        ::DeleteObject(data->hBitmap);
-        delete data;
-    }
 
+    //if( !m_mImageHash.Insert(bitmap, data) ) {
+    //    ::DeleteObject(data->hBitmap);
+    //    delete data;
+    //}
+	m_mImageHash.insert( pairsv( bitmap, data ) );
     return data;
 }
 
@@ -2068,10 +2126,13 @@ bool CPaintManagerUI::AddExternalImage( LPCTSTR file )
 				if (data)
 				{
 					data->dwMask = 0;
-					if( !(result = m_mImageHash.Insert(file, data)) ) {
-						::DeleteObject(data->hBitmap);
-						delete data;
-					}
+					//if( !(result = m_mImageHash.Insert(file, data)) ) 
+					//{
+					//	::DeleteObject(data->hBitmap);
+					//	delete data;
+					//}
+
+					m_mImageHash.insert( pairsv( file, data ));
 				}
 			}
 			delete[] pData;				
@@ -2092,10 +2153,12 @@ const TImageInfo* CPaintManagerUI::AddImage(LPCTSTR bitmap, HBITMAP hBitmap, int
     data->alphaChannel = bAlpha;
     //data->sResType = _T("");
     data->dwMask = 0;
-    if( !m_mImageHash.Insert(bitmap, data) ) {
-        ::DeleteObject(data->hBitmap);
-        delete data;
-    }
+    //if( !m_mImageHash.Insert(bitmap, data) ) {
+    //    ::DeleteObject(data->hBitmap);
+    //    delete data;
+    //}
+
+	m_mImageHash.insert( pairsv( bitmap, data ) );
 
     return data;
 }
@@ -2107,32 +2170,49 @@ bool CPaintManagerUI::RemoveImage(LPCTSTR bitmap)
 
     CRenderEngine::FreeImage(data) ;
 
-    return m_mImageHash.Remove(bitmap);
+    //return m_mImageHash.Remove(bitmap);
+	m_mImageHash.erase( bitmap );
+	return true;
 }
 
 void CPaintManagerUI::RemoveAllImages()
 {
-    TImageInfo* data;
-    for( int i = 0; i< m_mImageHash.GetSize(); i++ ) {
-        if(LPCTSTR key = m_mImageHash.GetAt(i)) {
-            data = static_cast<TImageInfo*>(m_mImageHash.Find(key, false));
-			if (data) {
-				CRenderEngine::FreeImage(data);
-			}
-        }
-    }
-	m_mImageHash.RemoveAll();
+	//TImageInfo* data;
+	//for( int i = 0; i< m_mImageHash.GetSize(); i++ ) {
+	//	if(LPCTSTR key = m_mImageHash.GetAt(i)) {
+	//		data = static_cast<TImageInfo*>(m_mImageHash.Find(key, false));
+	//		if (data) {
+	//			CRenderEngine::FreeImage(data);
+	//		}
+	//	}
+	//}
+	//m_mImageHash.RemoveAll();
+
+	for( mapsv::iterator it = m_mImageHash.begin(); it != m_mImageHash.end(); ++it )
+	{
+		TImageInfo* data = static_cast<TImageInfo*>( it->second );
+		if( data )
+			CRenderEngine::FreeImage( data );
+	}
+
+	m_mImageHash.clear();
 }
 
 void CPaintManagerUI::ReloadAllImages()
 {
     bool bRedraw = false;
-    TImageInfo* data;
     TImageInfo* pNewData;
-    for( int i = 0; i< m_mImageHash.GetSize(); i++ ) {
-        if(LPCTSTR bitmap = m_mImageHash.GetAt(i)) {
-            data = static_cast<TImageInfo*>(m_mImageHash.Find(bitmap));
-            if( data != NULL ) {
+    //for( int i = 0; i< m_mImageHash.GetSize(); i++ ) {
+    //    if(LPCTSTR bitmap = m_mImageHash.GetAt(i)) {
+    //        data = static_cast<TImageInfo*>(m_mImageHash.Find(bitmap));
+
+	for( mapsv::iterator it = m_mImageHash.begin(); it != m_mImageHash.end(); ++it )
+	{
+		LPCTSTR bitmap = it->first.c_str();
+		TImageInfo* data = static_cast<TImageInfo*>( it->second );
+		{
+            if( data != NULL )
+			{
                 //if( !data->sResType.IsEmpty() )
 				if( data->sResType != NULL )
 				{
@@ -2143,9 +2223,9 @@ void CPaintManagerUI::ReloadAllImages()
 						pNewData = CRenderEngine::LoadImage(iIndex, data->sResType, data->dwMask);
                     }
                 }
-                else {
+                else
                     pNewData = CRenderEngine::LoadImage(bitmap, NULL, data->dwMask);
-                }
+
                 if( pNewData == NULL ) continue;
 
                 if( data->hBitmap != NULL ) ::DeleteObject(data->hBitmap);
@@ -2164,20 +2244,29 @@ void CPaintManagerUI::ReloadAllImages()
 
 void CPaintManagerUI::AddDefaultAttributeList(LPCTSTR pStrControlName, LPCTSTR pStrControlAttrList)
 {
+	//void *v = mapsv_find( m_DefaultAttrHash, pStrControlName );
+	//if( v == nullptr )
+	//	return;
+
 	CStringW* pDefaultAttr = new CStringW(pStrControlAttrList);
-	if (pDefaultAttr != NULL)
-	{
-		if (m_DefaultAttrHash.Find(pStrControlName) == NULL)
-			m_DefaultAttrHash.Set(pStrControlName, (LPVOID)pDefaultAttr);
-		else
-			delete pDefaultAttr;
-	}
+	m_DefaultAttrHash.insert( pairsv( pStrControlName, (LPVOID)pDefaultAttr) );
+
+	//CStringW* pDefaultAttr = new CStringW(pStrControlAttrList);
+	//if (pDefaultAttr != NULL)
+	//{
+	//	if (m_DefaultAttrHash.Find(pStrControlName) == NULL)
+	//		m_DefaultAttrHash.Set(pStrControlName, (LPVOID)pDefaultAttr);
+	//	else
+	//		delete pDefaultAttr;
+	//}
 }
 
-LPCTSTR CPaintManagerUI::GetDefaultAttributeList(LPCTSTR pStrControlName) const
+LPCTSTR CPaintManagerUI::GetDefaultAttributeList(LPCTSTR pStrControlName)
 {
-    CStringW* pDefaultAttr = static_cast<CStringW*>(m_DefaultAttrHash.Find(pStrControlName));
-    if( !pDefaultAttr && m_pParentResourcePM )
+    //CStringW* pDefaultAttr = static_cast<CStringW*>(m_DefaultAttrHash.Find(pStrControlName));
+	CStringW* pDefaultAttr = static_cast<CStringW*>( mapsv_find(m_DefaultAttrHash, pStrControlName) );
+    
+	if( !pDefaultAttr && m_pParentResourcePM )
 		return m_pParentResourcePM->GetDefaultAttributeList(pStrControlName);
     
     if( pDefaultAttr ) 
@@ -2189,28 +2278,38 @@ LPCTSTR CPaintManagerUI::GetDefaultAttributeList(LPCTSTR pStrControlName) const
 
 bool CPaintManagerUI::RemoveDefaultAttributeList(LPCTSTR pStrControlName)
 {
-    CStringW* pDefaultAttr = static_cast<CStringW*>(m_DefaultAttrHash.Find(pStrControlName));
-    if( !pDefaultAttr ) return false;
+    //CStringW* pDefaultAttr = static_cast<CStringW*>(m_DefaultAttrHash.Find(pStrControlName));
+	CStringW* pDefaultAttr = static_cast<CStringW*>(mapsv_find(m_DefaultAttrHash,pStrControlName));
+	if( !pDefaultAttr ) return false;
 
-    delete pDefaultAttr;
-    return m_DefaultAttrHash.Remove(pStrControlName);
+	delete pDefaultAttr;
+	m_DefaultAttrHash.erase( pStrControlName );
+	return true;
+	//return m_DefaultAttrHash.Remove(pStrControlName);
 }
 
-const CStringPtrMap& CPaintManagerUI::GetDefaultAttribultes() const
+const mapsv& CPaintManagerUI::GetDefaultAttribultes()
 {
 	return m_DefaultAttrHash;
 }
 
 void CPaintManagerUI::RemoveAllDefaultAttributeList()
 {
-	CStringW* pDefaultAttr;
-	for( int i = 0; i< m_DefaultAttrHash.GetSize(); i++ ) {
-		if(LPCTSTR key = m_DefaultAttrHash.GetAt(i)) {
-			pDefaultAttr = static_cast<CStringW*>(m_DefaultAttrHash.Find(key));
-			delete pDefaultAttr;
-		}
+	//CStringW* pDefaultAttr;
+	//for( int i = 0; i< m_DefaultAttrHash.GetSize(); i++ ) {
+	//	if(LPCTSTR key = m_DefaultAttrHash.GetAt(i)) {
+	//		pDefaultAttr = static_cast<CStringW*>(m_DefaultAttrHash.Find(key));
+	//		delete pDefaultAttr;
+	//	}
+	//}
+	//m_DefaultAttrHash.RemoveAll();
+	for( auto it = m_DefaultAttrHash.begin(); it != m_DefaultAttrHash.end(); ++it )
+	{
+		CStringW* pDefaultAttr = static_cast<CStringW*>( it->second );
+		delete pDefaultAttr;
 	}
-	m_DefaultAttrHash.RemoveAll();
+
+	m_DefaultAttrHash.clear();
 }
 
 CControlUI* CPaintManagerUI::GetRoot() const
@@ -2380,13 +2479,25 @@ DWORD CPaintManagerUI::GetBorderColor()
 
 bool CPaintManagerUI::TranslateAccelerator(LPMSG pMsg)
 {
-	for (int i = 0; i < m_aTranslateAccelerator.GetSize(); i++)
+	//for (int i = 0; i < m_aTranslateAccelerator.GetSize(); i++)
+	//{
+	//	LRESULT lResult = static_cast<ITranslateAccelerator *>(m_aTranslateAccelerator[i])->TranslateAccelerator(pMsg);
+	//	if( lResult == S_OK ) return true;
+	//}
+	//return false;
+
+	for( auto it = m_aTranslateAccelerator.begin();
+		 it != m_aTranslateAccelerator.end(); ++it )
 	{
-		LRESULT lResult = static_cast<ITranslateAccelerator *>(m_aTranslateAccelerator[i])->TranslateAccelerator(pMsg);
-		if( lResult == S_OK ) return true;
+		ITranslateAccelerator *ta = static_cast<ITranslateAccelerator *>(*it);
+		if( S_OK == ta->TranslateAcceleratorW( pMsg ) )
+			return true;
 	}
+
 	return false;
 }
+
+
 //patch for tab switch controls
 //bool CPaintManagerUI::TranslateMessage(const LPMSG pMsg)
 //{
@@ -2444,20 +2555,25 @@ bool CPaintManagerUI::TranslateAccelerator(LPMSG pMsg)
 
 bool CPaintManagerUI::AddTranslateAccelerator(ITranslateAccelerator *pTranslateAccelerator)
 {
-	ASSERT(m_aTranslateAccelerator.Find(pTranslateAccelerator) < 0);
-	return m_aTranslateAccelerator.Add(pTranslateAccelerator);
+	//ASSERT(m_aTranslateAccelerator.Find(pTranslateAccelerator) < 0);
+	//return m_aTranslateAccelerator.Add(pTranslateAccelerator);
+	m_aTranslateAccelerator.insert( pTranslateAccelerator );
+	return true;
 }
 
 bool CPaintManagerUI::RemoveTranslateAccelerator(ITranslateAccelerator *pTranslateAccelerator)
 {
-	for (int i = 0; i < m_aTranslateAccelerator.GetSize(); i++)
-	{
-		if (static_cast<ITranslateAccelerator *>(m_aTranslateAccelerator[i]) == pTranslateAccelerator)
-		{
-			return m_aTranslateAccelerator.Remove(i);
-		}
-	}
-	return false;
+	//for (int i = 0; i < m_aTranslateAccelerator.size(); i++)
+	//{
+	//	if (static_cast<ITranslateAccelerator *>(m_aTranslateAccelerator[i]) == pTranslateAccelerator)
+	//	{
+	//		return m_aTranslateAccelerator.Remove(i);
+	//	}
+	//}
+	//return false;
+
+	m_aTranslateAccelerator.erase( pTranslateAccelerator );
+	return true;
 }
 
 bool CPaintManagerUI::WindowAttached()
@@ -2646,3 +2762,13 @@ void CPaintManagerUI::OnPaint()
 		::InvalidateRect(m_hWndPaint, NULL, FALSE);
 	}
 }
+
+void* CPaintManagerUI::mapsv_find( const mapsv &m, LPCTSTR str )
+{
+	mapsv::const_iterator it = m.find( str );
+	if( it == m.end() )
+		return nullptr;
+
+	return it->second;
+}
+

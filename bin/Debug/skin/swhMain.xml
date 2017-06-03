@@ -2,8 +2,8 @@
 <!--roundcorner="1,1"-->
 <Window size="900,600" caption="0,0,0,30" sizebox="4,4,6,6" roundcorner="1,1"  >
   <!--Include & Default-->
-  <Font name="宋体" size="14" />
   <Font name="宋体" size="12" />
+  <Font name="宋体" size="9" />
   
   <Include source="ctrl/scrollbar.xml" />
   <Include source="font.xml" />
@@ -92,7 +92,7 @@
 
       <Control width="1" bkcolor="#FFfa6d00" />
       
-      <HBox name="vlHandle" pos="240,30,272,600" float="true" >
+      <HBox name="vlHandle" pos="240,0,272,600" float="true" bkcolor111="#FF9999ff" >
         <Control width="1" bkcolor="#FFfa6d00" />
         <VBox >
           <Control />

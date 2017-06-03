@@ -70,7 +70,7 @@ public:
 	void SetDefaultFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic);
 	DWORD GetCustomFontCount() const;
 	HFONT AddFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic);
-	HFONT AddFontAt(int index, LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic);
+	//HFONT AddFontAt(int index, LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic);
 
 	HFONT CloneFont(HFONT hFont);
 
@@ -97,9 +97,9 @@ public:
 	void ReloadAllImages();
 
 	void AddDefaultAttributeList(LPCTSTR pStrControlName, LPCTSTR pStrControlAttrList);
-	LPCTSTR GetDefaultAttributeList(LPCTSTR pStrControlName) const;
+	LPCTSTR GetDefaultAttributeList(LPCTSTR pStrControlName);
 	bool RemoveDefaultAttributeList(LPCTSTR pStrControlName);
-	const CStringPtrMap& GetDefaultAttribultes() const;
+	const mapsv& GetDefaultAttribultes();
 	void RemoveAllDefaultAttributeList();
 
 	bool AttachDialog(CControlUI* pControl);
@@ -273,14 +273,18 @@ private:
 	DWORD m_dwDefaultSelectedBkColor;
 	DWORD m_dwBorderColor;
 	TFontInfo m_DefaultFontInfo;
-	CStdPtrArray m_aCustomFonts;
 
-	CStringPtrMap m_mImageHash;
-	CStringPtrMap m_DefaultAttrHash;
+	vectorv		m_aCustomFonts;
+	mapsv		m_mImageHash;
+	mapsv		m_DefaultAttrHash;
+
+	//CStdPtrArray m_aCustomFonts;
+	//CStringPtrMap m_mImageHash;
+	//CStringPtrMap m_DefaultAttrHash;
 
 	//////////////////////////////////////////////////////////////////////////
 public:
-	CStdPtrArray	m_aTranslateAccelerator;
+	setv	m_aTranslateAccelerator;
 
 	//bool			m_IsDoDragDroping;
 	//CDragEventArgs* m_DragEventArgs;
@@ -289,8 +293,10 @@ public:
 
 
 	bool		m_bExiting;
-
-
 	CStringW	m_strScript;
+
+
+private:
+	void*	mapsv_find( const mapsv &m, LPCTSTR str );
 };
 
