@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StringPtrMap.h"
+//#include "StringPtrMap.h"
 
 #define			WM_RDLIB_CLEANUP			WM_APP+1
 

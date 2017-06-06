@@ -14,54 +14,54 @@ class CEventSource;
 
 typedef CControlUI* (CALLBACK* FINDCONTROLPROC)(CControlUI*, LPVOID);
 
-class RDLIB_API CDataObject
-{
-public:
-	void* GetData(LPCTSTR pstrFormat)
-	{
-		return m_DataMap.Find(pstrFormat);
-	}
+//class RDLIB_API CDataObject
+//{
+//public:
+//	void* GetData(LPCTSTR pstrFormat)
+//	{
+//		return m_DataMap.Find(pstrFormat);
+//	}
+//
+//	bool SetData(LPCTSTR pstrFormat, void* pData)
+//	{
+//		return m_DataMap.Insert(pstrFormat, pData);
+//	}
+//
+//	bool GetDataPresent(LPCTSTR pstrFormat)
+//	{
+//		return m_DataMap.Find(pstrFormat) != NULL;
+//	}
+//private:
+//	CStringPtrMap		m_DataMap;
+//};
 
-	bool SetData(LPCTSTR pstrFormat, void* pData)
-	{
-		return m_DataMap.Insert(pstrFormat, pData);
-	}
 
-	bool GetDataPresent(LPCTSTR pstrFormat)
-	{
-		return m_DataMap.Find(pstrFormat) != NULL;
-	}
-private:
-	CStringPtrMap		m_DataMap;
-};
-
-
-typedef enum{
-	DropEffectDeny,
-	DropEffectAllow
-}DROPEFFECT;
-
-typedef enum{
-	DragStart, //点击拖动源,并且已调用DoDragDrop
-	DropAllow, //进入到一个目标,目标可以放
-	DropDeny   //目标不允许放
-}DRAGDROPSTEP;
-
-class RDLIB_API CDragEventArgs
-{
-public:
-	
-	CDragEventArgs(){
-		Effect = DropEffectDeny;
-		KeyState = 0;
-		pt.x = pt.y = 0;
-	}
-	//UINT AllowedEffect; //获取拖动事件的发起方（或源）所允许的拖放操作。 
-	CDataObject* Data; //获取 IDataObject，它包含与此事件关联的数据。 
-	DROPEFFECT Effect; //获取或设置拖放操作中目标放置效果。 
-	UINT KeyState; //获取 Shift、Ctrl 和 Alt 键的当前状态以及鼠标按钮的状态。 
-	POINT pt; //获取鼠标指针在屏幕坐标系中的 x 坐标。 
-};
+//typedef enum{
+//	DropEffectDeny,
+//	DropEffectAllow
+//}DROPEFFECT;
+//
+//typedef enum{
+//	DragStart, //点击拖动源,并且已调用DoDragDrop
+//	DropAllow, //进入到一个目标,目标可以放
+//	DropDeny   //目标不允许放
+//}DRAGDROPSTEP;
+//
+//class RDLIB_API CDragEventArgs
+//{
+//public:
+//	
+//	CDragEventArgs(){
+//		Effect = DropEffectDeny;
+//		KeyState = 0;
+//		pt.x = pt.y = 0;
+//	}
+//	//UINT AllowedEffect; //获取拖动事件的发起方（或源）所允许的拖放操作。 
+//	CDataObject* Data; //获取 IDataObject，它包含与此事件关联的数据。 
+//	DROPEFFECT Effect; //获取或设置拖放操作中目标放置效果。 
+//	UINT KeyState; //获取 Shift、Ctrl 和 Alt 键的当前状态以及鼠标按钮的状态。 
+//	POINT pt; //获取鼠标指针在屏幕坐标系中的 x 坐标。 
+//};
 
 //class RDLIB_API CDropTarget
 //{

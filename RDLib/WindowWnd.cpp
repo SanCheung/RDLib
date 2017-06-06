@@ -87,6 +87,7 @@ LPCTSTR __TraceMsg(UINT uMsg)
 /////////////////////////////////////////////////////////////////////////////////////
 //
 //
+/*
 
 CStdPtrArray::CStdPtrArray(int iPreallocSize) : m_ppVoid(NULL), m_nCount(0), m_nAllocated(iPreallocSize)
 {
@@ -208,6 +209,8 @@ LPVOID CStdPtrArray::operator[] (int iIndex) const
 	ASSERT(iIndex>=0 && iIndex<m_nCount);
 	return m_ppVoid[iIndex];
 }
+
+//*/
 
 
 ///////////////////////////////////////////////////////////////////////////////////////

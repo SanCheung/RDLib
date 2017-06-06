@@ -4,6 +4,7 @@
   <!--Include & Default-->
   <Font name="宋体" size="12" />
   <Font name="宋体" size="9" />
+  <Font name="宋体" size="16" />
   
   <Include source="ctrl/scrollbar.xml" />
   <Include source="font.xml" />
@@ -70,7 +71,7 @@
       </VBox>
 
 
-      <VBox bkcolor="#ff719471">
+      <VBox>
         <Control />
         <Combo name="cbClient" width="200" height="20" itemtextpadding="10,0,20,0">
           <ListLabelElement text="北京" />
@@ -88,6 +89,8 @@
           <Control />
         </HBox>
         <Control />
+        <Text name="tx" showhtml="true" hcenter="false" />
+        <Control />
       </VBox>
 
       <Control width="1" bkcolor="#FFfa6d00" />
@@ -102,5 +105,6 @@
       </HBox>
       
     </HBox>
+    <Control height="1" bkcolor="#FFfa6d00" />
   </VBox>
 </Window>

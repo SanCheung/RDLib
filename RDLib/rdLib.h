@@ -60,7 +60,7 @@ template struct RDLIB_API	less<LPCTSTR>;
 template class	RDLIB_API	map<LPCTSTR, void*>;
 template class	RDLIB_API	pair<LPCTSTR, void*>;
 
-typedef map<wstring, void*>	mapsv;
+typedef map<wstring, void*>		mapsv;
 typedef pair<wstring, void*>	pairsv;
 
 
@@ -69,7 +69,7 @@ typedef pair<wstring, void*>	pairsv;
 #pragma comment( lib, "XdBase.lib" )
 
 // all lib .h
-#include "StringPtrMap.h"
+//#include "StringPtrMap.h"
 
 #include "rddefine.h"
 

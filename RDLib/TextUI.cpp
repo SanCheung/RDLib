@@ -70,10 +70,13 @@ void CTextUI::DoEvent(TEventUI& event)
 			}
 		}
 	}
-	if( event.Type == UIEVENT_BUTTONUP && IsEnabled() ) {
-		for( int i = 0; i < m_nLinks; i++ ) {
-			if( ::PtInRect(&m_rcLinks[i], event.ptMouse) ) {
-				m_pManager->SendNotify(this, _T("link"), i);
+	if( event.Type == UIEVENT_BUTTONUP && IsEnabled() )
+	{
+		for( int i = 0; i < m_nLinks; i++ ) 
+		{
+			if( ::PtInRect(&m_rcLinks[i], event.ptMouse) )
+			{
+				m_pManager->SendNotify(this, _T("link"), i, (LPARAM)(LPCTSTR)m_sLinks[i]);
 				return;
 			}
 		}
