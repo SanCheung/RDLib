@@ -88,9 +88,9 @@ public:
     virtual ~CControlUI();
 
 public:
-    virtual CStringW GetName() const;
-    virtual void SetName(LPCTSTR pstrName);
-	virtual LPCTSTR GetClass() const			{ return _T("ControlUI");}
+    virtual CStringW GetName() const		{ return m_sName; }
+	virtual void SetName(LPCTSTR pstrName)	{ m_sName = pstrName; }
+	virtual LPCTSTR GetClass() const		{ return _T("ControlUI");}
 
     virtual LPVOID GetInterface(LPCTSTR pstrName);
     virtual UINT GetControlFlags() const;
@@ -101,36 +101,36 @@ public:
 	virtual CControlUI* GetParent() const		{ return m_pParent; }
 
     // 文本相关
-    virtual CStringW GetText() const;
+    virtual CStringW GetText() const		{ return m_sText; }
     virtual void SetText(LPCTSTR pstrText);
 
     // 图形相关
-    DWORD	GetBkColor() const;
+    DWORD	GetBkColor() const				{ return m_dwBackColor; }
     void	SetBkColor(DWORD dwBackColor);
-    DWORD	GetBkColor2() const;
+    DWORD	GetBkColor2() const				{ return m_dwBackColor2; }
     void	SetBkColor2(DWORD dwBackColor);
-    DWORD	GetBkColor3() const;
+    DWORD	GetBkColor3() const				{ return m_dwBackColor3; }
     void	SetBkColor3(DWORD dwBackColor);
 
-    LPCTSTR GetBkImage();
+	LPCTSTR GetBkImage()					{ return m_sBkImage; }
     void	SetBkImage(LPCTSTR pStrImage);
-    DWORD	GetBorderColor() const;
+    DWORD	GetBorderColor() const			{ return m_dwBorderColor; }
     void	SetBorderColor(DWORD dwBorderColor);
-	DWORD	GetFocusBorderColor() const;
+	DWORD	GetFocusBorderColor() const		{ return m_dwFocusBorderColor; }
 	void	SetFocusBorderColor(DWORD dwBorderColor);
    
-	bool	IsColorHSL() const;
+	bool	IsColorHSL() const				{ return m_bColorHSL; }
     void	SetColorHSL(bool bColorHSL);
     
-	int		GetBorderSize() const;
+	int		GetBorderSize() const			{ return m_nBorderSize; }
     void	SetBorderSize(int nSize);
 
-    SIZE	GetBorderRound() const;
+    SIZE	GetBorderRound() const			{ return m_cxyBorderRound; }
     void	SetBorderRound(SIZE cxyRound);
     bool	DrawImage(HDC hDC, LPCTSTR pStrImage, LPCTSTR pStrModify = NULL);
 
     // 位置相关
-    virtual const RECT& GetPos() const;
+    virtual const RECT& GetPos() const		{ return m_rcItem; }
     virtual void SetPos(RECT rc);
     virtual int GetWidth() const;
     virtual int GetHeight() const;
@@ -194,7 +194,7 @@ public:
     virtual CControlUI* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
 
     void Invalidate();
-    bool IsUpdateNeeded() const;
+    bool IsUpdateNeeded() const			{ return m_bUpdateNeeded; }
     void NeedUpdate();
     void NeedParentUpdate();
     DWORD GetAdjustColor(DWORD dwColor);
@@ -223,10 +223,9 @@ public:
 	//DROPEFFECT DoDragDrop(CDataObject* data);
 	//virtual HCURSOR GetFeedback( DRAGDROPSTEP step );
 
-
 	// 20160319
 	static DWORD	FormatToColor( LPCTSTR p );
-	static RECT		FormatToRect( LPCTSTR p );
+	static CDUIRect	FormatToRect( LPCTSTR p );
 
 public:
     CEventSource OnInit;
@@ -241,12 +240,15 @@ protected:
     CStringW m_sName;
     bool m_bUpdateNeeded;
     bool m_bMenuUsed;
-    RECT m_rcItem;
-    RECT m_rcPadding;
-    SIZE m_cXY;
-    SIZE m_cxyFixed;
-    SIZE m_cxyMin;
-    SIZE m_cxyMax;
+
+    CDUIRect m_rcItem;
+    CDUIRect m_rcPadding;
+
+    CDUISize m_cXY;
+    CDUISize m_cxyFixed;
+    CDUISize m_cxyMin;
+    CDUISize m_cxyMax;
+
     bool m_bVisible;
     bool m_bInternVisible;
     bool m_bEnabled;

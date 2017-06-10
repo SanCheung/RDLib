@@ -68,6 +68,8 @@
                 normalimage="swh/level1-normal.png" selectedimage="swh/level1-hover.png" hotimage="swh/level1-hover.png" />
         <Option name="bnL4" text="庭审录像" height="40" font="0"  group="g1"
                 normalimage="swh/level1-normal.png" selectedimage="swh/level1-hover.png" hotimage="swh/level1-hover.png" />
+
+        <Control height="100" />
       </VBox>
 
 

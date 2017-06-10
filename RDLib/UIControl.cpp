@@ -45,15 +45,15 @@ CControlUI::~CControlUI()
     if( m_pManager != NULL ) m_pManager->ReapObjects(this);
 }
 
-CStringW CControlUI::GetName() const
-{
-    return m_sName;
-}
-
-void CControlUI::SetName(LPCTSTR pstrName)
-{
-    m_sName = pstrName;
-}
+//CStringW CControlUI::GetName() const
+//{
+//    return m_sName;
+//}
+//
+//void CControlUI::SetName(LPCTSTR pstrName)
+//{
+//    m_sName = pstrName;
+//}
 
 LPVOID CControlUI::GetInterface(LPCTSTR pstrName)
 {
@@ -98,10 +98,10 @@ void CControlUI::SetManager(CPaintManagerUI* pManager, CControlUI* pParent, bool
 //	return m_pParent;
 //}
 
-CStringW CControlUI::GetText() const
-{
-    return m_sText;
-}
+//CStringW CControlUI::GetText() const
+//{
+//    return m_sText;
+//}
 
 void CControlUI::SetText(LPCTSTR pstrText)
 {
@@ -111,10 +111,10 @@ void CControlUI::SetText(LPCTSTR pstrText)
     Invalidate();
 }
 
-DWORD CControlUI::GetBkColor() const
-{
-    return m_dwBackColor;
-}
+//DWORD CControlUI::GetBkColor() const
+//{
+//    return m_dwBackColor;
+//}
 
 void CControlUI::SetBkColor(DWORD dwBackColor)
 {
@@ -124,10 +124,10 @@ void CControlUI::SetBkColor(DWORD dwBackColor)
     Invalidate();
 }
 
-DWORD CControlUI::GetBkColor2() const
-{
-    return m_dwBackColor2;
-}
+//DWORD CControlUI::GetBkColor2() const
+//{
+//    return m_dwBackColor2;
+//}
 
 void CControlUI::SetBkColor2(DWORD dwBackColor)
 {
@@ -137,10 +137,10 @@ void CControlUI::SetBkColor2(DWORD dwBackColor)
     Invalidate();
 }
 
-DWORD CControlUI::GetBkColor3() const
-{
-    return m_dwBackColor3;
-}
+//DWORD CControlUI::GetBkColor3() const
+//{
+//    return m_dwBackColor3;
+//}
 
 void CControlUI::SetBkColor3(DWORD dwBackColor)
 {
@@ -150,10 +150,10 @@ void CControlUI::SetBkColor3(DWORD dwBackColor)
     Invalidate();
 }
 
-LPCTSTR CControlUI::GetBkImage()
-{
-    return m_sBkImage;
-}
+//LPCTSTR CControlUI::GetBkImage()
+//{
+//    return m_sBkImage;
+//}
 
 void CControlUI::SetBkImage(LPCTSTR pStrImage)
 {
@@ -163,10 +163,10 @@ void CControlUI::SetBkImage(LPCTSTR pStrImage)
     Invalidate();
 }
 
-DWORD CControlUI::GetBorderColor() const
-{
-    return m_dwBorderColor;
-}
+//DWORD CControlUI::GetBorderColor() const
+//{
+//    return m_dwBorderColor;
+//}
 
 void CControlUI::SetBorderColor(DWORD dwBorderColor)
 {
@@ -176,10 +176,10 @@ void CControlUI::SetBorderColor(DWORD dwBorderColor)
     Invalidate();
 }
 
-DWORD CControlUI::GetFocusBorderColor() const
-{
-    return m_dwFocusBorderColor;
-}
+//DWORD CControlUI::GetFocusBorderColor() const
+//{
+//    return m_dwFocusBorderColor;
+//}
 
 void CControlUI::SetFocusBorderColor(DWORD dwBorderColor)
 {
@@ -189,10 +189,10 @@ void CControlUI::SetFocusBorderColor(DWORD dwBorderColor)
     Invalidate();
 }
 
-bool CControlUI::IsColorHSL() const
-{
-    return m_bColorHSL;
-}
+//bool CControlUI::IsColorHSL() const
+//{
+//    return m_bColorHSL;
+//}
 
 void CControlUI::SetColorHSL(bool bColorHSL)
 {
@@ -202,10 +202,10 @@ void CControlUI::SetColorHSL(bool bColorHSL)
     Invalidate();
 }
 
-int CControlUI::GetBorderSize() const
-{
-    return m_nBorderSize;
-}
+//int CControlUI::GetBorderSize() const
+//{
+//    return m_nBorderSize;
+//}
 
 void CControlUI::SetBorderSize(int nSize)
 {
@@ -215,10 +215,10 @@ void CControlUI::SetBorderSize(int nSize)
     Invalidate();
 }
 
-SIZE CControlUI::GetBorderRound() const
-{
-    return m_cxyBorderRound;
-}
+//SIZE CControlUI::GetBorderRound() const
+//{
+//    return m_cxyBorderRound;
+//}
 
 void CControlUI::SetBorderRound(SIZE cxyRound)
 {
@@ -231,10 +231,10 @@ bool CControlUI::DrawImage(HDC hDC, LPCTSTR pStrImage, LPCTSTR pStrModify)
     return CRenderEngine::DrawImageString(hDC, m_pManager, m_rcItem, m_rcPaint, pStrImage, pStrModify);
 }
 
-const RECT& CControlUI::GetPos() const
-{
-    return m_rcItem;
-}
+//const RECT& CControlUI::GetPos() const
+//{
+//    return m_rcItem;
+//}
 
 void CControlUI::SetPos(RECT rc)
 {
@@ -594,18 +594,16 @@ void CControlUI::Invalidate()
         rcTemp = invalidateRc;
         rcParent = pParent->GetPos();
         if( !::IntersectRect(&invalidateRc, &rcTemp, &rcParent) ) 
-        {
             return;
-        }
     }
 
     if( m_pManager != NULL ) m_pManager->Invalidate(invalidateRc);
 }
 
-bool CControlUI::IsUpdateNeeded() const
-{
-    return m_bUpdateNeeded;
-}
+//bool CControlUI::IsUpdateNeeded() const
+//{
+//    return m_bUpdateNeeded;
+//}
 
 void CControlUI::NeedUpdate()
 {
@@ -851,9 +849,12 @@ void CControlUI::DoPaint(HDC hDC, const RECT& rcPaint)
 
 void CControlUI::PaintBkColor(HDC hDC)
 {
-    if( m_dwBackColor != 0 ) {
-        if( m_dwBackColor2 != 0 ) {
-            if( m_dwBackColor3 != 0 ) {
+    if( m_dwBackColor != 0 )
+	{
+        if( m_dwBackColor2 != 0 )
+		{
+            if( m_dwBackColor3 != 0 )
+			{
                 RECT rc = m_rcItem;
                 rc.bottom = (rc.bottom + rc.top) / 2;
                 CRenderEngine::DrawGradient(hDC, rc, GetAdjustColor(m_dwBackColor), GetAdjustColor(m_dwBackColor2), true, 8);
@@ -864,8 +865,10 @@ void CControlUI::PaintBkColor(HDC hDC)
             else 
                 CRenderEngine::DrawGradient(hDC, m_rcItem, GetAdjustColor(m_dwBackColor), GetAdjustColor(m_dwBackColor2), true, 16);
         }
-        else if( m_dwBackColor >= 0xFF000000 ) CRenderEngine::DrawColor(hDC, m_rcPaint, GetAdjustColor(m_dwBackColor));
-        else CRenderEngine::DrawColor(hDC, m_rcItem, GetAdjustColor(m_dwBackColor));
+        else if( m_dwBackColor >= 0xFF000000 )
+			CRenderEngine::DrawColor(hDC, m_rcPaint, GetAdjustColor(m_dwBackColor));
+        else 
+			CRenderEngine::DrawColor(hDC, m_rcItem, GetAdjustColor(m_dwBackColor));
     }
 }
 
@@ -1012,10 +1015,10 @@ DWORD CControlUI::FormatToColor( LPCTSTR pstrValue )
 	return _tcstoul(pstrValue, 0, 16);
 }
 
-RECT CControlUI::FormatToRect( LPCTSTR pstrValue )
+CDUIRect CControlUI::FormatToRect( LPCTSTR pstrValue )
 {
-	RECT rc = { 0 };
-	LPTSTR pstr = NULL;
+	CDUIRect	rc;
+	LPTSTR		pstr = NULL;
 	rc.left		= _tcstol(pstrValue, &pstr, 10);  ASSERT(pstr);    
 	rc.top		= _tcstol(pstr + 1, &pstr, 10);    ASSERT(pstr);    
 	rc.right	= _tcstol(pstr + 1, &pstr, 10);  ASSERT(pstr);    

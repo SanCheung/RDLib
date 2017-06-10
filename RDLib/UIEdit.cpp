@@ -118,8 +118,10 @@ LRESULT CEditWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT lRes = 0;
 	BOOL bHandled = TRUE;
-	if( uMsg == WM_KILLFOCUS ) lRes = OnKillFocus(uMsg, wParam, lParam, bHandled);
-	else if( uMsg == OCM_COMMAND ) {
+	if( uMsg == WM_KILLFOCUS )
+		lRes = OnKillFocus(uMsg, wParam, lParam, bHandled);
+	else if( uMsg == OCM_COMMAND )
+	{
 		if( GET_WM_COMMAND_CMD(wParam, lParam) == EN_CHANGE ) 
 			lRes = OnEditChanged(uMsg, wParam, lParam, bHandled);
 		else if( GET_WM_COMMAND_CMD(wParam, lParam) == EN_UPDATE )
@@ -129,16 +131,20 @@ LRESULT CEditWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 			::InvalidateRect(m_hWnd, &rcClient, FALSE);
 		}
 	}
-	else if( uMsg == WM_KEYDOWN && TCHAR(wParam) == VK_RETURN ) {
+	else if( uMsg == WM_KEYDOWN && TCHAR(wParam) == VK_RETURN ) 
+	{
 		//m_pOwner->GetManager()->SendNotify(m_pOwner, _T("return"));
-		if(m_pOwner->m_bMultiLine ){
+		if(m_pOwner->m_bMultiLine )
+		{
 			bHandled = FALSE;
 		}
-		else{
+		else
+		{
 			m_pOwner->GetManager()->SendNotify(m_pOwner, _T("return"));	//UIE_KEY_RETURN);
 		}
 	}
-	else if( uMsg == OCM__BASE + WM_CTLCOLOREDIT  || uMsg == OCM__BASE + WM_CTLCOLORSTATIC ) {
+	else if( uMsg == OCM__BASE + WM_CTLCOLOREDIT  || uMsg == OCM__BASE + WM_CTLCOLORSTATIC )
+	{
 		if( m_pOwner->GetNativeEditBkColor() == 0xFFFFFFFF ) return NULL;
 		::SetBkMode((HDC)wParam, TRANSPARENT);
 		DWORD dwTextColor = m_pOwner->GetTextColor();
