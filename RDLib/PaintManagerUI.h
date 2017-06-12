@@ -174,6 +174,8 @@ public:
 
 	void OnPaint();
 
+	UINT MapKeyState();
+
 
 public:
 	static CControlUI* CALLBACK __FindControlFromNameHash(CControlUI* pThis, LPVOID pData);

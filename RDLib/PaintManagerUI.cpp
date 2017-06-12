@@ -2,17 +2,6 @@
 #include "PaintManagerUI.h"
 
 
-static UINT MapKeyState()
-{
-	UINT uState = 0;
-	if( ::GetKeyState(VK_CONTROL) < 0 ) uState |= MK_CONTROL;
-	if( ::GetKeyState(VK_RBUTTON) < 0 ) uState |= MK_LBUTTON;
-	if( ::GetKeyState(VK_LBUTTON) < 0 ) uState |= MK_RBUTTON;
-	if( ::GetKeyState(VK_SHIFT) < 0 ) uState |= MK_SHIFT;
-	if( ::GetKeyState(VK_MENU) < 0 ) uState |= MK_ALT;
-	return uState;
-}
-
 typedef struct tagFINDTABINFO
 {
 	CControlUI* pFocus;
@@ -1661,7 +1650,7 @@ TFontInfo* CPaintManagerUI::GetDefaultFontInfo()
 	if( m_pParentResourcePM ) 
 		return m_pParentResourcePM->GetDefaultFontInfo();
 
-	m_fontLib.GetDefaultFontInfo();
+	return m_fontLib.GetDefaultFontInfo();
 	//if( m_DefaultFontInfo.tm.tmHeight == 0 )
 	//{
 	//	HFONT hOldFont = (HFONT) ::SelectObject(m_hDcPaint, m_DefaultFontInfo.hFont);
@@ -2834,5 +2823,17 @@ void* CPaintManagerUI::mapsv_find( const mapsv &m, LPCTSTR str )
 		return nullptr;
 
 	return it->second;
+}
+
+
+UINT CPaintManagerUI::MapKeyState()
+{
+	UINT uState = 0;
+	if( ::GetKeyState(VK_CONTROL) < 0 ) uState |= MK_CONTROL;
+	if( ::GetKeyState(VK_RBUTTON) < 0 ) uState |= MK_LBUTTON;
+	if( ::GetKeyState(VK_LBUTTON) < 0 ) uState |= MK_RBUTTON;
+	if( ::GetKeyState(VK_SHIFT) < 0 ) uState |= MK_SHIFT;
+	if( ::GetKeyState(VK_MENU) < 0 ) uState |= MK_ALT;
+	return uState;
 }
 

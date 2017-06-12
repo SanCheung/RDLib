@@ -1414,7 +1414,8 @@ void CHorizontalLayoutUI::SetPos(RECT rc)
 
 void CHorizontalLayoutUI::DoPostPaint(HDC hDC, const RECT& rcPaint)
 {
-    if( (m_uButtonState & UISTATE_CAPTURED) != 0 && !m_bImmMode ) {
+    if( (m_uButtonState & UISTATE_CAPTURED) != 0 && !m_bImmMode )
+	{
         RECT rcSeparator = GetThumbRect(true);
         CRenderEngine::DrawColor(hDC, rcSeparator, 0xAA000000);
     }

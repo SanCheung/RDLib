@@ -580,6 +580,11 @@ CControlUI* CControlUI::FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFl
     return Proc(this, pData);
 }
 
+CControlUI* CControlUI::FindControl( LPCTSTR sName )
+{
+	return FindControl(CPaintManagerUI::__FindControlFromName, (LPVOID)sName, UIFIND_ALL);
+}
+
 void CControlUI::Invalidate()
 {
     if( !IsVisible() ) return;

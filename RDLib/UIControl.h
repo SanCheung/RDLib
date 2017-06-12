@@ -191,6 +191,7 @@ public:
     virtual void SetFloat(bool bFloat = true);
 	virtual void SetBorderState(int state);
 
+	virtual CControlUI* FindControl( LPCTSTR sName );
     virtual CControlUI* FindControl(FINDCONTROLPROC Proc, LPVOID pData, UINT uFlags);
 
     void Invalidate();

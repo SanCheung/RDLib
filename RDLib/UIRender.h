@@ -124,6 +124,18 @@ public:
     static void DrawHtmlText(HDC hDC, CPaintManagerUI* pManager, RECT& rc, LPCTSTR pstrText, 
         DWORD dwTextColor, int iFont, RECT* pLinks, CStringW* sLinks, int& nLinkRects, UINT uStyle);
     static HBITMAP GenerateBitmap(CPaintManagerUI* pManager, CControlUI* pControl, RECT rc);
+
+	static void RGBtoHSL(DWORD ARGB, float* H, float* S, float* L);
+	static void HSLtoRGB(DWORD* ARGB, float H, float S, float L);
+	static RECT AdjustForVerticalAlignment(HDC hdc, LPCTSTR text, RECT bounds, DWORD flags, LPDRAWTEXTPARAMS dtparams);
+	static COLORREF PixelAlpha(COLORREF clrSrc, double src_darken, COLORREF clrDest, double dest_darken);
+	static BOOL WINAPI AlphaBitBlt(HDC hDC, int nDestX, int nDestY, int dwWidth, int dwHeight, HDC hSrcDC, \
+		int nSrcX, int nSrcY, int wSrc, int hSrc, BLENDFUNCTION ftn);
+
+
+	static bool rdDrawImage(HDC hDC, CPaintManagerUI* pManager, const RECT& rc, const RECT& rcPaint, const CStringW& sImageName, \
+		const CStringW& sImageResType, RECT rcItem, RECT rcBmpPart, RECT rcCorner, DWORD dwMask, BYTE bFade, \
+		bool bHole, bool bTiledX, bool bTiledY);
 };
 
 //} // namespace DuiLib

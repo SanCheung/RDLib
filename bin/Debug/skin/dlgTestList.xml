@@ -6,7 +6,7 @@
   <Include source="ctrl.xml" />
 
   <HBox>
-    <HBox width="200" maxwidth="300" minwidth="100" sepwidth="10" sepimm="true" >
+    <HBox width="200" maxwidth="300" minwidth="100" sepwidth="5" sepimm111="true" >
       <VBox bkcolor="#ffAFAFAF" inset="10,0,10,0" childpadding="1"  >
           <Control height="20"/>
           <Button name="bn1" text="测试List" hottextcolor1="#FFFF0000"/>

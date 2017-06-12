@@ -362,7 +362,8 @@ LRESULT CDialogBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			LPNMHDR pNMHDR = (LPNMHDR)lParam;
 			HWND hChild = pNMHDR->hwndFrom;
-			if (hChild){
+			if (hChild)
+			{
 				::SendMessage(hChild, OCM__BASE+WM_NOTIFY, wParam, lParam);
 			}
 		}

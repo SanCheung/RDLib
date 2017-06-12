@@ -112,7 +112,8 @@ void CRenderClip::UseOldClipEnd(HDC hDC, CRenderClip& clip)
 
 static const float OneThird = 1.0f / 3;
 
-static void RGBtoHSL(DWORD ARGB, float* H, float* S, float* L) {
+void CRenderEngine::RGBtoHSL(DWORD ARGB, float* H, float* S, float* L)
+{
     const float
         R = (float)GetRValue(ARGB),
         G = (float)GetGValue(ARGB),
@@ -135,7 +136,7 @@ static void RGBtoHSL(DWORD ARGB, float* H, float* S, float* L) {
     }
 }
 
-static void HSLtoRGB(DWORD* ARGB, float H, float S, float L) {
+void CRenderEngine::HSLtoRGB(DWORD* ARGB, float H, float S, float L) {
     const float
         q = 2*L<1?L*(1+S):(L+S-L*S),
         p = 2*L-q,
@@ -153,7 +154,7 @@ static void HSLtoRGB(DWORD* ARGB, float H, float S, float L) {
     *ARGB |= RGB( (BYTE)(R<0?0:(R>255?255:R)), (BYTE)(G<0?0:(G>255?255:G)), (BYTE)(B<0?0:(B>255?255:B)) );
 }
 
-static COLORREF PixelAlpha(COLORREF clrSrc, double src_darken, COLORREF clrDest, double dest_darken)
+COLORREF CRenderEngine::PixelAlpha(COLORREF clrSrc, double src_darken, COLORREF clrDest, double dest_darken)
 {
     return RGB (GetRValue (clrSrc) * src_darken + GetRValue (clrDest) * dest_darken, 
         GetGValue (clrSrc) * src_darken + GetGValue (clrDest) * dest_darken, 
@@ -161,7 +162,7 @@ static COLORREF PixelAlpha(COLORREF clrSrc, double src_darken, COLORREF clrDest,
 
 }
 
-static BOOL WINAPI AlphaBitBlt(HDC hDC, int nDestX, int nDestY, int dwWidth, int dwHeight, HDC hSrcDC, \
+BOOL WINAPI CRenderEngine::AlphaBitBlt(HDC hDC, int nDestX, int nDestY, int dwWidth, int dwHeight, HDC hSrcDC, \
                         int nSrcX, int nSrcY, int wSrc, int hSrc, BLENDFUNCTION ftn)
 {
     HDC hTempDC = ::CreateCompatibleDC(hDC);
@@ -816,9 +817,11 @@ void CRenderEngine::DrawImage(HDC hDC, HBITMAP hBitmap, const RECT& rc, const RE
 }
 
 
-bool rdDrawImage(HDC hDC, CPaintManagerUI* pManager, const RECT& rc, const RECT& rcPaint, const CStringW& sImageName, \
-		const CStringW& sImageResType, RECT rcItem, RECT rcBmpPart, RECT rcCorner, DWORD dwMask, BYTE bFade, \
-		bool bHole, bool bTiledX, bool bTiledY)
+bool CRenderEngine::rdDrawImage(HDC hDC, CPaintManagerUI* pManager, const RECT& rc, 
+	const RECT& rcPaint, const CStringW& sImageName,
+	const CStringW& sImageResType, RECT rcItem, RECT rcBmpPart, 
+	RECT rcCorner, DWORD dwMask, BYTE bFade,
+	bool bHole, bool bTiledX, bool bTiledY)
 {
 	const TImageInfo* data = NULL;
 	if( sImageResType.IsEmpty() ) {
@@ -1111,7 +1114,7 @@ void CRenderEngine::DrawRoundRect(HDC hDC, const RECT& rc, int nSize, int width,
     ::DeleteObject(hPen);
 }
 
-RECT AdjustForVerticalAlignment(HDC hdc, LPCTSTR text, RECT bounds, DWORD flags, LPDRAWTEXTPARAMS dtparams)
+RECT CRenderEngine::AdjustForVerticalAlignment(HDC hdc, LPCTSTR text, RECT bounds, DWORD flags, LPDRAWTEXTPARAMS dtparams)
 {
 	if (((((flags & DT_BOTTOM) == DT_TOP) && ((flags & DT_VCENTER) == DT_TOP)) || ((flags & DT_SINGLELINE) != DT_TOP)) || ((flags & DT_CALCRECT) != DT_TOP))
 	{
