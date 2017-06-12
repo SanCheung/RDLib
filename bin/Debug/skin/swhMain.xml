@@ -75,7 +75,7 @@
 
       <VBox>
         <Control />
-        <Combo name="cbClient" width="200" height="20" itemtextpadding="10,0,20,0">
+        <Combo name="cbClient" width="200" height="20" itemtextpadding="10,0,20,0" itemfont="1" >
           <ListLabelElement text="北京" />
           <ListLabelElement text="上海" />
           <ListLabelElement text="广州" />

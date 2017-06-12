@@ -277,6 +277,12 @@ LRESULT CDialogBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 //#endif
 
 	CControlUI* pRoot = builder.Create( (LPCTSTR)tstrSkin, (UINT)0, this, &paint_manager_);
+	if( pRoot == NULL )
+	{
+		MsgBox( L"XMLΩ‚Œˆ ß∞‹£¨«ÎºÏ≤È£°" );
+		return 0;
+	}
+
 	paint_manager_.AttachDialog(pRoot);
 	paint_manager_.AddNotifier(this);
 

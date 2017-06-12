@@ -536,9 +536,11 @@ CControlUI* CDialogBuilder::CreateFromXML(IDialogBuilderCallback* pCallback, CPa
 {
 	m_pCallback = pCallback;
 	CMarkupNode root = m_xml.GetRoot();
-	if( !root.IsValid() ) return NULL;
+	if( !root.IsValid() )
+		return NULL;
 
-	if( pManager ) {
+	if( pManager ) 
+	{
 		LPCTSTR pstrClass = NULL;
 		int nAttributes = 0;
 		LPCTSTR pstrName = NULL;

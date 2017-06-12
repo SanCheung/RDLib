@@ -1,6 +1,7 @@
 #pragma once
 
 //#include "StringPtrMap.h"
+#include "UIFontLib.h"
 
 #define			WM_RDLIB_CLEANUP			WM_APP+1
 
@@ -37,13 +38,13 @@ public:
 	CDUISize GetRoundCorner() const;
 	void SetRoundCorner(int cx, int cy);
 
-	CDUISize GetMinInfo() const	{ return m_szMinWindow; }
+	CDUISize GetMinInfo() const					{ return m_szMinWindow; }
 	void SetMinInfo(int cx, int cy);
 
-	CDUISize GetMaxInfo() const { return m_szMinWindow; }
+	CDUISize GetMaxInfo() const					{ return m_szMinWindow; }
 	void SetMaxInfo(int cx, int cy);
 
-	int GetTransparent() const;
+	int GetTransparent() const					{ return m_nOpacity; }
 	void SetTransparent(int nOpacity);
 
 	void SetBackgroundTransparent(bool bTrans);
@@ -64,8 +65,10 @@ public:
 	void SetDefaultLinkFontColor(DWORD dwColor);
 	DWORD GetDefaultLinkHoverFontColor() const;
 	void SetDefaultLinkHoverFontColor(DWORD dwColor);
+
 	DWORD GetDefaultSelectedBkColor() const;
 	void SetDefaultSelectedBkColor(DWORD dwColor);
+
 	TFontInfo* GetDefaultFontInfo();
 	void SetDefaultFont(LPCTSTR pStrFontName, int nSize, bool bBold, bool bUnderline, bool bItalic);
 	DWORD GetCustomFontCount() const;
@@ -87,6 +90,7 @@ public:
 	TFontInfo* GetFontInfo(int index);
 	TFontInfo* GetFontInfo(HFONT hFont);
 
+
 	const TImageInfo* GetImage(LPCTSTR bitmap);
 	const TImageInfo* GetImageEx(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0);
 	const TImageInfo* AddImage(LPCTSTR bitmap, LPCTSTR type = NULL, DWORD mask = 0);
@@ -95,6 +99,7 @@ public:
 	bool RemoveImage(LPCTSTR bitmap);
 	void RemoveAllImages();
 	void ReloadAllImages();
+
 
 	void AddDefaultAttributeList(LPCTSTR pStrControlName, LPCTSTR pStrControlAttrList);
 	LPCTSTR GetDefaultAttributeList(LPCTSTR pStrControlName);
@@ -193,6 +198,7 @@ private:
 	HWND m_hwndTooltip;
 	TOOLINFO m_ToolTip;
 	bool m_bShowUpdateRect;
+
 	//
 	CControlUI* m_pRoot;
 	CControlUI* m_pFocus;
@@ -272,9 +278,13 @@ private:
 	DWORD m_dwDefaultLinkHoverFontColor;
 	DWORD m_dwDefaultSelectedBkColor;
 	DWORD m_dwBorderColor;
-	TFontInfo m_DefaultFontInfo;
 
-	vectorv		m_aCustomFonts;
+
+	CUIFontLib	m_fontLib;
+
+	//TFontInfo m_DefaultFontInfo;
+	//vectorv	m_aCustomFonts;
+
 	mapsv		m_mImageHash;
 	mapsv		m_DefaultAttrHash;
 

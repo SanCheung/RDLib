@@ -100,6 +100,7 @@
     <ClInclude Include="UIDelegate.h" />
     <ClInclude Include="UIDlgBuilder.h" />
     <ClInclude Include="UIEdit.h" />
+    <ClInclude Include="UIFontLib.h" />
     <ClInclude Include="UIList.h" />
     <ClInclude Include="UIMarkup.h" />
     <ClInclude Include="UIRender.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="UIDelegate.cpp" />
     <ClCompile Include="UIDlgBuilder.cpp" />
     <ClCompile Include="UIEdit.cpp" />
+    <ClCompile Include="UIFontLib.cpp" />
     <ClCompile Include="UIList.cpp" />
     <ClCompile Include="UIMarkup.cpp" />
     <ClCompile Include="UIRender.cpp" />
