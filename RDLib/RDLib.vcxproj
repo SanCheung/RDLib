@@ -85,6 +85,7 @@
     <ClInclude Include="CheckBoxUI.h" />
     <ClInclude Include="DialogBase.h" />
     <ClInclude Include="LabelUI.h" />
+    <ClInclude Include="OcxSite.h" />
     <ClInclude Include="OptionUI.h" />
     <ClInclude Include="PaintManagerUI.h" />
     <ClInclude Include="ProgressUI.h" />
@@ -106,6 +107,7 @@
     <ClInclude Include="UIRender.h" />
     <ClInclude Include="WindowWnd.h" />
     <ClInclude Include="WndShadow.h" />
+    <ClInclude Include="WndUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppData.cpp" />
@@ -121,6 +123,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="LabelUI.cpp" />
+    <ClCompile Include="OcxSite.cpp" />
     <ClCompile Include="OptionUI.cpp" />
     <ClCompile Include="PaintManagerUI.cpp" />
     <ClCompile Include="ProgressUI.cpp" />
@@ -143,6 +146,7 @@
     <ClCompile Include="UIRender.cpp" />
     <ClCompile Include="WindowWnd.cpp" />
     <ClCompile Include="WndShadow.cpp" />
+    <ClCompile Include="WndUI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

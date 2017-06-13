@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "SwhMainLayout.h"
 #include "DlgTestList.h"
+#include "BarCodeOcxUI.h"
 
 
 CSwhMainLayout::CSwhMainLayout(void)
@@ -14,6 +15,12 @@ CSwhMainLayout::~CSwhMainLayout(void)
 
 CControlUI* CSwhMainLayout::CreateControl( LPCTSTR pstrClass )
 {
+	if( EQUSTR( pstrClass, L"ocx" ) )
+	{
+		m_ocx = CBarCodeOcxUI::CreateUI( m_hWnd );
+		return m_ocx->GetHostUI();
+	}
+
 	return NULL;
 }
 
@@ -31,6 +38,8 @@ void CSwhMainLayout::Init()
 	paint_manager_.SetDefaultLinkHoverFontColor( 0xFF000000 );
 
 	FindCtrl<CTextUI>( L"tx" )->SetText( L"{c #FF0000}{f 2}  {c #00FF00}xyz{/c}  {a app:notepad}hello{/a}  {f 1}abc{/f}  {a 2}world{/a}{/f}{/c}" );
+
+	m_ocx->SetValue( L"" );
 }
 
 void CSwhMainLayout::Notify( TNotifyUI& msg )

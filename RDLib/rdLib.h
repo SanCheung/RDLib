@@ -95,5 +95,9 @@ typedef pair<wstring, void*>	pairsv;
 #include "CheckBoxUI.h"
 #include "OptionUI.h"
 
+#include "WndUI.h"
+#include "OcxSite.h"
+
+
 #include "UIDlgBuilder.h"
 #include "DialogBase.h"

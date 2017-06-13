@@ -81,6 +81,7 @@
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BarCodeOcxUI.h" />
     <ClInclude Include="ComboUIEx.h" />
     <ClInclude Include="CommListElementUI.h" />
     <ClInclude Include="CustomListElementUI.h" />
@@ -100,6 +101,7 @@
     <ClInclude Include="VoteListElementUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BarCodeOcxUI.cpp" />
     <ClCompile Include="ComboUIEx.cpp" />
     <ClCompile Include="CommListElementUI.cpp" />
     <ClCompile Include="CustomListElementUI.cpp" />

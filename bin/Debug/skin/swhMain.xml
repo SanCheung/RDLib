@@ -93,6 +93,8 @@
         <Control />
         <Text name="tx" showhtml="true" hcenter="false" />
         <Control />
+        <ocx height="300" />
+        <Control />
       </VBox>
 
       <Control width="1" bkcolor="#FFfa6d00" />
