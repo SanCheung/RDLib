@@ -2,7 +2,7 @@
 #include "SwhMainLayout.h"
 #include "DlgTestList.h"
 #include "BarCodeOcxUI.h"
-
+#include "IconPathViewD2UI.h"
 
 CSwhMainLayout::CSwhMainLayout(void)
 {
@@ -19,6 +19,11 @@ CControlUI* CSwhMainLayout::CreateControl( LPCTSTR pstrClass )
 	{
 		m_ocx = CBarCodeOcxUI::CreateUI( m_hWnd );
 		return m_ocx->GetHostUI();
+	}
+	else if( EQUSTR( pstrClass, L"IconPathView") )
+	{
+		m_pIPV = CIconPathViewD2UI::CreateUI( m_hWnd );
+		return m_pIPV->GetHostUI();
 	}
 
 	return NULL;
@@ -40,6 +45,7 @@ void CSwhMainLayout::Init()
 	FindCtrl<CTextUI>( L"tx" )->SetText( L"{c #FF0000}{f 2}  {c #00FF00}xyz{/c}  {a app:notepad}hello{/a}  {f 1}abc{/f}  {a 2}world{/a}{/f}{/c}" );
 
 	m_ocx->SetValue( L"" );
+	m_pIPV->InitAllImage();
 }
 
 void CSwhMainLayout::Notify( TNotifyUI& msg )
@@ -49,9 +55,14 @@ void CSwhMainLayout::Notify( TNotifyUI& msg )
 
 	if( strType == L"click")
 	{
-		if( strSenderName == L"bn1" )
+		if( strSenderName == L"bnClose" )
 		{
 			PostQuitMessage( 1 );
+		}
+		if( strSenderName == L"bnMax" )
+		{
+			BOOL bZoomed = ::IsZoomed(m_hWnd);
+			SendMessage(WM_SYSCOMMAND, bZoomed?SC_RESTORE:SC_MAXIMIZE, 0);
 		}
 		else if( strSenderName == L"bnLeftHandle" )
 		{
@@ -89,6 +100,13 @@ void CSwhMainLayout::Notify( TNotifyUI& msg )
 		CCheckBoxUI *pCk = FindCtrl<CCheckBoxUI>( L"bnL2" );
 		CVerticalLayoutUI *pVL = FindCtrl<CVerticalLayoutUI>( L"vlL2Sub" );
 		pVL->SetVisible( pCk->IsCheck() );
+
+
+		CTabLayoutUI *pTabMain = FindCtrl<CTabLayoutUI>(L"tabMain");
+		if( L"bnL3" == strSenderName )
+			pTabMain->SelectItem( 1 );
+		else
+			pTabMain->SelectItem( 0 );
 	}
 	else if( strType == L"itemselect" )
 	{

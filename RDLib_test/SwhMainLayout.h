@@ -1,6 +1,8 @@
 #pragma once
 
 class CBarCodeOcxUI;
+class CIconPathViewD2UI;
+
 class CSwhMainLayout : public CDialogBase
 {
 public:
@@ -15,5 +17,7 @@ public:
 
 	CVerticalLayoutUI	*m_pVLHandle;
 	CBarCodeOcxUI *	m_ocx;
+
+	CIconPathViewD2UI	* m_pIPV;
 };
 

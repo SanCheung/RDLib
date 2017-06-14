@@ -16,9 +16,11 @@
     <!--top-->
     <HBox height="30" >
       <Control />
-      <Button name="bn2" width="30" height="30" text="Test" hottextcolor1="#FFFF0000" font="0" />
+      <Button name="bn2" width="30" height="30" text="Test" hottextcolor="#FFFF0000" font="0" />
       <Control />
-      <Button name="bn1" width="30" height="30" text="关闭" hottextcolor1="#FFFF0000" font="0" />
+      <Button name="bnMax" width="60" height="30" text="最大化" hottextcolor="#FFFF0000" font="0" />
+      <Control width="6" />
+      <Button name="bnClose" width="30" height="30" text="关闭" hottextcolor="#FFFF0000" font="0" />
       <Control width="6" />
     </HBox>
 
@@ -72,30 +74,40 @@
         <Control height="100" />
       </VBox>
 
-
-      <VBox>
-        <Control />
-        <Combo name="cbClient" width="200" height="20" itemtextpadding="10,0,20,0" itemfont="1" >
-          <ListLabelElement text="北京" />
-          <ListLabelElement text="上海" />
-          <ListLabelElement text="广州" />
-          <ListLabelElement text="深圳" />
-          <ListLabelElement text="杭州" />
-          <ListLabelElement text="西安" />
-          <ListLabelElement text="成都" />
-        </Combo>
-        <Control />
-        <HBox height="30" >
+      <TBox name="tabMain">
+        <VBox inset="5,5,5,5" borderround111="10, 10" bordersize="5" bordercolor="#FFff0000" focusbordercolor="#FF0000ff">
           <Control />
-          <Edit width="280" name="edAccount" normalimage ="file='ctrl/edit.png' corner='4,4,4,4'" />
+          <Combo name="cbClient" width="200" height="20" itemtextpadding="10,0,20,0" itemfont="1" >
+            <ListLabelElement text="北京" />
+            <ListLabelElement text="上海" />
+            <ListLabelElement text="广州" />
+            <ListLabelElement text="深圳" />
+            <ListLabelElement text="杭州" />
+            <ListLabelElement text="西安" />
+            <ListLabelElement text="成都" />
+          </Combo>
           <Control />
-        </HBox>
-        <Control />
-        <Text name="tx" showhtml="true" hcenter="false" />
-        <Control />
-        <ocx height="300" />
-        <Control />
-      </VBox>
+          <HBox height="30" >
+            <Control />
+            <Edit width="280" name="edAccount" normalimage ="file='ctrl/edit.png' corner='4,4,4,4'" />
+            <Control />
+          </HBox>
+          <Control />
+          <Text name="tx" showhtml="true" hcenter="false" />
+          <Control />
+          <HBox height="300" >
+            <Control width="50" />
+            <ocx />
+            <Control width="50" />
+          </HBox>
+          
+          <Control />
+        </VBox>
+        <VBox">
+          <IconPathView />
+        </VBox>
+      </TBox>
+      
 
       <Control width="1" bkcolor="#FFfa6d00" />
       

@@ -81,11 +81,14 @@
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="BarCodeOcxUI.h" />
     <ClInclude Include="ComboUIEx.h" />
     <ClInclude Include="CommListElementUI.h" />
     <ClInclude Include="CustomListElementUI.h" />
+    <ClInclude Include="D2dEngine.h" />
     <ClInclude Include="DlgTestList.h" />
+    <ClInclude Include="IconPathViewD2UI.h" />
     <ClInclude Include="ListHortElementUI.h" />
     <ClInclude Include="ListLabelElementUIEx.h" />
     <ClInclude Include="MainDlg.h" />
@@ -101,11 +104,14 @@
     <ClInclude Include="VoteListElementUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BarCodeOcxUI.cpp" />
     <ClCompile Include="ComboUIEx.cpp" />
     <ClCompile Include="CommListElementUI.cpp" />
     <ClCompile Include="CustomListElementUI.cpp" />
+    <ClCompile Include="D2dEngine.cpp" />
     <ClCompile Include="DlgTestList.cpp" />
+    <ClCompile Include="IconPathViewD2UI.cpp" />
     <ClCompile Include="ListHortElementUI.cpp" />
     <ClCompile Include="ListLabelElementUIEx.cpp" />
     <ClCompile Include="MainDlg.cpp" />
