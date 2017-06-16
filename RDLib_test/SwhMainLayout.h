@@ -2,6 +2,7 @@
 
 class CBarCodeOcxUI;
 class CIconPathViewD2UI;
+class CD2ViewUI;
 
 class CSwhMainLayout : public CDialogBase
 {
@@ -18,6 +19,7 @@ public:
 	CVerticalLayoutUI	*m_pVLHandle;
 	CBarCodeOcxUI *	m_ocx;
 
-	CIconPathViewD2UI	* m_pIPV;
+	CIconPathViewD2UI	*m_pIPV;
+	CD2ViewUI			*m_pView;
 };
 

@@ -3,6 +3,7 @@
 #include "DlgTestList.h"
 #include "BarCodeOcxUI.h"
 #include "IconPathViewD2UI.h"
+#include "D2ViewUI.h"
 
 CSwhMainLayout::CSwhMainLayout(void)
 {
@@ -25,7 +26,11 @@ CControlUI* CSwhMainLayout::CreateControl( LPCTSTR pstrClass )
 		m_pIPV = CIconPathViewD2UI::CreateUI( m_hWnd );
 		return m_pIPV->GetHostUI();
 	}
-
+	else if( EQUSTR( pstrClass, L"D2View") )
+	{
+		m_pView = CD2ViewUI::CreateUI( m_hWnd );
+		return m_pView->GetHostUI();
+	}
 	return NULL;
 }
 
@@ -46,6 +51,8 @@ void CSwhMainLayout::Init()
 
 	m_ocx->SetValue( L"" );
 	m_pIPV->InitAllImage();
+
+	m_pView->InitAllImage();
 }
 
 void CSwhMainLayout::Notify( TNotifyUI& msg )
@@ -105,6 +112,8 @@ void CSwhMainLayout::Notify( TNotifyUI& msg )
 		CTabLayoutUI *pTabMain = FindCtrl<CTabLayoutUI>(L"tabMain");
 		if( L"bnL3" == strSenderName )
 			pTabMain->SelectItem( 1 );
+		else if( L"bnL4" == strSenderName )
+			pTabMain->SelectItem( 2 );
 		else
 			pTabMain->SelectItem( 0 );
 	}

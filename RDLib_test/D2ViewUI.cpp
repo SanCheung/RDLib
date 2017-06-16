@@ -1,5 +1,6 @@
-#include "stdAfx.h"
-#include "IconPathViewD2UI.h"
+#include "StdAfx.h"
+#include "D2ViewUI.h"
+
 #include "WndUI.h"
 
 #include <math.h>
@@ -7,7 +8,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-CIconPathViewD2UI::CIconPathViewD2UI(void)
+CD2ViewUI::CD2ViewUI(void)
 	//: _at( ImageState( 100.f, 100.f, 100.f, 100.f, 0.f, .5f ),
 	//	   ImageState( 500.f, 200.f, 200.f, 200.f, 0.f, 1.f ),
 	//	   50 )
@@ -31,7 +32,7 @@ CIconPathViewD2UI::CIconPathViewD2UI(void)
 }
 
 
-CIconPathViewD2UI::~CIconPathViewD2UI(void)
+CD2ViewUI::~CD2ViewUI(void)
 {
 	_asImageFile.clear();
 	_asText.clear();
@@ -49,52 +50,30 @@ CIconPathViewD2UI::~CIconPathViewD2UI(void)
 	_de.d2_safe_release( _d2sb );
 }
 
-LRESULT CIconPathViewD2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
+LRESULT CD2ViewUI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	LRESULT lResult = 0;
 	BOOL handled = FALSE;
 	if(uMsg == WM_PAINT)
 	{
-		//PAINTSTRUCT ps;
-		//HDC hDC = BeginPaint(*this, &ps);
-		//DoPaint(hDC);
-		//EndPaint(*this, &ps);
-		//handled = TRUE;
-
-		//if( _dw._pBmpBK == nullptr )
-		//{
-		//	// 停止绘制
-		//	HWND	hWnd = GetHWND();
-		//	PAINTSTRUCT ps = { 0 };
-		//	HDC hdc = ::BeginPaint( hWnd, &ps);
-		//	::EndPaint(hWnd, &ps);
-		//}
-		//else
+		_de.d2Draw( this );
+		if( _animing )
 		{
-			//_dw.draw2( this );
-			_de.d2Draw( this );
-
-			if( _animing )
-			{
-				AniProc();
-			}
-			else
-			{
-				// 停止绘制
-				HWND	hWnd = GetHWND();
-				PAINTSTRUCT ps = { 0 };
-				HDC hdc = ::BeginPaint( hWnd, &ps);
-				::EndPaint(hWnd, &ps);
-			}
+			AniProc();
 		}
-
-
+		else
+		{
+			// 停止绘制
+			HWND	hWnd = GetHWND();
+			PAINTSTRUCT ps = { 0 };
+			HDC hdc = ::BeginPaint( hWnd, &ps);
+			::EndPaint(hWnd, &ps);
+		}
 
 		handled = TRUE;
 	}
 	else if( uMsg == WM_LBUTTONDBLCLK )
 	{
-		// 双击
 		m_pHost->SetFocus();
 		SetFocus(m_hWnd);
 
@@ -119,7 +98,6 @@ LRESULT CIconPathViewD2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lPara
 		m_bMouseDown = true;
 		OnLButtonDown(nFlags, point);
 
-		//_dw.reset();
 		InvalidateRect( GetHWND(), NULL, FALSE );
 	}
 	else if( uMsg == WM_LBUTTONUP )
@@ -138,13 +116,8 @@ LRESULT CIconPathViewD2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lPara
 	}
 	else if( uMsg == WM_MOUSEMOVE )
 	{
-		UINT	nFlags = 0;
-		POINT	point;
-
-		nFlags = (UINT)wParam;
-		point.x = GET_X_LPARAM(lParam);
-		point.y = GET_Y_LPARAM(lParam);
-
+		UINT	nFlags = (UINT)wParam;
+		POINT	point  = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 		OnMouseMove(nFlags, point);
 	}
 	else if( uMsg == WM_KILLFOCUS )
@@ -152,29 +125,22 @@ LRESULT CIconPathViewD2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lPara
 		lResult = 1;
 		handled = TRUE;
 	}
-	else if( uMsg == WM_TIMER )
-	{
-		AniProc();
-		lResult = 1;
-		handled = TRUE;
-	}
+	//else if( uMsg == WM_TIMER )
+	//{
+	//	AniProc();
+	//	lResult = 1;
+	//	handled = TRUE;
+	//}
 	else if( uMsg == WM_SIZE )
 	{
 		lResult = 1;
 		handled = TRUE;
-
-		////CDUIRect	rt;
-		////GetClientRect( m_hWnd, &rt );
-		////ATLTRACE( L"%d %d\n", rt.GetWidth(), rt.GetHeight() );
 
 		int w = LOWORD(lParam);
 		int h = HIWORD(lParam);
 
 		if( w > 0 && h > 0 )
 		{
-			//_dw.InitD2d( GetHWND() );
-			//_dw.resize( w, h );
-
 			_de.d2InitHRT( GetHWND() );
 			_de.d2Resize( w, h );
 			InitImageStateArray();
@@ -200,7 +166,7 @@ LRESULT CIconPathViewD2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lPara
 
 
 
-void CIconPathViewD2UI::InitImageStateArray()
+void CD2ViewUI::InitImageStateArray()
 {
 	if( _asImageFile.empty() )
 		return;
@@ -290,7 +256,7 @@ void CIconPathViewD2UI::InitImageStateArray()
 
 
 
-void CIconPathViewD2UI::DrawImageByState( Graphics *pGr, shared_ptr<Image> sp, ImageState *s )
+void CD2ViewUI::DrawImageByState( Graphics *pGr, shared_ptr<Image> sp, ImageState *s )
 {
 	//if( s->_a == 0 )
 	//	return;
@@ -348,7 +314,7 @@ void CIconPathViewD2UI::DrawImageByState( Graphics *pGr, shared_ptr<Image> sp, I
 }
 
 
-void CIconPathViewD2UI::DrawTextByState( Graphics *pGr, CStringW strText, ImageState *s )
+void CD2ViewUI::DrawTextByState( Graphics *pGr, CStringW strText, ImageState *s )
 {
 	Font			ft( L"微软雅黑", 18 );
 	StringFormat	sf;
@@ -368,20 +334,7 @@ void CIconPathViewD2UI::DrawTextByState( Graphics *pGr, CStringW strText, ImageS
 }
 
 
-//void CIconPathViewD2UI::DrawUseD2d()
-//{
-//	CDUIRect	rt;
-//	GetClientRect( m_hWnd, &rt );
-//
-//	float w = (float)rt.GetWidth();
-//	float h = (float)rt.GetHeight();
-//
-//	_dw.DrawImage( _dw._pBmpBK, 0, 0, w, h )
-//}
-//
-
-
-void CIconPathViewD2UI::DoDraw()
+void CD2ViewUI::DoDraw()
 {
 	CDUIRect	rt;
 	GetClientRect( m_hWnd, &rt );
@@ -389,7 +342,6 @@ void CIconPathViewD2UI::DoDraw()
 	int w = rt.GetWidth();
 	int h = rt.GetHeight();
 
-	//_dw.DrawImage( _dw._pBmpBK, 0, 0, w, h );
 	_de.d2DrawBitmap( _spBK2, 0, 0, (float)w, (float)h );
 
 	for( int i = 0; i < 5; i++ )
@@ -404,7 +356,6 @@ void CIconPathViewD2UI::DoDraw()
 		if( aj_valid() )
 			s = aj_getIs( i );
 
-		//_dw.DrawItem( strImageFile, strText, s );
 		d2DrawItem( strImageFile, strText, s );
 	}
 
@@ -416,7 +367,7 @@ void CIconPathViewD2UI::DoDraw()
 
 
 
-void CIconPathViewD2UI::Draw( Graphics &g )
+void CD2ViewUI::Draw( Graphics &g )
 {
 	g.SetSmoothingMode( _animing ? SmoothingModeHighSpeed : SmoothingModeAntiAlias);
 
@@ -439,23 +390,6 @@ void CIconPathViewD2UI::Draw( Graphics &g )
 		return;
 	}
 
-	//for( int i = 0; i < 5; i++ )
-	//{
-	//	//int i = (7-_nOffsetIcon)%5;
-
-	//	CStringW	strImageFile = _asImageFile[i];
-	//	CStringW	strText = _asText[i];
-
-	//	int nDrawIndex = (i+_nOffsetIcon)%5;
-
-	//	ImageState	*s = &_iss[ nDrawIndex ];
-	//	if( aj_valid() )
-	//		s = aj_getIs( nDrawIndex );
-
-	//	shared_ptr<Image> sp = _mapImage.find(strImageFile)->second;
-	//	DrawImageByState( &g, sp, s );
-	//	DrawTextByState( &g, strText, s );
-	//}
 	for( int i = 0; i < 5; i++ )
 	{
 		int nObjectCount = GetObjectCount();
@@ -474,7 +408,7 @@ void CIconPathViewD2UI::Draw( Graphics &g )
 	}
 }
 
-void CIconPathViewD2UI::DoPaint( HDC hDC )
+void CD2ViewUI::DoPaint( HDC hDC )
 {
 	Graphics	g( hDC );
 	g.SetSmoothingMode( SmoothingModeHighSpeed );
@@ -489,11 +423,11 @@ void CIconPathViewD2UI::DoPaint( HDC hDC )
 	g.DrawImage( &bmp, 0, 0 );
 }
 
-void CIconPathViewD2UI::OnLButtonDown( UINT nFlags, POINT point )
+void CD2ViewUI::OnLButtonDown( UINT nFlags, POINT point )
 {
 }
 
-void CIconPathViewD2UI::OnLButtonUp( UINT nFlags, POINT point )
+void CD2ViewUI::OnLButtonUp( UINT nFlags, POINT point )
 {
 	if( _animing )
 		return;
@@ -514,50 +448,39 @@ void CIconPathViewD2UI::OnLButtonUp( UINT nFlags, POINT point )
 
 }
 
-void CIconPathViewD2UI::OnMouseMove( UINT nFlags, POINT point )
+void CD2ViewUI::OnMouseMove( UINT nFlags, POINT point )
 {
 
 }
 
-void CIconPathViewD2UI::OnDoubleClick( UINT nFlags, POINT point )
+void CD2ViewUI::OnDoubleClick( UINT nFlags, POINT point )
 {
 
 }
 
-CIconPathViewD2UI* CIconPathViewD2UI::CreateUI( HWND hWnd )
+CD2ViewUI* CD2ViewUI::CreateUI( HWND hWnd )
 {
-	CIconPathViewD2UI* pThis = new CIconPathViewD2UI;
+	CD2ViewUI* pThis = new CD2ViewUI;
 	pThis->Create( hWnd, L"", UI_WNDSTYLE_CHILD, 0 );
 
 	CControlUI *pControl = new CWndUI( pThis );
 	pThis->m_pHost = pControl;
 
-	//pThis->RegisterGestureDevice( hWnd );
-	//pThis->RegisterTouchDevice( hWnd );
 	return pThis;
 }
 
 
-void CIconPathViewD2UI::ReloadBKimage()
+void CD2ViewUI::ReloadBKimage()
 {
 	CStringW	strFolder = CAppData::GetInstancePath();
 	strFolder += _strIconSubFolder;
 
-	//_spBK.reset( Image::FromFile( strFolder + L"背景.png" ));
-	//_spIconBK.reset( Image::FromFile( strFolder + L"bgb.png" ) );
-
-	//_dw.AddFixImage( strFolder + L"背景.png", strFolder + L"bgb.png" );
-	//::InvalidateRect( m_hWnd, NULL, FALSE );
-
 	m_strFileBK = strFolder + L"背景.png" ;
 	m_strFileIconBK = strFolder + L"bgb.png";
-
-	//_spBK2 = _de.d2NewBitmap( strFolder + L"背景.png" );
-	//_spIconBK2 = _de.d2NewBitmap( strFolder + L"bgb.png" );
 }
 
 
-void CIconPathViewD2UI::AddIconAndText( CStringW strImageFile, CStringW strText )
+void CD2ViewUI::AddIconAndText( CStringW strImageFile, CStringW strText )
 {
 	_asImageFile.push_back( strImageFile );
 	_asText.push_back( strText );
@@ -565,28 +488,12 @@ void CIconPathViewD2UI::AddIconAndText( CStringW strImageFile, CStringW strText 
 	CStringW	strFolder = CAppData::GetInstancePath();
 	strFolder += _strIconSubFolder;
 
-	//auto it = _mapImage.find( strImageFile );
-	//if( it == _mapImage.end() )
-	//{
-	//	_mapImage.insert( pair< CStringW, shared_ptr<Image> >( 
-	//		strImageFile, Image::FromFile( strFolder + strImageFile ) ) );
-	//}
-
-	//auto it = _mapImage2.find( strImageFile );
-	//if( it == _mapImage2.end() )
-	//{
-	//	d2Bitmap *bmp = _de.d2NewBitmap( strFolder + strImageFile );
-	//	_mapImage2.insert( make_pair( strImageFile, bmp ) );
-	//}
-
 	auto it = _mapName2File.find( strImageFile );
 	if( it == _mapName2File.end() )
 		_mapName2File.insert( make_pair( strImageFile, strFolder + strImageFile ) );
-
-	//_dw.AddImageFile( strImageFile, strFolder + strImageFile );
 }
 
-void CIconPathViewD2UI::AniStart( bool bToRight, int nTime )
+void CD2ViewUI::AniStart( bool bToRight, int nTime )
 {
 	if( _animing )
 		return;
@@ -609,12 +516,10 @@ void CIconPathViewD2UI::AniStart( bool bToRight, int nTime )
 	_nTime = nTime;
 	_animing = true;
 
-	//::SetTimer( m_hWnd, IDT_ANIMATION, 10, NULL );
-
 	InvalidateRect( m_hWnd, NULL, FALSE );
 }
 
-void CIconPathViewD2UI::AniEnd()
+void CD2ViewUI::AniEnd()
 {
 	_animing = false;
 	_nTime = 0;
@@ -624,12 +529,9 @@ void CIconPathViewD2UI::AniEnd()
 		m_pHost->GetManager()->SendNotify( m_pHost,  L"itemclick", GetCurrentIndex() );
 		_bClickItem = false;
 	}
-
-	//::KillTimer( m_hWnd, IDT_ANIMATION );
-	//m_pHost->GetManager()->SendNotify( m_pHost,  L"positionchanged", GetCurrentIndex() );
 }
 
-void CIconPathViewD2UI::AniProc()
+void CD2ViewUI::AniProc()
 {
 	if( !aj_step() )
 	{
@@ -647,23 +549,19 @@ void CIconPathViewD2UI::AniProc()
 	}
 
 	Sleep(1);
-	
-	// direct2d无须定时刷新 
-	//::InvalidateRect( m_hWnd, NULL, FALSE );
 }
 
-void CIconPathViewD2UI::DrawBigPoint( Graphics *pGr, PointF pt, int size )
+void CD2ViewUI::DrawBigPoint( Graphics *pGr, PointF pt, int size )
 {
 	pGr->DrawEllipse( &Pen(Color::Red, 2), pt.X, pt.Y, (REAL)size, (REAL)size );
 }
 
-int CIconPathViewD2UI::GetCurrentIndex()
+int CD2ViewUI::GetCurrentIndex()
 {
-	//TRACE( L"%d", _nOffsetIcon );
 	return (2+_nOffsetIcon)%GetObjectCount();
 }
 
-CStringW CIconPathViewD2UI::GetTextByIndex( int i )
+CStringW CD2ViewUI::GetTextByIndex( int i )
 {
 	if( i < 0 || i >= (int)_asText.size() )
 		return L"";
@@ -671,20 +569,16 @@ CStringW CIconPathViewD2UI::GetTextByIndex( int i )
 	return _asText[i];
 }
 
-int CIconPathViewD2UI::GetObjectCount() const
+int CD2ViewUI::GetObjectCount() const
 {
 	return (int)_asImageFile.size();
 }
 
-int CIconPathViewD2UI::HitTest( int x, int y )
+int CD2ViewUI::HitTest( int x, int y )
 {
 	for( int i = 0; i < 5; i++ )
 	{
 		ImageState &s = _iss[i];
-
-		//CDUIRect	rt( int(s._x), int(s._y), 
-		//	int(s._x + s._w), 
-		//	int(s._y + s._h) );
 
 		CDUIRect	rt( int(s._x - s._w/2), int(s._y - s._h/2), 
 			int(s._x + s._w/2), 
@@ -697,7 +591,7 @@ int CIconPathViewD2UI::HitTest( int x, int y )
 	return -1;
 }
 
-void CIconPathViewD2UI::onPan( int dx, int dy )
+void CD2ViewUI::onPan( int dx, int dy )
 {
 	if( _bPanning )
 		return;
@@ -709,24 +603,14 @@ void CIconPathViewD2UI::onPan( int dx, int dy )
 }
 
 
-void CIconPathViewD2UI::onGestureEnd()
+void CD2ViewUI::onGestureEnd()
 {
 	_bPanning = false;
 }
 
 
-void CIconPathViewD2UI::InitAllImage()
+void CD2ViewUI::InitAllImage()
 {
-	//SetIconSubFolder( L"icons/" );
-	//ReloadBKimage();
-
-	//AddIconAndText( L"会务信息.png", L"会务信息" );
-	//AddIconAndText( L"会议资料.png", L"会议资料" );
-	//AddIconAndText( L"投票表决.png", L"投票表决" );
-	//AddIconAndText( L"视频服务.png", L"视频服务" );
-	//AddIconAndText( L"其它应用.png", L"其它应用" );
-
-	// 审委会图标
 	SetIconSubFolder( L"icons2/" );
 	ReloadBKimage();
 
@@ -737,7 +621,7 @@ void CIconPathViewD2UI::InitAllImage()
 	AddIconAndText( L"笔录校对.png", L"笔录校对" );
 }
 
-void CIconPathViewD2UI::d2DrawItem( CStringW strName, CStringW strText, ImageState *s )
+void CD2ViewUI::d2DrawItem( CStringW strName, CStringW strText, ImageState *s )
 {
 	// 面板
 	_de.d2DrawBitmap( _spIconBK2, s->_x-s->_w/2, s->_y-s->_h/2, s->_w, s->_h, 0.5f );
@@ -769,7 +653,7 @@ void CIconPathViewD2UI::d2DrawItem( CStringW strName, CStringW strText, ImageSta
 	_de.d2DrawBitmap( icon, s->_x-iw/2, s->_y-ih/2-20.f, iw, ih, s->_a );
 }
 
-void CIconPathViewD2UI::BuildAllBitmap()
+void CD2ViewUI::BuildAllBitmap()
 {
 	if( _spBK2 != nullptr )
 		return;
@@ -786,4 +670,5 @@ void CIconPathViewD2UI::BuildAllBitmap()
 	_d2Font = _de.d2NewFont( L"黑体", 24 );
 	_d2sb = _de.d2NewSolidBrush( RGB(255,255,255) );
 }
+
 

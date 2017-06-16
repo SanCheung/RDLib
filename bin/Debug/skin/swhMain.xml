@@ -103,8 +103,11 @@
           
           <Control />
         </VBox>
-        <VBox">
+        <VBox>
           <IconPathView />
+        </VBox>
+        <VBox>
+          <D2View />
         </VBox>
       </TBox>
       
