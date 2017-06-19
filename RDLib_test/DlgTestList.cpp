@@ -15,6 +15,8 @@
 //#include "MainDlg.h"
 //#include "ExitTPWindow.h"
 
+#include "NetTestWnd.h"
+
 CDlgTestList::CDlgTestList(void)
 	//: _wndET( nullptr )
 {
@@ -79,6 +81,8 @@ void CDlgTestList::Notify( TNotifyUI& msg )
 			////CSeatSettingDlg::TestCase( m_hWnd, L"Test!!!" );
 			//CMainDlg		dlg;
 			//dlg.DoModal( m_hWnd, L"hello" );
+
+			CNetTestWnd::Show();
 		}
 		else if( strSenderName == L"bn3" )
 		{
@@ -86,6 +90,7 @@ void CDlgTestList::Notify( TNotifyUI& msg )
 			//dlg.DoModal( m_hWnd, L"CTableMain" );
 
 			//CSeatArrangeDlg::TestCase( m_hWnd, L"Test!!!" );
+			CNetTestWnd::Hide();
 		}
 		else if( strSenderName == L"bn4" )
 		{

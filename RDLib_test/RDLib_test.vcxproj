@@ -89,11 +89,13 @@
     <ClInclude Include="D2dEngine.h" />
     <ClInclude Include="D2dObjectLib.h" />
     <ClInclude Include="D2ViewUI.h" />
+    <ClInclude Include="DlgNetTest.h" />
     <ClInclude Include="DlgTestList.h" />
     <ClInclude Include="IconPathViewD2UI.h" />
     <ClInclude Include="ListHortElementUI.h" />
     <ClInclude Include="ListLabelElementUIEx.h" />
     <ClInclude Include="MainDlg.h" />
+    <ClInclude Include="NetTestWnd.h" />
     <ClInclude Include="RDLib_test.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ServiceQueryELementUI.h" />
@@ -114,11 +116,13 @@
     <ClCompile Include="D2dEngine.cpp" />
     <ClCompile Include="D2dObjectLib.cpp" />
     <ClCompile Include="D2ViewUI.cpp" />
+    <ClCompile Include="DlgNetTest.cpp" />
     <ClCompile Include="DlgTestList.cpp" />
     <ClCompile Include="IconPathViewD2UI.cpp" />
     <ClCompile Include="ListHortElementUI.cpp" />
     <ClCompile Include="ListLabelElementUIEx.cpp" />
     <ClCompile Include="MainDlg.cpp" />
+    <ClCompile Include="NetTestWnd.cpp" />
     <ClCompile Include="RDLib_test.cpp" />
     <ClCompile Include="ServiceQueryELementUI.cpp" />
     <ClCompile Include="SQElementUI.cpp" />

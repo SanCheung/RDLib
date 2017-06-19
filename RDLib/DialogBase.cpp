@@ -293,7 +293,7 @@ LRESULT CDialogBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 		//ÃÌº”“ı”∞
 		CWndShadow::Initialize(CAppData::GetInstance());
 		m_shadow.Create(m_hWnd);
-		m_shadow.SetSize(5);
+		m_shadow.SetSize(2);
 		m_shadow.SetPosition(1, 1);
 	}
 

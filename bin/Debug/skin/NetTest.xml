@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" ?>
+<Window size="300,135" caption="0,0,0,48" roundcorner="2,2" font="0" >
+  <VBox bkcolor="#ff00a1d8" >
+    <Control height="38" />
+    <HBox height="32" >
+      <Control width="20" />
+      <Control name="icon" width="32" bkimage="net/net0.png" />
+      <Control width="20" />
+      <Label text="正在准备网络，请稍候..." textcolor="#FFffffff" />
+    </HBox>
+    <Control />
+    <HBox height="30" >
+      <Control />
+      <Button name="bn" width="74" normalimage="net/normal.png" hotimage="net/pressed.png" />
+      <Control width="20" />
+    </HBox>
+    <Control height="18" />
+  </VBox>
+ 
+</Window>

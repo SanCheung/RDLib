@@ -6,6 +6,7 @@
 #include "MainDlg.h"
 #include "DlgTestList.h"
 #include "SwhMainLayout.h"
+#include "DlgNetTest.h"
 
 
 //#include "commonstuff.hpp"
@@ -543,15 +544,23 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	CAppData::SetInstance(hInstance);
 	CAppData::SetResourcePath( CAppData::GetInstancePath() + L"skin/" );
 
-	CSwhMainLayout	*pMainWnd = new CSwhMainLayout;
-	//CMainDlg		*pMainWnd = new CMainDlg;
-	//CDlgTestList	*pMainWnd = new CDlgTestList;
-	//pMainWnd->Create( NULL, L"Title", UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE );
-	pMainWnd->Create( NULL, L"Title", WS_VISIBLE|WS_POPUPWINDOW, 0 );
-	pMainWnd->CenterWindow();
 
-	CAppData::MessageLoop();
-	DEL( pMainWnd );
+	//int nRet = CDlgNetTest::PopNetTestDlg();
+	//if( nRet == 2 )
+	//{
+	//	PostQuitMessage( 0 );
+	//}
+	//else
+	//{
+		CSwhMainLayout	*pMainWnd = new CSwhMainLayout;
+		//CMainDlg		*pMainWnd = new CMainDlg;
+		//CDlgTestList	*pMainWnd = new CDlgTestList;
+		//pMainWnd->Create( NULL, L"Title", UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE );
+		pMainWnd->Create( NULL, L"Title", WS_VISIBLE|WS_POPUPWINDOW, 0 );
+		pMainWnd->CenterWindow();
+		CAppData::MessageLoop();
+		DEL( pMainWnd );
+	//}
 
 	::GdiplusShutdown(token);
 	CoUninitialize();
