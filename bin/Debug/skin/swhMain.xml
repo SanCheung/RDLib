@@ -96,9 +96,9 @@
           <Text name="tx" showhtml="true" hcenter="false" />
           <Control />
           <HBox height="300" >
-            <Control width="50" />
+            <Control width="10" />
             <ocx />
-            <Control width="50" />
+            <Control width="10" />
           </HBox>
           
           <Control />

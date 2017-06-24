@@ -9,6 +9,31 @@ D2dObjectLib::D2dObjectLib(void)
 
 D2dObjectLib::~D2dObjectLib(void)
 {
+	clearAll();
+}
+
+void D2dObjectLib::clearAll()
+{
+	for( auto it = _imageLib.begin(); it != _imageLib.end(); ++it )
+	{
+		ID2D1Bitmap *bmp = it->second;
+		d2_safe_release<ID2D1Bitmap>( bmp );
+	}
+	_imageLib.clear();
+
+	for( auto it = _fontLib.begin(); it != _fontLib.end(); ++it )
+	{
+		IDWriteTextFormat *pWTF = *it;
+		d2_safe_release<IDWriteTextFormat>( pWTF );
+	}
+	_fontLib.clear();
+
+	for( auto it = _solidBrushLib.begin(); it != _solidBrushLib.end(); ++it )
+	{
+		ID2D1SolidColorBrush *pSB = *it;
+		d2_safe_release<ID2D1SolidColorBrush>( pSB );
+	}
+	_solidBrushLib.clear();
 }
 
 ID2D1Bitmap* D2dObjectLib::dl_getImage( LPCWSTR strFileName )
@@ -63,3 +88,5 @@ ID2D1SolidColorBrush* D2dObjectLib::dl_getSolidBrush( D2D1_COLOR_F cr )
 	_solidBrushLib.push_back( pBrush );
 	return pBrush;
 }
+
+

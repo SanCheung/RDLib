@@ -1,6 +1,6 @@
 #pragma once
 #include "Animation.h"
-#include "D2dEngine.h"
+#include "D2dObjectLib.h"
 
 class CD2ViewUI : public CHostableWnd
 				, public CAniJob
@@ -28,11 +28,11 @@ public:
 	int			GetObjectCount() const;
 
 private:
-	void	Draw( Graphics &g );
+	//void	Draw( Graphics &g );
 	void	DoDraw();
 
 	virtual LRESULT HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam );
-	void	DoPaint( HDC hDC );
+	//void	DoPaint( HDC hDC );
 	void	OnLButtonDown(UINT nFlags, POINT point);
 	void	OnLButtonUp(UINT nFlags, POINT point);
 	void	OnMouseMove(UINT nFlags, POINT point);
@@ -79,7 +79,7 @@ private:
 	bool		_animing;
 
 	//D2dWrap		_dw;
-	D2dEngine		_de;
+	D2dObjectLib	_de;
 
 	//shared_ptr<Image>		_sp;
 	ImageState			_iss[5];
@@ -88,9 +88,9 @@ private:
 	//int 		_alpha;
 	//CAniTask		_at;
 
-	void	DrawBigPoint( Graphics *pGr, PointF pt, int size=8 );
-	void	DrawImageByState( Graphics *pGr, shared_ptr<Image> sp, ImageState *s );
-	void	DrawTextByState( Graphics *pGr, CStringW strText, ImageState *s );
+	//void	DrawBigPoint( Graphics *pGr, PointF pt, int size=8 );
+	//void	DrawImageByState( Graphics *pGr, shared_ptr<Image> sp, ImageState *s );
+	//void	DrawTextByState( Graphics *pGr, CStringW strText, ImageState *s );
 
 	//bool	DoDraw();
 	//void	DrawUseD2d();

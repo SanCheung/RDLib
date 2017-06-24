@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RDLib_test", "RDLib_test\RD
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js_test", "js_test\js_test.vcxproj", "{AFABCA5F-8F9D-432F-B5D1-F9AE6C36EEF8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test2d", "test2d\test2d.vcxproj", "{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -38,6 +40,10 @@ Global
 		{AFABCA5F-8F9D-432F-B5D1-F9AE6C36EEF8}.Debug|Win32.Build.0 = Debug|Win32
 		{AFABCA5F-8F9D-432F-B5D1-F9AE6C36EEF8}.Release|Win32.ActiveCfg = Release|Win32
 		{AFABCA5F-8F9D-432F-B5D1-F9AE6C36EEF8}.Release|Win32.Build.0 = Release|Win32
+		{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}.Debug|Win32.Build.0 = Debug|Win32
+		{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}.Release|Win32.ActiveCfg = Release|Win32
+		{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

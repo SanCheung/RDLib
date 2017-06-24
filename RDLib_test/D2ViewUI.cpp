@@ -37,17 +37,17 @@ CD2ViewUI::~CD2ViewUI(void)
 	_asImageFile.clear();
 	_asText.clear();
 
-	_de.d2_safe_release( _spBK2 );
-	_de.d2_safe_release( _spIconBK2 );
-	for( auto it = _mapImage2.begin(); it != _mapImage2.end(); ++it )
-	{
-		d2Bitmap *bmp = it->second;
-		_de.d2_safe_release( bmp );
-	}
-	_mapImage2.clear();
+	//_de.d2_safe_release( _spBK2 );
+	//_de.d2_safe_release( _spIconBK2 );
+	//for( auto it = _mapImage2.begin(); it != _mapImage2.end(); ++it )
+	//{
+	//	d2Bitmap *bmp = it->second;
+	//	_de.d2_safe_release( bmp );
+	//}
+	//_mapImage2.clear();
 
-	_de.d2_safe_release( _d2Font );
-	_de.d2_safe_release( _d2sb );
+	//_de.d2_safe_release( _d2Font );
+	//_de.d2_safe_release( _d2sb );
 }
 
 LRESULT CD2ViewUI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -256,82 +256,82 @@ void CD2ViewUI::InitImageStateArray()
 
 
 
-void CD2ViewUI::DrawImageByState( Graphics *pGr, shared_ptr<Image> sp, ImageState *s )
-{
-	//if( s->_a == 0 )
-	//	return;
-
-	bool bHasRotate = (abs(s->_r) > 1e-4);
-
-	if( bHasRotate )
-	{
-		Matrix		mx;
-		mx.RotateAt( s->_r, PointF( s->_x, s->_y) );
-		pGr->SetTransform( &mx );
-	}
-
-	ImageAttributes		ia2;
-	if( s->_a2 > 0.f && s->_a2 < 1.f )
-	{
-		ColorMatrix		mxColor =  {
-			1.f, 0.f, 0.f, 0.f, 0.f,
-			0.f, 1.f, 0.f, 0.f, 0.f,
-			0.f, 0.f, 1.f, 0.f, 0.f,
-			0.f, 0.f, 0.f, s->_a2, 0.f,
-			0.f, 0.f, 0.f, 0.f, 1.f,
-		};
-
-		ia2.SetColorMatrix( &mxColor );
-	}
-
-	//Image *img = _spBg3[1].get();
-	pGr->DrawImage( _spIconBK.get(), RectF(s->_x-s->_w/2, s->_y-s->_h/2, s->_w, s->_h ), 
-		0, 0, (REAL)_spIconBK->GetWidth(), (REAL)_spIconBK->GetHeight(), UnitPixel, &ia2 );
-
-	ImageAttributes		ia;
-	if( s->_a > 0.f && s->_a < 1.f )
-	{
-		ColorMatrix		mxColor =  {
-			1.f, 0.f, 0.f, 0.f, 0.f,
-			0.f, 1.f, 0.f, 0.f, 0.f,
-			0.f, 0.f, 1.f, 0.f, 0.f,
-			0.f, 0.f, 0.f, s->_a, 0.f,
-			0.f, 0.f, 0.f, 0.f, 1.f,
-		};
-
-		ia.SetColorMatrix( &mxColor );
-	}
-
-	float iw = (float)sp->GetWidth();
-	float ih = (float)sp->GetHeight();
-	pGr->DrawImage( sp.get(), RectF(s->_x-iw/2, s->_y-ih/2-20, iw, ih ), 
-		0, 0, iw, ih, UnitPixel, &ia );
-
-	if( bHasRotate )
-		pGr->ResetTransform();
-
-	//pGr->FillEllipse( &SolidBrush(Color::Red), s->_x-5, s->_y-5, 10.f, 10.f );
-}
-
-
-void CD2ViewUI::DrawTextByState( Graphics *pGr, CStringW strText, ImageState *s )
-{
-	Font			ft( L"微软雅黑", 18 );
-	StringFormat	sf;
-	sf.SetAlignment( StringAlignmentCenter );
-
-	CDUIRect	rtClient;
-	GetClientRect( m_hWnd, &rtClient );
-	CDUIPoint cp = rtClient.CenterPoint();
-
-	int  r, g, b;
-	r = g = b = 51;
-	if( abs( s->_x - cp.x ) < 20 )
-		r = g = b = 255;
-
-	RectF			rt( s->_x-80.f, s->_y+50, 160.f, 30.f );
-	pGr->DrawString( strText, strText.GetLength(), &ft, rt, &sf, &SolidBrush(Color(BYTE(s->_a*255), r, g, b)) );
-}
+//void CD2ViewUI::DrawImageByState( Graphics *pGr, shared_ptr<Image> sp, ImageState *s )
+//{
+//	//if( s->_a == 0 )
+//	//	return;
+//
+//	bool bHasRotate = (abs(s->_r) > 1e-4);
+//
+//	if( bHasRotate )
+//	{
+//		Matrix		mx;
+//		mx.RotateAt( s->_r, PointF( s->_x, s->_y) );
+//		pGr->SetTransform( &mx );
+//	}
+//
+//	ImageAttributes		ia2;
+//	if( s->_a2 > 0.f && s->_a2 < 1.f )
+//	{
+//		ColorMatrix		mxColor =  {
+//			1.f, 0.f, 0.f, 0.f, 0.f,
+//			0.f, 1.f, 0.f, 0.f, 0.f,
+//			0.f, 0.f, 1.f, 0.f, 0.f,
+//			0.f, 0.f, 0.f, s->_a2, 0.f,
+//			0.f, 0.f, 0.f, 0.f, 1.f,
+//		};
+//
+//		ia2.SetColorMatrix( &mxColor );
+//	}
+//
+//	//Image *img = _spBg3[1].get();
+//	pGr->DrawImage( _spIconBK.get(), RectF(s->_x-s->_w/2, s->_y-s->_h/2, s->_w, s->_h ), 
+//		0, 0, (REAL)_spIconBK->GetWidth(), (REAL)_spIconBK->GetHeight(), UnitPixel, &ia2 );
+//
+//	ImageAttributes		ia;
+//	if( s->_a > 0.f && s->_a < 1.f )
+//	{
+//		ColorMatrix		mxColor =  {
+//			1.f, 0.f, 0.f, 0.f, 0.f,
+//			0.f, 1.f, 0.f, 0.f, 0.f,
+//			0.f, 0.f, 1.f, 0.f, 0.f,
+//			0.f, 0.f, 0.f, s->_a, 0.f,
+//			0.f, 0.f, 0.f, 0.f, 1.f,
+//		};
+//
+//		ia.SetColorMatrix( &mxColor );
+//	}
+//
+//	float iw = (float)sp->GetWidth();
+//	float ih = (float)sp->GetHeight();
+//	pGr->DrawImage( sp.get(), RectF(s->_x-iw/2, s->_y-ih/2-20, iw, ih ), 
+//		0, 0, iw, ih, UnitPixel, &ia );
+//
+//	if( bHasRotate )
+//		pGr->ResetTransform();
+//
+//	//pGr->FillEllipse( &SolidBrush(Color::Red), s->_x-5, s->_y-5, 10.f, 10.f );
+//}
+//
+//
+//void CD2ViewUI::DrawTextByState( Graphics *pGr, CStringW strText, ImageState *s )
+//{
+//	Font			ft( L"微软雅黑", 18 );
+//	StringFormat	sf;
+//	sf.SetAlignment( StringAlignmentCenter );
+//
+//	CDUIRect	rtClient;
+//	GetClientRect( m_hWnd, &rtClient );
+//	CDUIPoint cp = rtClient.CenterPoint();
+//
+//	int  r, g, b;
+//	r = g = b = 51;
+//	if( abs( s->_x - cp.x ) < 20 )
+//		r = g = b = 255;
+//
+//	RectF			rt( s->_x-80.f, s->_y+50, 160.f, 30.f );
+//	pGr->DrawString( strText, strText.GetLength(), &ft, rt, &sf, &SolidBrush(Color(BYTE(s->_a*255), r, g, b)) );
+//}
 
 
 void CD2ViewUI::DoDraw()
@@ -359,14 +359,14 @@ void CD2ViewUI::DoDraw()
 		d2DrawItem( strImageFile, strText, s );
 	}
 
-	//_de.d2DrawText( L"刘德华 欢迎您！", 0, 0, 200, 20, _d2Font, _d2sb );
+	_de.d2DrawText( L"第一次全体会议", 0, 0, w, 20, _d2Font, _d2sb );
 }
 
 
 
 
 
-
+/*
 void CD2ViewUI::Draw( Graphics &g )
 {
 	g.SetSmoothingMode( _animing ? SmoothingModeHighSpeed : SmoothingModeAntiAlias);
@@ -407,21 +407,23 @@ void CD2ViewUI::Draw( Graphics &g )
 		DrawTextByState( &g, strText, s );
 	}
 }
+//*/
 
-void CD2ViewUI::DoPaint( HDC hDC )
-{
-	Graphics	g( hDC );
-	g.SetSmoothingMode( SmoothingModeHighSpeed );
 
-	CDUIRect	rt;
-	GetClientRect( m_hWnd, &rt );
-
-	Bitmap		bmp( rt.Width(), rt.Height()+1 );
-	Graphics	g2( &bmp );
-	Draw( g2 );
-
-	g.DrawImage( &bmp, 0, 0 );
-}
+//void CD2ViewUI::DoPaint( HDC hDC )
+//{
+//	Graphics	g( hDC );
+//	g.SetSmoothingMode( SmoothingModeHighSpeed );
+//
+//	CDUIRect	rt;
+//	GetClientRect( m_hWnd, &rt );
+//
+//	Bitmap		bmp( rt.Width(), rt.Height()+1 );
+//	Graphics	g2( &bmp );
+//	Draw( g2 );
+//
+//	g.DrawImage( &bmp, 0, 0 );
+//}
 
 void CD2ViewUI::OnLButtonDown( UINT nFlags, POINT point )
 {
@@ -551,10 +553,10 @@ void CD2ViewUI::AniProc()
 	Sleep(1);
 }
 
-void CD2ViewUI::DrawBigPoint( Graphics *pGr, PointF pt, int size )
-{
-	pGr->DrawEllipse( &Pen(Color::Red, 2), pt.X, pt.Y, (REAL)size, (REAL)size );
-}
+//void CD2ViewUI::DrawBigPoint( Graphics *pGr, PointF pt, int size )
+//{
+//	pGr->DrawEllipse( &Pen(Color::Red, 2), pt.X, pt.Y, (REAL)size, (REAL)size );
+//}
 
 int CD2ViewUI::GetCurrentIndex()
 {
@@ -639,7 +641,7 @@ void CD2ViewUI::d2DrawItem( CStringW strName, CStringW strText, ImageState *s )
 	//	g_text_format, D2D1::RectF( tx, ty, tx+120.f, ty+30.f),  
 	//	bWhite ? g_brush2 : g_brush );
 
-	_de.d2DrawText( strText, tx, ty, 120.f, 30.f, _d2Font, _d2sb );
+	_de.d2DrawText( strText, tx, ty, 100.f, 30.f, _d2Font, _d2sb );
 
 	auto it = _mapImage2.find( strName );
 	if( it == _mapImage2.end() )
@@ -658,17 +660,32 @@ void CD2ViewUI::BuildAllBitmap()
 	if( _spBK2 != nullptr )
 		return;
 
-	_spBK2 = _de.d2NewBitmap( m_strFileBK );
-	_spIconBK2 = _de.d2NewBitmap( m_strFileIconBK );
+	//_spBK2 = _de.d2NewBitmap( m_strFileBK );
+	//_spIconBK2 = _de.d2NewBitmap( m_strFileIconBK );
+
+	//for( auto it = _mapName2File.begin(); it != _mapName2File.end(); ++it )
+	//{
+	//	d2Bitmap *bmp = _de.d2NewBitmap(it->second);
+	//	_mapImage2.insert( make_pair( it->first, bmp ) );
+	//}
+
+	//_d2Font = _de.d2NewFont( L"黑体", 24 );
+	//_d2sb = _de.d2NewSolidBrush( RGB(255,255,255) );
+
+
+	_spBK2 = _de.dl_getImage( m_strFileBK );
+	_spIconBK2 = _de.dl_getImage( m_strFileIconBK );
 
 	for( auto it = _mapName2File.begin(); it != _mapName2File.end(); ++it )
 	{
-		d2Bitmap *bmp = _de.d2NewBitmap(it->second);
+		d2Bitmap *bmp = _de.dl_getImage( it->second );
 		_mapImage2.insert( make_pair( it->first, bmp ) );
 	}
 
-	_d2Font = _de.d2NewFont( L"黑体", 24 );
-	_d2sb = _de.d2NewSolidBrush( RGB(255,255,255) );
+	_d2Font = _de.dl_getFont( L"黑体", 24 );
+
+	D2D1_COLOR_F	d2Color = {1.f, 1.f, 1.f, 1.f};
+	_d2sb = _de.dl_getSolidBrush( d2Color );
 }
 
 

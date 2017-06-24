@@ -165,6 +165,7 @@ void D2dEngine::d2DrawText( LPCWSTR strText, float x, float y, float w, float h,
 	if( nullptr == _render_target )
 		return;
 
+	font->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 	_render_target->DrawText( strText, wcslen( strText ),  
 		font, D2D1::RectF(x, y, x+w, y+h), sb );  
 }
