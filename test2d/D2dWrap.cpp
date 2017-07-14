@@ -260,26 +260,25 @@ bool D2dEngine::d2InitHRT( HWND hWnd )
 	int imgwidth = _w;
 	int imgheight= _h;
 
-	//创建位图  
-	D2D1_SIZE_U imgsize= D2D1::SizeU(imgwidth, imgheight);  
-	D2D1_PIXEL_FORMAT pixelFormat =  //位图像素格式描述  
-	{  
-		DXGI_FORMAT_B8G8R8A8_UNORM, //该参数设置图像数据区的像素格式，现为RGBA，可根据需要改为别的格式，只是后面的数据拷贝要做相应的调整  
-		//D2D1_ALPHA_MODE_IGNORE 
-		D2D1_ALPHA_MODE_PREMULTIPLIED
-	};  
+	////创建位图  
+	//D2D1_SIZE_U imgsize= D2D1::SizeU(imgwidth, imgheight);  
+	//D2D1_PIXEL_FORMAT pixelFormat =  //位图像素格式描述  
+	//{  
+	//	DXGI_FORMAT_B8G8R8A8_UNORM, //该参数设置图像数据区的像素格式，现为RGBA，可根据需要改为别的格式，只是后面的数据拷贝要做相应的调整  
+	//	//D2D1_ALPHA_MODE_IGNORE 
+	//	D2D1_ALPHA_MODE_PREMULTIPLIED
+	//};  
 
-	D2D1_BITMAP_PROPERTIES prop =  //位图具体信息描述  
-	{  
-		pixelFormat,  
-		imgsize.width,  
-		imgsize.height  
-	}; 
+	//D2D1_BITMAP_PROPERTIES prop =  //位图具体信息描述  
+	//{  
+	//	pixelFormat,  
+	//	imgsize.width,  
+	//	imgsize.height  
+	//}; 
 
-	long pitch = imgsize.width*4;  
-	imgdata = new char[imgsize.width * imgsize.height * 4];  
-	_render_target->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);//设置图像为抗锯齿模式  
-	HRESULT hr =_render_target->CreateBitmap(imgsize, imgdata, pitch, &prop, &m_pBitmap);
+	long pitch = _w*4;  
+	imgdata = new char[_w * _h * 4];  
+	//_render_target->SetAntialiasMode(D2D1_ANTIALIAS_MODE_PER_PRIMITIVE);//设置图像为抗锯齿模式  
 
 	memset( imgdata, 0, _w*_h*4 );
 	//memcpy( imgdata, pImage, _w*_h*4 );
@@ -307,8 +306,34 @@ bool D2dEngine::d2InitHRT( HWND hWnd )
 		}
 
 	stbi_image_free(pImage);
+
+	////HRESULT hr =_render_target->CreateBitmap(imgsize, imgdata, pitch, &prop, &m_pBitmap);
+	//HRESULT hr =_render_target->CreateBitmap(D2D1::SizeU(_w,_h), nullptr, pitch, &prop, &m_pBitmap);
+
+	
+	d2InitBitmap( _w, _h );
 	return true;
 }
+
+
+
+void D2dEngine::d2InitBitmap( int w, int h )
+{
+	//位图像素格式描述
+	D2D1_PIXEL_FORMAT pixelFormat =    
+	{
+		//该参数设置图像数据区的像素格式，现为RGBA，可根据需要改为别的格式，只是后面的数据拷贝要做相应的调整
+		DXGI_FORMAT_B8G8R8A8_UNORM,   
+		D2D1_ALPHA_MODE_PREMULTIPLIED
+	};  
+
+	//位图具体信息描述
+	D2D1_BITMAP_PROPERTIES prop = { pixelFormat, w, h };
+
+	long pitch = _w*4;
+	HRESULT hr =_render_target->CreateBitmap(D2D1::SizeU(w,h), nullptr, pitch, &prop, &m_pBitmap);
+}
+
 
 
 void D2dEngine::d2Resize( int w, int h )
@@ -458,29 +483,35 @@ void D2dEngine::TestGDIPlus()
 	imgrect.top = 0;  
 	imgrect.bottom = _h;  
 
+	m_pBitmap->CopyFromMemory(&imgrect, imgdata, _w * 4);
 
-	m_pBitmap->CopyFromMemory(&imgrect, imgdata, _w * 4);  
-	_render_target->DrawBitmap(m_pBitmap, D2D1::RectF(150, 150, 150+_w, 150+_h) );
 
-	D2D1_SIZE_F	sz = {200,200};
-	ID2D1BitmapRenderTarget * spBRT;
-	_render_target->CreateCompatibleRenderTarget( sz, &spBRT );
+	int x = rand()%100;
+	int y = rand()%100;
+	_render_target->DrawBitmap(m_pBitmap, D2D1::RectF(x, y, x+_w, y+_h) );
 
-	spBRT->BeginDraw();
-	spBRT->Clear( D2D1::ColorF(0.63, 0.84, 0.00, 0.3f) );
 
-	ID2D1SolidColorBrush *br = nullptr;
-	spBRT->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &br);
 
-	D2D1_POINT_2F	p1 = {100.f, 100.f};
-	D2D1_POINT_2F	p2 = {160.f, 140.f};
-	spBRT->DrawLine( p1, p2, br );
-	spBRT->EndDraw();
+	//  类似于GDI+双缓冲玩法
+	//D2D1_SIZE_F	sz = {200,200};
+	//ID2D1BitmapRenderTarget * spBRT;
+	//_render_target->CreateCompatibleRenderTarget( sz, &spBRT );
 
-	ID2D1Bitmap	*pBmp;
-	spBRT->GetBitmap( &pBmp );
+	//spBRT->BeginDraw();
+	//spBRT->Clear( D2D1::ColorF(0.63, 0.84, 0.00, 0.3f) );
 
-	_render_target->DrawBitmap( pBmp );
+	//ID2D1SolidColorBrush *br = nullptr;
+	//spBRT->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &br);
+
+	//D2D1_POINT_2F	p1 = {100.f, 100.f};
+	//D2D1_POINT_2F	p2 = {160.f, 140.f};
+	//spBRT->DrawLine( p1, p2, br );
+	//spBRT->EndDraw();
+
+	//ID2D1Bitmap	*pBmp;
+	//spBRT->GetBitmap( &pBmp );
+
+	//_render_target->DrawBitmap( pBmp );
 
 }
 

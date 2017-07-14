@@ -122,6 +122,10 @@ public:
 		}
 	}
 
+
+	void	d2InitBitmap( int w, int h );
+
+
 private:
 	ID2D1Factory *				_factory;
 	IDWriteFactory *			_write_factory;
