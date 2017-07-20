@@ -157,7 +157,7 @@ public:
 		_e->d2GetSize( w, h );
 
 		ID2D1Bitmap *bmp = _e->d2NewBitmap( L"f:\\c.jpg" );
-		_e->d2DrawBitmap( bmp, 0, 0, w, h, 1.f );
+		_e->d2DrawBitmap( bmp, 0, 0, 500, 400, 1.f );
 		_e->d2_safe_release( bmp );
 
 		ID2D1SolidColorBrush *sb = _e->d2NewSolidBrush( D2D1::ColorF(RGB(0,0,255)) );

@@ -486,8 +486,8 @@ void D2dEngine::TestGDIPlus()
 	m_pBitmap->CopyFromMemory(&imgrect, imgdata, _w * 4);
 
 
-	int x = rand()%100;
-	int y = rand()%100;
+	int x = 100;
+	int y = 100;
 	_render_target->DrawBitmap(m_pBitmap, D2D1::RectF(x, y, x+_w, y+_h) );
 
 
