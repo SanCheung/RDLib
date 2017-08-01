@@ -44,6 +44,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)temp\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -67,12 +69,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../XdBase;../RDLib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -91,6 +95,7 @@
     <ClInclude Include="D2ViewUI.h" />
     <ClInclude Include="DlgNetTest.h" />
     <ClInclude Include="DlgTestList.h" />
+    <ClInclude Include="ExitTPWindow.h" />
     <ClInclude Include="IconPathViewD2UI.h" />
     <ClInclude Include="ListHortElementUI.h" />
     <ClInclude Include="ListLabelElementUIEx.h" />
@@ -118,6 +123,7 @@
     <ClCompile Include="D2ViewUI.cpp" />
     <ClCompile Include="DlgNetTest.cpp" />
     <ClCompile Include="DlgTestList.cpp" />
+    <ClCompile Include="ExitTPWindow.cpp" />
     <ClCompile Include="IconPathViewD2UI.cpp" />
     <ClCompile Include="ListHortElementUI.cpp" />
     <ClCompile Include="ListLabelElementUIEx.cpp" />

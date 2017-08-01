@@ -16,7 +16,9 @@
     <!--top-->
     <HBox height="30" >
       <Control />
-      <Button name="bn2" width="30" height="30" text="Test" hottextcolor="#FFFF0000" font="0" />
+      <Button name="bn2" width="30" height="30" text="Test2" hottextcolor="#FFFF0000" font="0" />
+      <Control />
+      <Button name="bn3" width="30" height="30" text="Test3" hottextcolor="#FFFF0000" font="0" />
       <Control />
       <Button name="bnMax" width="60" height="30" text="最大化" hottextcolor="#FFFF0000" font="0" />
       <Control width="6" />

@@ -4,6 +4,7 @@
 #include "BarCodeOcxUI.h"
 #include "IconPathViewD2UI.h"
 #include "D2ViewUI.h"
+#include "ExitTPWindow.h"
 
 CSwhMainLayout::CSwhMainLayout(void)
 {
@@ -89,6 +90,10 @@ void CSwhMainLayout::Notify( TNotifyUI& msg )
 		{
 			CDlgTestList dlg;
 			dlg.DoModal( GetHWND(), L"hello" );
+		}
+		else if( strSenderName == L"bn3" )
+		{
+			CExitTPWindow::Show( GetHWND() );
 		}
 	}
 	else if( L"link" == strType )
