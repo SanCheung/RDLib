@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js_test", "js_test\js_test.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test2d", "test2d\test2d.vcxproj", "{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MGCClient", "MGCClient\MGCClient.vcxproj", "{E31F6738-A464-4705-B271-F1F9F52D59DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -44,6 +46,10 @@ Global
 		{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}.Debug|Win32.Build.0 = Debug|Win32
 		{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}.Release|Win32.ActiveCfg = Release|Win32
 		{3B9B72D3-0CCD-4BFE-BA40-5628F2E6BF97}.Release|Win32.Build.0 = Release|Win32
+		{E31F6738-A464-4705-B271-F1F9F52D59DF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E31F6738-A464-4705-B271-F1F9F52D59DF}.Debug|Win32.Build.0 = Debug|Win32
+		{E31F6738-A464-4705-B271-F1F9F52D59DF}.Release|Win32.ActiveCfg = Release|Win32
+		{E31F6738-A464-4705-B271-F1F9F52D59DF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

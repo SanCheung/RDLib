@@ -95,6 +95,19 @@ void CSwhMainLayout::Notify( TNotifyUI& msg )
 		{
 			CExitTPWindow::Show( GetHWND() );
 		}
+		else if( strSenderName == L"bnTest1" )
+		{
+			///////隐藏任务栏和开始菜单
+			//HWND hWndST = FindWindow( L"Shell_TrayWnd", NULL );
+			//HWND hWndStart = FindWindowEx( NULL, NULL, L"Button", NULL );
+
+			//int		nNewSW = ::IsWindowVisible(hWndST) ? SW_HIDE:SW_SHOW;
+			//::ShowWindow( hWndST, nNewSW );
+			//::ShowWindow( hWndStart, nNewSW );
+		}
+		else if( strSenderName == L"bnTest2" )
+		{
+		}
 	}
 	else if( L"link" == strType )
 	{
