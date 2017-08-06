@@ -6,7 +6,7 @@
   <Include source="ctrl.xml" />
 
   <HBox>
-    <VBox bkcolor="#ffAFAFAF" inset="10,10,10,10" childpadding="10" width="200" >
+    <VBox bkcolor="#ffAFAFAF" inset="10,10,10,10" childpadding="10" width="120" >
         <Control height="20"/>
         <Button name="bn1" text="测试1" hottextcolor1="#FFFF0000"/>
         <Button name="bn2" text="测试2" hottextcolor1="#FFFF0000"/>

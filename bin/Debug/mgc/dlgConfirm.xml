@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" ?>
+<Window size="600,600" caption="0,0,0,48" sizebox="4,4,6,6" >
+  <!--Include & Default-->
+  <Include source="sb/sb.xml" />
+  <Include source="font.xml" />
+  <Include source="ctrl.xml" />
+  
+  <VBox bkcolor="#ff000000">
+    <Label textcolor="#FFffffff" text="确定结束体验？" align="center" font="3"/>
+    
+    <Control />
+    <HBox inset="0,10,0,10" childpadding="10" height="200" >
+      <Control />
+      <Button name="bn1" height="100" text="确定" />
+      <Button name="bn2" height="100" text="取消" />
+      <Control />
+    </HBox>
+  </VBox>
+</Window>

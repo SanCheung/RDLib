@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" ?>
+<Window size="300,600" mininfo="300,600"  caption="0,0,0,48" sizebox="4,4,6,6" >
+  <!--Include & Default-->
+  <Include source="sb/sb.xml" />
+  <Include source="font.xml" />
+  <Include source="ctrl.xml" />
+  
+  <HBox>
+    
+    <Control />
+    <VBox bkcolor="#ffAFAFAF" inset="0,10,0,10" childpadding="10" width="120" >
+      <Control height="20"/>
+      <Button name="bn1" text="测试1" />
+      <Button name="bn2" text="测试2" />
+      <Button name="bn3" text="测试3" />
+      <Button name="bn4" text="测试4" />
+      <Button name="bn5" text="测试5" />
+      <Control />
+    </VBox>
+  </HBox>
+</Window>

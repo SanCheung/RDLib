@@ -1,12 +1,10 @@
 #pragma once
-
-#define		WM_EXITTPWND_CLICK				WM_APP + 100
-
-class CExitTPWindow : public CWindowWnd
+class CWindowTip : public CWindowWnd
 {
 public:
-	CExitTPWindow(void);
-	virtual ~CExitTPWindow(void);
+	CWindowTip(void);
+	virtual ~CWindowTip(void);
+
 
 	virtual LPCTSTR GetWindowClassName() const { return L"mgc_windowclass"; }
 	virtual UINT	GetClassStyle() const { return CS_HREDRAW | CS_VREDRAW | CS_IME | CS_DBLCLKS; }
@@ -21,16 +19,9 @@ protected:
 	HWND		CreateThis( HWND hHostWnd );
 
 private:
-	void	Update( int nType );
+	void	Update();
+	HWND	_hHostWnd;
 
-	bool	m_bMouseTracking;
-	bool	m_bPosChanged;
-
-	CDUIPoint	_ptNow;
-	HWND		_hHostWnd;
-
-	CWndShadow	m_shadow;
-
-	static	CExitTPWindow*	s_instance;
+	static	CWindowTip*	s_instance;
 };
 

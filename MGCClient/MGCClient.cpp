@@ -7,7 +7,11 @@
 #include "ExitTPWindow.h"
 #include "DlgTestVideo.h"
 #include "VlcWindow.h"
+#include "InfoWindow.h"
 
+#include "WindowTip.h"
+
+#include "DemoDlg.h"
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
@@ -26,25 +30,39 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	CAppData::SetInstance(hInstance);
 	CAppData::SetResourcePath( CAppData::GetInstancePath() + L"mgc/" );
 
-	//// ¸¡¶¯´°¿Ú²âÊÔ
-	//CExitTPWindow::Show( ::GetDesktopWindow() );
+	CDemoDlg		*pMainWnd = new CDemoDlg;
 
-	//CDlgTestVideo		dlg;
-	////dlg.DoModalNoCaption( NULL );
-	//dlg.DoModal( NULL, L"test" );
-
-
-	CVlcWindow::Show( ::GetDesktopWindow() );
-
+	pMainWnd->Create( NULL, L"MGC Demo", UI_WNDSTYLE_FRAME, 0 );
+	//pMainWnd->CenterWindow();
+	::SetWindowPos( pMainWnd->GetHWND(), NULL, GetSystemMetrics( SM_CXSCREEN )-300, 100, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
 
 	CAppData::MessageLoop();
-
-	CVlcWindow::Hide();
-	CVlcWindow::Release();
+	DEL( pMainWnd );
 
 
-	//CExitTPWindow::Hide();
-	//CExitTPWindow::Release();
+	////// ¸¡¶¯´°¿Ú²âÊÔ
+	////CExitTPWindow::Show( ::GetDesktopWindow() );
+
+	////CDlgTestVideo		dlg;
+	//////dlg.DoModalNoCaption( NULL );
+	////dlg.DoModal( NULL, L"test" );
+
+
+	//HWND hWndVlc = CVlcWindow::Show( ::GetDesktopWindow() );
+	//CWindowTip::Show( hWndVlc );
+
+
+	//CAppData::MessageLoop();
+
+	//CWindowTip::Hide();
+	//CWindowTip::Release();
+
+	//CVlcWindow::Hide();
+	//CVlcWindow::Release();
+
+
+	////CExitTPWindow::Hide();
+	////CExitTPWindow::Release();
 
 	::GdiplusShutdown(token);
 	CoUninitialize();

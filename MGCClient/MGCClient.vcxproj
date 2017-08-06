@@ -81,23 +81,31 @@
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DemoDlg.h" />
+    <ClInclude Include="DlgConfirm.h" />
     <ClInclude Include="DlgTestVideo.h" />
     <ClInclude Include="ExitTPWindow.h" />
+    <ClInclude Include="InfoWindow.h" />
     <ClInclude Include="MGCClient.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="VlcWindow.h" />
+    <ClInclude Include="WindowTip.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DemoDlg.cpp" />
+    <ClCompile Include="DlgConfirm.cpp" />
     <ClCompile Include="DlgTestVideo.cpp" />
     <ClCompile Include="ExitTPWindow.cpp" />
+    <ClCompile Include="InfoWindow.cpp" />
     <ClCompile Include="MGCClient.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="VlcWindow.cpp" />
+    <ClCompile Include="WindowTip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MGCClient.rc" />
