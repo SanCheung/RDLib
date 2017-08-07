@@ -152,7 +152,7 @@ HWND CWindowTip::CreateThis( HWND hHostWnd )
 
 void CWindowTip::Update()
 {
-	CStringW	strFile = CAppData::GetInstancePath() + L"tp/mgc_tip.png";
+	CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_tip.png";
 
 	Image	 image( strFile );
 	int iWidth = image.GetWidth();

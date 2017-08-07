@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" ?>
+<Window size="900,600" mininfo="640,480"  caption="0,0,0,48" sizebox="4,4,6,6" >
+  <HBox>
+    <WndMediaDisplay  name="wndMedia"  />
+  </HBox>
+</Window>

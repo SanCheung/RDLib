@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<Window size="300,600" mininfo="300,600"  caption="0,0,0,48" sizebox="4,4,6,6" >
+<Window size="400,600" caption="0,0,0,48" sizebox="4,4,6,6" >
   <!--Include & Default-->
   <Include source="sb/sb.xml" />
   <Include source="font.xml" />
@@ -8,13 +8,13 @@
   <HBox>
     
     <Control />
-    <VBox bkcolor="#ffAFAFAF" inset="0,10,0,10" childpadding="10" width="120" >
+    <VBox bkcolor="#ffAFAFAF" inset="0,10,0,10" childpadding="10" width="200" >
       <Control height="20"/>
-      <Button name="bn1" text="测试1" />
-      <Button name="bn2" text="测试2" />
-      <Button name="bn3" text="测试3" />
-      <Button name="bn4" text="测试4" />
-      <Button name="bn5" text="测试5" />
+      <Button width="200" name="bn1" text="视频框 打开/关闭" />
+      <Button width="200" name="bn2" text="二维码扫描窗口" />
+      <Button width="200" name="bn3" text="计费窗口" />
+      <Button width="200" name="bn4" text="计费确认窗口" />
+      <Button width="200" name="bn5" text="任务栏隐藏/显示" />
       <Control />
     </VBox>
   </HBox>

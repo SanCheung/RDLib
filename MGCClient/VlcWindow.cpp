@@ -7,6 +7,9 @@
 #pragma comment( lib, "libvlc.lib" )
 #pragma comment( lib, "libvlccore.lib" )
 
+
+#define			VIDEO_FILE				"clip.wmv"
+
 CVlcWindow*	CVlcWindow::s_instance = nullptr;
 
 CVlcWindow::CVlcWindow(void)
@@ -197,7 +200,7 @@ void CVlcWindow::Play()
 	// Create a new item
 	//m = libvlc_media_new_location (libvlc_inst, "http://mycool.movie.com/test.mov");
 
-	libvlc_media_t* libvlc_m = libvlc_media_new_path (libvlc_inst, "F:\\chicken.wmv" );
+	libvlc_media_t* libvlc_m = libvlc_media_new_path (libvlc_inst, VIDEO_FILE );
 
 	if( libvlc_m )
 	{

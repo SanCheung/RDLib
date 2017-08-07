@@ -8,6 +8,8 @@ public:
 	static void		Show( HWND hHostWnd );
 	static bool		Hide();
 	static void		Release();
+	static bool		IsShow();
+
 
 protected:
 	virtual LPCTSTR GetWindowClassName() const { return L"mgc_windowclass"; }

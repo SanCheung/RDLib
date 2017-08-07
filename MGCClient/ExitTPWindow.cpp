@@ -58,7 +58,8 @@ LRESULT CExitTPWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 				if( PtInRect( &rt, TheFirstPoint ) )
 				{
 					//MessageBox( m_hWnd, L"", L"", MB_OK );
-					PostQuitMessage( WM_QUIT );
+					//PostQuitMessage( WM_QUIT );
+					Hide();
 				}
 			}
 		}
@@ -184,7 +185,7 @@ void CExitTPWindow::Update( int nType )
 	//	strFile = CAppData::GetInstancePath() + L"tp/exittp_hover.png";
 	//else if( 2 == nType )
 	//	strFile = CAppData::GetInstancePath() + L"tp/exittp_pushed.png";
-	CStringW	strFile = CAppData::GetInstancePath() + L"tp/mgc_bg.png";
+	CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_bg.png";
 
 	Image	 image( strFile );
 	int iWidth = image.GetWidth();
@@ -270,10 +271,10 @@ bool CExitTPWindow::Hide()
 	if( s_instance != nullptr && 
 		IsWindow( s_instance->GetHWND() ) )
 	{
-		//if( DUI_CANCEL == DuiMessageBox(::GetDesktopWindow(), L"确定终止同屏演示?",L"温馨提示",DUI_YESNO ) )
+		////if( DUI_CANCEL == DuiMessageBox(::GetDesktopWindow(), L"确定终止同屏演示?",L"温馨提示",DUI_YESNO ) )
+		////	return false;
+		//if( IDNO == MessageBox( ::GetDesktopWindow(), L"确定退出？", L"", MB_YESNO|MB_ICONQUESTION ) )
 		//	return false;
-		if( IDNO == MessageBox( ::GetDesktopWindow(), L"确定退出？", L"", MB_YESNO|MB_ICONQUESTION ) )
-			return false;
 
 		s_instance->ShowWindow( false );
 		return true;

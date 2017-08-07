@@ -2,6 +2,7 @@
 #include "DemoDlg.h"
 
 #include "VlcWindow.h"
+#include "InfoWindow.h"
 #include "DlgConfirm.h"
 #include "ExitTPWindow.h"
 
@@ -47,12 +48,29 @@ void CDemoDlg::Notify( TNotifyUI& msg )
 		}								   
 		else if( strSenderName == L"bn2" )
 		{
-			   CDlgConfirm		dlg;
-			   dlg.DoModalNoCaption( GetDesktopWindow() );
+			if( CInfoWindow::IsShow() )
+				CInfoWindow::Hide();
+			else
+				CInfoWindow::Show( m_hWnd );
 		}
 		else if( strSenderName == L"bn3" )
 		{
 			CExitTPWindow::Show( m_hWnd );
+		}
+		else if( strSenderName == L"bn4" )
+		{
+			CDlgConfirm		dlg;
+			dlg.DoModalNoCaption( GetDesktopWindow() );
+		}
+		else if( strSenderName == L"bn5" )
+		{
+			/////隐藏任务栏和开始菜单
+			HWND hWndST = FindWindow( L"Shell_TrayWnd", NULL );
+			HWND hWndStart = FindWindowEx( NULL, NULL, L"Button", NULL );
+
+			int		nNewSW = ::IsWindowVisible(hWndST) ? SW_HIDE:SW_SHOW;
+			::ShowWindow( hWndST, nNewSW );
+			::ShowWindow( hWndStart, nNewSW );
 		}
 	}
 	else if( strType == L"timer" )
