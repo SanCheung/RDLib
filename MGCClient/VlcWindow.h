@@ -6,6 +6,7 @@
 //typedef void (* pfnCallback) (void *data);
 
 class CVlcWindow : public CWindowWnd
+				 , xdmp::ThreadWrap
 {
 public:
 	CVlcWindow(void);
@@ -45,5 +46,11 @@ protected:
 	void	vlcReleasePlayer();
 	void	Play();
 	void	Replay();
+
+	virtual void	thread_main();
+
+
+	void		onShow();
+	void		onHide();
 };
 

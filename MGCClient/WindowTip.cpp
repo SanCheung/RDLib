@@ -52,10 +52,11 @@ LRESULT CWindowTip::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			//	RECT rt = {50, 250, 50+220, 250+50};
 			//	if( PtInRect( &rt, TheFirstPoint ) )
 			//	{
-			//		//MessageBox( m_hWnd, L"", L"", MB_OK );
-			//		PostQuitMessage( WM_QUIT );
+			//		MessageBox( m_hWnd, L"", L"", MB_OK );
+			//		//PostQuitMessage( WM_QUIT );
 			//	}
 			//}
+			//MessageBox( m_hWnd, L"", L"", MB_OK );
 		}
 		break;
 	case WM_MOUSEMOVE:
@@ -152,67 +153,44 @@ HWND CWindowTip::CreateThis( HWND hHostWnd )
 
 void CWindowTip::Update()
 {
-	CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_tip.png";
-
+	CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_pc_dianji.png";
 	Image	 image( strFile );
 	int iWidth = image.GetWidth();
 	int iHeight = image.GetHeight();
 
+
+	int w = 400;
+	int h = 44;
+
+
 	HDC hdcScreen = GetDC(NULL);
 	HDC hdcMem = CreateCompatibleDC(hdcScreen);
-	HBITMAP hBitmap = CreateCompatibleBitmap(hdcScreen, iWidth, iHeight);
+	//HBITMAP hBitmap = CreateCompatibleBitmap(hdcScreen, iWidth, iHeight);
+	HBITMAP hBitmap = CreateCompatibleBitmap(hdcScreen, w, h);
 	HBITMAP hBitmapOld = (HBITMAP)SelectObject(hdcMem, hBitmap);
 
 	Graphics gr(hdcMem);
 	gr.SetSmoothingMode( SmoothingModeHighQuality );
+	gr.SetTextRenderingHint( TextRenderingHintAntiAlias );
 	gr.DrawImage(&image, 0, 0);//将png图像绘制到后台DC中
 
-	//Pen		penLine( Color(0xFF999999), 1 );	
-	//gr.DrawLine( &penLine, 30, 120, 290, 120 );
-	//gr.DrawLine( &penLine, 30, 166, 290, 166 );
+	Font		ft( L"Microsoft Yahei", 18.f, FontStyleBold );
 
-	//SolidBrush	sbLabel( Color(0xFF999999) );
-	//SolidBrush	sbInfo( Color(0xFF222222) );
-
-	//Font			ft( L"微软雅黑", 14 );
-	//StringFormat	sf;
-	////sf.SetAlignment( StringAlignmentCenter );
-
-	//gr.DrawString( L"已玩", 2, &ft, PointF(30,84), &sf, &sbLabel );
-	//gr.DrawString( L"计费", 2, &ft, PointF(30,84+46), &sf, &sbLabel );
-	//gr.DrawString( L"需支付", 3, &ft, PointF(30,84+46+46), &sf, &sbLabel );
-
-	//StringFormat	sf2;
-	//sf2.SetAlignment( StringAlignmentFar );
-	//gr.DrawString( L"1小时23分", 6, &ft, PointF(290,84), &sf2, &sbInfo );
-	//gr.DrawString( L"1元/10分钟", 7, &ft, PointF(290,84+46), &sf2, &sbInfo );
-	//gr.DrawString( L"55.6元", 6, &ft, PointF(290,84+46+46), &sf2, &sbInfo );
-
-	//SolidBrush	sbButton( Color(0xFF222222) );
-	//if( 2 == nType )
-	//	sbButton.SetColor( Color(0xCF222222) );
-
-	//GraphicsPath	gp;
-	//AddRoundRect( gp, 50, 240, 220, 50, 24, 24 );
-	//gr.FillPath( &sbButton, &gp );
-
-	//Font			ft2( L"微软雅黑", 16 );
-	//StringFormat	sf3;
-	//sf3.SetAlignment( StringAlignmentCenter );
-
-
-	//gr.DrawString( L"结束体验 >", 6, &ft2, RectF(50, 250, 220, 50), &sf3, &SolidBrush(Color::White) );
-
+	CStringW	str = L"点击任意位置开始";
+	gr.DrawString( str, str.GetLength(), &ft, PointF(32, 0), &SolidBrush(Color::White));
 
 	BLENDFUNCTION blend = { 0 };
 	blend.BlendOp = AC_SRC_OVER;
 	blend.SourceConstantAlpha = 255;
 	blend.AlphaFormat = AC_SRC_ALPHA;//按通道混合
 
-	CDUIPoint	_ptNow( 0, 0 );
+	int	sw = GetSystemMetrics( SM_CXSCREEN );
+	int sh = GetSystemMetrics( SM_CYSCREEN );
+
+	CDUIPoint	_ptNow( (sw-w)/2, sh-h-10 );
 
 	POINT	pSrc = { 0, 0 };
-	SIZE	sizeWnd = { iWidth, iHeight };
+	SIZE	sizeWnd = { w, h };
 	UpdateLayeredWindow( m_hWnd, hdcScreen, &_ptNow, &sizeWnd, hdcMem, &pSrc, NULL, &blend, ULW_ALPHA);//更新分层窗口
 	//收尾清理工作
 	SelectObject(hdcMem, hBitmapOld);

@@ -2,6 +2,7 @@
 #include "VlcWindow.h"
 
 #include "WindowTip.h"
+#include "MainHelper.h"
 
 // libvlc.lib;libvlccore.lib;
 #pragma comment( lib, "libvlc.lib" )
@@ -87,6 +88,9 @@ LRESULT CVlcWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 
 			Play();
+
+			//CTopWindow		topWnd;
+			//m_hWndTop = topWnd.CreateThis( m_hWnd );
 		}
 		break;
 
@@ -102,18 +106,20 @@ LRESULT CVlcWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		break;
 	case WM_SHOWWINDOW:
 		{
-			if( wParam )
-			{
-				Replay();
+			//if( wParam )
+			//{
+			//	Replay();
 
-				CWindowTip::Show( m_hWnd );
-			}
-			else
-			{
-				libvlc_media_player_stop(libvlc_mp);
+			//	CWindowTip::Show( m_hWnd );
 
-				CWindowTip::Hide();
-			}
+			//	Start();
+			//}
+			//else
+			//{
+			//	libvlc_media_player_stop(libvlc_mp);
+
+			//	CWindowTip::Hide();
+			//}
 
 		}
 		break;
@@ -147,9 +153,11 @@ HWND CVlcWindow::Show( HWND hParentWnd )
 	}
 	else
 	{
-		s_instance->ShowWindow();
+		//s_instance->ShowWindow();
+		::ShowWindow( s_instance->m_hWnd, SW_SHOW);
 	}
 
+	s_instance->onShow();
 	return s_instance->GetHWND();
 }
 
@@ -162,6 +170,7 @@ bool CVlcWindow::Hide()
 		//	return false;
 
 		s_instance->ShowWindow( false );
+		s_instance->onHide();
 		return true;
 	}
 
@@ -180,7 +189,8 @@ HWND CVlcWindow::CreateThis( HWND hHostWnd )
 	Create( NULL, NULL, WS_POPUP|WS_BORDER|WS_VISIBLE, 0, 0, 0, 640, 480 );
 	_hHostWnd = hHostWnd;
 
-	::ShowWindow( m_hWnd, SW_SHOW);
+	//::ShowWindow( m_hWnd, SW_SHOW);
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
 	UpdateWindow( m_hWnd );
 
 	return m_hWnd;
@@ -239,4 +249,47 @@ void CVlcWindow::Replay()
 	libvlc_media_player_stop(libvlc_mp);
 	libvlc_media_player_set_position( libvlc_mp, 0.f );
 	int r = libvlc_media_player_play (libvlc_mp);
+}
+
+void CVlcWindow::thread_main()
+{
+	Sleep(2000);
+
+	while( 1 )
+	{
+		//DWORD tNow = ::GetTickCount();
+		//DWORD tLast = IdleTrackerGetLastTickCount();
+
+		//if( tNow - tLast < 500 )
+		//{
+		//	CVlcWindow::Hide();
+		//	break;
+		//}
+
+		if( !CMainHelper::TestTimeOut( 500 ) )
+		{
+			CVlcWindow::Hide();
+			break;
+		}
+
+		if( WAIT_OBJECT_0 == WaitEvent(500) )
+			break;
+	}
+}
+
+void CVlcWindow::onShow()
+{
+	// 播放视频/显示提示/开始检测键鼠
+	Replay();
+	CWindowTip::Show( m_hWnd );
+	Start();
+}
+
+void CVlcWindow::onHide()
+{
+	// 停止播放视频/隐藏提示
+	libvlc_media_player_stop( libvlc_mp );
+	CWindowTip::Hide();
+
+	::PostMessage( _hHostWnd, WM_SHOWA, 2, 0 );
 }

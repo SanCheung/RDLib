@@ -29,7 +29,7 @@ private:
 	CDUIPoint	_ptNow;
 	HWND		_hHostWnd;
 
-	CWndShadow	m_shadow;
+	//CWndShadow	m_shadow;
 
 	static	CExitTPWindow*	s_instance;
 };

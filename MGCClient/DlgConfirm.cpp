@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "DlgConfirm.h"
 
+#include "SettingMgr.h"
+
 
 CDlgConfirm::CDlgConfirm(void)
 {
@@ -13,6 +15,9 @@ CDlgConfirm::~CDlgConfirm(void)
 
 void CDlgConfirm::Init()
 {
+	CStringW		str;
+	str.Format( L"联系客服： %s", SetMgr()->_strPhone );
+	FindCtrl( L"lbService" )->SetText( str );
 }
 
 LRESULT CDlgConfirm::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
@@ -33,11 +38,11 @@ void CDlgConfirm::Notify( TNotifyUI& msg )
 
 	if( strType == L"click")
 	{
-		if( strSenderName == L"bn1" )
+		if( strSenderName == L"bnOK" )
 		{
 			EndModal( IDOK );
 		}
-		else if( strSenderName == L"bn2" )
+		else if( strSenderName == L"bnCancel" )
 		{
 			EndModal( IDCANCEL );
 		}

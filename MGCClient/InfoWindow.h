@@ -24,5 +24,7 @@ private:
 	static	CInfoWindow*	s_instance;
 
 	HWND		_hHostWnd;
+
+	int			_time;
 };
 

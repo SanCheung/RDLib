@@ -1,5 +1,9 @@
 #include "StdAfx.h"
 #include "ExitTPWindow.h"
+#include "MainHelper.h"
+
+#include "DlgConfirm.h"
+#include "DlgPayment.h"
 
 CExitTPWindow*	CExitTPWindow::s_instance = nullptr;
 
@@ -57,9 +61,18 @@ LRESULT CExitTPWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 				RECT rt = {50, 250, 50+220, 250+50};
 				if( PtInRect( &rt, TheFirstPoint ) )
 				{
-					//MessageBox( m_hWnd, L"", L"", MB_OK );
-					//PostQuitMessage( WM_QUIT );
-					Hide();
+					////MessageBox( m_hWnd, L"", L"", MB_OK );
+					////PostQuitMessage( WM_QUIT );
+					//Hide();
+
+					CDlgConfirm		dlg;
+					if( IDOK == dlg.DoModalNoCaption( GetDesktopWindow() ) )
+					{
+						 Hide();
+
+						 CDlgPayment		dlg;
+						 dlg.DoModalNoCaption( GetDesktopWindow() );
+					}
 				}
 			}
 		}
@@ -130,11 +143,11 @@ LRESULT CExitTPWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		{
 			Update( 0 );
 
-			//ÃÌº”“ı”∞
-			CWndShadow::Initialize(CAppData::GetInstance());
-			m_shadow.Create(m_hWnd);
-			m_shadow.SetSize(2);
-			m_shadow.SetPosition(1, 1);
+			////ÃÌº”“ı”∞
+			//CWndShadow::Initialize(CAppData::GetInstance());
+			//m_shadow.Create(m_hWnd);
+			//m_shadow.SetSize(2);
+			//m_shadow.SetPosition(1, 1);
 		}
 		break;
 	}
@@ -159,24 +172,6 @@ HWND CExitTPWindow::CreateThis( HWND hHostWnd )
 
 	return m_hWnd;
 }
-
-void AddRoundRect( GraphicsPath &gp, INT x, INT y, INT width, INT height, INT cornerX, INT cornerY)  
-{  
-	INT elWid = 2*cornerX;  
-	INT elHei = 2*cornerY;  
-
-	gp.AddArc(x,y,elWid,elHei,180,90); // ◊Û…œΩ«‘≤ª°  
-	gp.AddLine(x+cornerX,y,x+width-cornerX,y); // …œ±ﬂ  
-
-	gp.AddArc(x+width-elWid,y, elWid,elHei,270,90); // ”“…œΩ«‘≤ª°  
-	gp.AddLine(x+width,y+cornerY, x+width,y+height-cornerY);// ”“±ﬂ  
-
-	gp.AddArc(x+width-elWid,y+height-elHei, elWid,elHei,0,90); // ”“œ¬Ω«‘≤ª°  
-	gp.AddLine(x+width-cornerX,y+height, x+cornerX,y+height); // œ¬±ﬂ  
-
-	gp.AddArc(x,y+height-elHei, elWid,elHei,90,90);   
-	gp.AddLine(x,y+cornerY, x, y+height-cornerY);  
-}  
 
 void CExitTPWindow::Update( int nType )
 {
@@ -226,7 +221,7 @@ void CExitTPWindow::Update( int nType )
 		sbButton.SetColor( Color(0xCF222222) );
 
 	GraphicsPath	gp;
-	AddRoundRect( gp, 50, 240, 220, 50, 24, 24 );
+	CMainHelper::AddRoundRect( gp, 50, 240, 220, 50, 24, 24 );
 	gr.FillPath( &sbButton, &gp );
 
 	Font			ft2( L"Œ¢»Ì—≈∫⁄", 16 );

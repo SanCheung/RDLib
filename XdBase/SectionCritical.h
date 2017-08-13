@@ -19,4 +19,16 @@ private:
 	LONG		m_EnterCount;
 };
 
+class CLockScoped
+{
+public:
+	CLockScoped(CSectionCritical& lock)
+		:m_Lock(lock)	{ m_Lock.Enter(); }
+
+	~CLockScoped()		{ m_Lock.Leave(); }
+
+private:
+	CSectionCritical&	m_Lock;
+};
+
 };

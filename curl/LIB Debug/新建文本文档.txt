@@ -1,0 +1,17 @@
+curl -F "action=upload" -F "file=@p.jpg" http://www.bullrushsoft.com/t140410/up.php
+
+curld -F "file=@upload.zip" -F "questionId=09acaea43d3a14abe66a97c8986d79c9" -F "userId=8a489d1a3fd760d9013fd760d9070000" http://www.zuihuixue.com/api/weike/upload
+{"error_code":0}
+
+
+0: 上传成功
+101: userId 不能为空
+102: questionId 不能为空
+103: 用户不存在或状态不正常
+104: 试题不存在
+105: 请指定需要上传的微课文件
+106: 微课文件解压失败
+107: 微课缺少数据文件
+108: 微课缺少音频文件
+109: 微课缺少图片文件
+110: 微课数据文件不合法

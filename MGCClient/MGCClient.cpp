@@ -13,6 +13,10 @@
 
 #include "DemoDlg.h"
 
+#include "MainHelper.h"
+
+#include "SettingMgr.h"
+
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPTSTR    lpCmdLine,
@@ -29,6 +33,29 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	CAppData::SetInstance(hInstance);
 	CAppData::SetResourcePath( CAppData::GetInstancePath() + L"mgc/" );
+
+	if( nullptr == SetMgr() )
+	{
+		CStringW strInfo;
+		strInfo.Format( L"请检查配置文件%s", CONFIG_INI );
+		MessageBox( NULL, strInfo, L"MGCClient", MB_OK|MB_ICONERROR);
+		return -1;
+	}
+
+	// 如果无法获取客服电话，网络未设置，或web服务未通
+	CStringW	strPhone = CMainHelper::webServiceNum();
+	if( strPhone.IsEmpty() )
+	{
+		mgTrace( L"无法获取客服电话" );
+		return -1;
+	}
+
+	SetMgr()->_strPhone = strPhone;
+	
+
+
+	IdleTrackerInit();
+
 
 	CDemoDlg		*pMainWnd = new CDemoDlg;
 
@@ -63,6 +90,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	////CExitTPWindow::Hide();
 	////CExitTPWindow::Release();
+
+	IdleTrackerTerm();
 
 	::GdiplusShutdown(token);
 	CoUninitialize();

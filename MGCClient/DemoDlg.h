@@ -1,5 +1,7 @@
 #pragma once
-class CDemoDlg : public CDialogBase
+
+class CDemoDlg  : public CDialogBase
+				, xdmp::ThreadWrap
 {
 public:
 	CDemoDlg(void);
@@ -11,5 +13,9 @@ public:
 	void	Init();
 
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+	void	ShowInfo( CStringW strInfo );
+
+	virtual void	thread_main();
 };
 

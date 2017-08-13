@@ -39,6 +39,19 @@
 using namespace Gdiplus;
 
 
+#include "../IdleTracker/IdleTracker.h"
+#pragma comment(lib, "IdleTracker.lib")
+
+#include "../XdURL/XdURLlib.h"
+#pragma comment(lib, "XdURL.lib")
+
+#include "ThreadWrap.h"
+
+#define		LOG_FILE			"mgcclient.log"
+#define		CONFIG_INI			L"mgcclient.ini"
+
+#define		WM_SHOWA		(WM_APP+1)
+
 
 
 #if defined _M_IX86

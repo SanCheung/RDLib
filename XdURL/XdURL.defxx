@@ -1,0 +1,4 @@
+LIBRARY "XdURL"
+
+EXPORTS
+   urlGetInfo @1

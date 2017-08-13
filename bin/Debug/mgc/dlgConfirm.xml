@@ -22,14 +22,14 @@
     
     <HBox childpadding="10" height="200" >
       <Control width="70" />
-      <Button name="bn1" width="200" text="算了 再玩会" textcolor="#FFffffff" font="3" />
+      <Button name="bnCancel" width="200" text="算了 再玩会" textcolor="#FFffffff" font="3" />
       <Control />
-      <Button name="bn2" width="200" text="确定" textcolor="#FFffffff" font="3" />
+      <Button name="bnOK" width="200" text="确定" textcolor="#FFffffff" font="3" />
       <Control width="70" />
     </HBox>
     
     <Control />
-    <Label textcolor="#FF999999" text="联系客服： 400-3345-3445" align="center" font="2" />
+    <Label name="lbService" textcolor="#FF999999" text="联系客服： 400-3345-3445" align="center" font="2" />
     <Control height="36" />
   </VBox>
 </Window>
