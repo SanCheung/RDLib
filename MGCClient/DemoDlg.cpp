@@ -72,8 +72,10 @@ void CDemoDlg::Notify( TNotifyUI& msg )
 		}
 		else if( strSenderName == L"bn4" )
 		{
+			//CDlgConfirm		dlg;
+			//dlg.DoModalNoCaption( GetDesktopWindow() );
 			CDlgConfirm		dlg;
-			dlg.DoModalNoCaption( GetDesktopWindow() );
+			dlg.DoModal( GetDesktopWindow(), L"", WS_POPUPWINDOW );
 		}
 		else if( strSenderName == L"bn5" )
 		{

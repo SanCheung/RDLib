@@ -1,16 +1,10 @@
 ﻿<?xml version="1.0" ?>
 <Window size="640,760" sizebox="4,4,6,6" >
-  <!--Include & Default--><!--
-  <Include source="sb/sb.xml" />
-  <Include source="font.xml" />
-  <Include source="ctrl.xml" />-->
-
   <Font name="Microsoft YaHei" size="50" />
   <Font name="Microsoft YaHei" size="24" />
   <Font name="Microsoft YaHei" size="20" />
   <Font name="Microsoft YaHei" size="30" />
   <Default name="Button" value="normalimage=&quot;file='ctrl2/btn_normal.png' corner='4,4,4,4'&quot; hotimage=&quot;file='ctrl2/btn_highlight.png' corner='4,4,4,4'&quot; pushedimage=&quot;file='ctrl2/btn_down.png' corner='4,4,4,4'&quot;" />
-
 
   <VBox bkcolor="#ff000000">
     <Control height="110" />

@@ -159,7 +159,7 @@ void CWindowTip::Update()
 	int iHeight = image.GetHeight();
 
 
-	int w = 400;
+	int w = 240;
 	int h = 44;
 
 
@@ -174,10 +174,10 @@ void CWindowTip::Update()
 	gr.SetTextRenderingHint( TextRenderingHintAntiAlias );
 	gr.DrawImage(&image, 0, 0);//将png图像绘制到后台DC中
 
-	Font		ft( L"Microsoft Yahei", 18.f, FontStyleBold );
+	Font		ft( L"Microsoft Yahei", 16.f, FontStyleBold );
 
 	CStringW	str = L"点击任意位置开始";
-	gr.DrawString( str, str.GetLength(), &ft, PointF(32, 0), &SolidBrush(Color::White));
+	gr.DrawString( str, str.GetLength(), &ft, PointF(32, 0), &SolidBrush(Color(128,255,255,255)));
 
 	BLENDFUNCTION blend = { 0 };
 	blend.BlendOp = AC_SRC_OVER;

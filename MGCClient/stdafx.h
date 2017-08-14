@@ -47,7 +47,7 @@ using namespace Gdiplus;
 
 #include "ThreadWrap.h"
 
-#define		LOG_FILE			"mgcclient.log"
+#define		LOG_FILE			"\\mgcclient.log"
 #define		CONFIG_INI			L"mgcclient.ini"
 
 #define		WM_SHOWA		(WM_APP+1)

@@ -193,6 +193,7 @@ void CExitTPWindow::Update( int nType )
 
 	Graphics gr(hdcMem);
 	gr.SetSmoothingMode( SmoothingModeHighQuality );
+	gr.SetTextRenderingHint( TextRenderingHintAntiAlias );
 	gr.DrawImage(&image, 0, 0);//将png图像绘制到后台DC中
 
 	Pen		penLine( Color(0xFF999999), 1 );	
@@ -258,6 +259,7 @@ void CExitTPWindow::Show( HWND hParentWnd )
 	else
 	{
 		s_instance->ShowWindow();
+		s_instance->Update( 0 );
 	}
 }
 

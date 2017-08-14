@@ -5,7 +5,7 @@ public:
 	CDlgConfirm(void);
 	virtual ~CDlgConfirm(void);
 
-	RDLIB_DEFAULT_METHOD( L"dlgConfirm.xml", UI_CLASSSTYLE_FRAME, L"mgc_windowclass" )
+	RDLIB_DEFAULT_METHOD( L"dlgConfirm.xml", UI_CLASSSTYLE_FRAME, L"mgc_ws_confirm" )
 
 	LRESULT OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled );
 	void	Init();
