@@ -85,7 +85,7 @@ protected:
 protected:
 	CPaintManagerUI paint_manager_;
 
-	CWndShadow		m_shadow;
+	//CWndShadow		m_shadow;
 
 public:
 	template< class T>

@@ -288,14 +288,14 @@ LRESULT CDialogBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHa
 
 	Init();
 
-	if( !(styleValue & WS_DLGFRAME) )
-	{
-		//添加阴影
-		CWndShadow::Initialize(CAppData::GetInstance());
-		m_shadow.Create(m_hWnd);
-		m_shadow.SetSize(2);
-		m_shadow.SetPosition(1, 1);
-	}
+	//if( !(styleValue & WS_DLGFRAME) )
+	//{
+	//	//添加阴影
+	//	CWndShadow::Initialize(CAppData::GetInstance());
+	//	m_shadow.Create(m_hWnd);
+	//	m_shadow.SetSize(2);
+	//	m_shadow.SetPosition(1, 1);
+	//}
 
 	return 0;
 }

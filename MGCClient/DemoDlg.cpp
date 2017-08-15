@@ -22,7 +22,7 @@ CDemoDlg::~CDemoDlg(void)
 
 void CDemoDlg::Init()
 {
-
+	::SetTimer( m_hWnd, 1, 1000, NULL );
 }
 
 LRESULT CDemoDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
@@ -72,15 +72,11 @@ void CDemoDlg::Notify( TNotifyUI& msg )
 		}
 		else if( strSenderName == L"bn4" )
 		{
-			//CDlgConfirm		dlg;
-			//dlg.DoModalNoCaption( GetDesktopWindow() );
-			CDlgConfirm		dlg;
-			dlg.DoModal( GetDesktopWindow(), L"", WS_POPUPWINDOW );
+			PostMessage( WM_SHOWA, 4 );
 		}
 		else if( strSenderName == L"bn5" )
 		{
-		   CDlgPayment		dlg;
-		   dlg.DoModalNoCaption( GetDesktopWindow() );
+			PostMessage( WM_SHOWA, 5 );
 		}			
 		else if( strSenderName == L"bn6" )
 		{
@@ -99,14 +95,16 @@ void CDemoDlg::Notify( TNotifyUI& msg )
 			Start();
 		}
 	}
-	else if( strType == L"timer" )
-	{
-	}
 }
 
 LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-	if( WM_SHOWA == uMsg )
+	if( WM_TIMER == uMsg )
+	{
+		PostMessage( WM_SHOWA, 1 );
+		KillTimer( m_hWnd, 1 );
+	}
+	else if( WM_SHOWA == uMsg )
 	{
 		if( wParam == 1 )
 			CVlcWindow::Show( m_hWnd );
@@ -114,8 +112,16 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			CInfoWindow::Show( m_hWnd );
 		else if( wParam == 3 )
 			CExitTPWindow::Show( m_hWnd );
-		//else if( wParam == 3 )
-		//	CExitTPWindow::Show( m_hWnd );
+		else if( wParam == 4 )
+		{
+			CDlgConfirm		dlg;
+			dlg.DoModalNoCaption( m_hWnd );
+		}
+		else if( wParam == 5 )
+		{
+			CDlgPayment		dlg;
+			dlg.DoModalNoCaption( m_hWnd );
+		}
 
 	}
 	else if( WM_LBUTTONDOWN == uMsg )

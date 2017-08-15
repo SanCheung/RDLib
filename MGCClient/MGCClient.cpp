@@ -42,17 +42,15 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return -1;
 	}
 
-	//// 如果无法获取客服电话，网络未设置，或web服务未通
-	//CStringW	strPhone = CMainHelper::webServiceNum();
-	//if( strPhone.IsEmpty() )
-	//{
-	//	mgTrace( L"无法获取客服电话" );
-	//	return -1;
-	//}
-
-	//SetMgr()->_strPhone = strPhone;
-
-	SetMgr()->_strPhone = L"999-888-777";
+	// 如果无法获取客服电话，网络未设置，或web服务未通
+	CStringW	strPhone = CMainHelper::webServiceNum();
+	if( strPhone.IsEmpty() )
+	{
+		mgTrace( L"无法获取客服电话" );
+		return -1;
+	}
+	SetMgr()->_strPhone = strPhone;
+	//SetMgr()->_strPhone = L"999-888-777";
 	
 
 
@@ -63,6 +61,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	pMainWnd->Create( NULL, L"MGC Demo", UI_WNDSTYLE_FRAME, 0 );
 	//pMainWnd->CenterWindow();
+	//pMainWnd->ShowWindow( false );
 	::SetWindowPos( pMainWnd->GetHWND(), NULL, GetSystemMetrics( SM_CXSCREEN )-440, 100, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
 
 	CAppData::MessageLoop();

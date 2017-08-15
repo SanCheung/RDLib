@@ -15,9 +15,9 @@ CDlgConfirm::~CDlgConfirm(void)
 
 void CDlgConfirm::Init()
 {
-	//CStringW		str;
-	//str.Format( L"联系客服： %s", SetMgr()->_strPhone );
-	//FindCtrl( L"lbService" )->SetText( str );
+	CStringW		str;
+	str.Format( L"联系客服： %s", SetMgr()->_strPhone );
+	FindCtrl( L"lbService" )->SetText( str );
 }
 
 LRESULT CDlgConfirm::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
