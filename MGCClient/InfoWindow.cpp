@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "InfoWindow.h"
 #include "MainHelper.h"
+#include "SettingMgr.h"
 
 CInfoWindow*	CInfoWindow::s_instance = nullptr;
 
@@ -190,4 +191,28 @@ HWND CInfoWindow::CreateThis( HWND hHostWnd )
 	UpdateWindow( m_hWnd );
 
 	return m_hWnd;
+}
+
+void CInfoWindow::thread_main()
+{
+	Sleep(2000);
+
+	maps2s			m;
+	maps2s_shell	ms( &m );
+	while(1)
+	{
+		int nRet = CMainHelper::webStatus_client( m );
+		if( nRet > 0 )
+		{
+			if( ms.intValue("onlineStatus") == 2 )
+			{
+				Hide();
+				::PostMessage( _hHostWnd, WM_SHOWA, 3, 0 );
+				break;
+			}
+		}
+
+		if( WAIT_OBJECT_0 == thWaitEvent(1000) )
+			break;
+	}
 }

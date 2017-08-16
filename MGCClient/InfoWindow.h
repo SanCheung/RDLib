@@ -1,5 +1,6 @@
 #pragma once
 class CInfoWindow  : public CWindowWnd
+				   , xdmp::ThreadWrap
 {
 public:
 	CInfoWindow(void);
@@ -29,5 +30,7 @@ private:
 	shared_ptr<Image>	_spImage2w;
 
 	int			_time;
+
+	virtual void	thread_main();
 };
 

@@ -2,6 +2,7 @@
 #include "DlgPayment.h"
 
 #include "SettingMgr.h"
+#include "MainHelper.h"
 
 CDlgPayment::CDlgPayment(void)
 {
@@ -39,6 +40,9 @@ void CDlgPayment::Init()
 	FindCtrl( L"lb1" )->SetText( str1 );
 	FindCtrl( L"lb2" )->SetText( str2 );
 	FindCtrl( L"lb3" )->SetText( str3 );
+
+	// 3分钟 = 180秒
+	::SetTimer( m_hWnd, 1, 5000, NULL );
 }
 
 LRESULT CDlgPayment::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
@@ -79,6 +83,24 @@ LRESULT CDlgPayment::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 		int x = LOWORD( wParam );
 		int y = HIWORD( wParam );
+	}
+	else if( WM_TIMER == uMsg )
+	{
+		::KillTimer( m_hWnd, 1 );
+
+		maps2s			m;
+		maps2s_shell	ms( &m );
+		int nRet = CMainHelper::webStatus_client( m );
+		if( nRet > 0 )
+		{
+			int		onlineStatus = 	ms.intValue("onlineStatus");
+			//if( onlineStatus == 1 )
+			{
+				MessageBox( m_hWnd, L"支付晚，待上机状态!!!\n这种情况下会重启计算机！", L"", 0 );
+				//Hide();
+				EndModal( 0 );
+			}
+		}
 	}
 
 	return CDialogBase::HandleMessage(uMsg, wParam, lParam);

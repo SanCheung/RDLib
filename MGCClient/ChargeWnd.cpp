@@ -324,6 +324,15 @@ void CChargeWnd::thread_main()
 			s->_charging = ms.stringValue( "charging" ).c_str();
 			s->_cost = ms.stringValue( "cost" ).c_str();
 			Update(0);
+
+
+			int		onlineStatus = 	ms.intValue("onlineStatus");
+			if( onlineStatus != 2 )
+			{
+				MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
+				//Hide();
+				break;
+			}
 		}
 
 		if( WAIT_OBJECT_0 == thWaitEvent(10000) )
