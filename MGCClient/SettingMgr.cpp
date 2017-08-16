@@ -47,6 +47,7 @@ bool CSettingMgr::load()
 
 	fblSystem::CIni		ini( strIniFile, L"main" );
 	_strWeb = ini.GetString( L"web" );
+	_strClientID = ini.GetInt("id");
 	return true;
 }
 

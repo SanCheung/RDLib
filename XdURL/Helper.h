@@ -5,6 +5,8 @@ namespace Json
 	class Value;
 }
 
+typedef int		(*cbCurlProcess)( void *, double, double, double, double );
+
 class CHelper
 {
 public:
@@ -17,7 +19,12 @@ public:
 
 	static int urlReturn( string strURL, string &strValue );
 
+
+	static bool		curlDownload( string strURL, string strLocalFile, void *lpData, cbCurlProcess callback, int &nResCode );
+
 private:
+	static size_t	write_data(char *buffer,size_t size, size_t nitems,void *outstream);
+	
 	static string	unicode2Mbs( wstring ws );
 	static wstring	utf2Unicode( string str );
 	static size_t	writeToString(char *buffer,size_t size, size_t nitems,void *outstream);

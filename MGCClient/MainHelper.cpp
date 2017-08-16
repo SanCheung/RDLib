@@ -134,7 +134,7 @@ bool CMainHelper::TestTimeOut( int nTimeOut )
 	DWORD tNow = ::GetTickCount();
 	DWORD tLast = IdleTrackerGetLastTickCount();
 
-	if( tNow - tLast < nTimeOut )
+	if( tNow - tLast < (DWORD)nTimeOut )
 		return false;
 
 	return true;
@@ -154,4 +154,16 @@ CStringW CMainHelper::webServiceNum()
 		return L"";
 
 	return (CStringW)ms.stringValue( "phone" ).c_str();
+}
+
+int CMainHelper::webStatus_client( maps2s &m )
+{
+	CStringA	strWeb = (CStringA)SetMgr()->_strWeb;
+	int			id = SetMgr()->_strClientID;
+
+	// http://47.92.114.240:8080/rest/status_client?clientId=1
+	CStringA	strURL;
+	strURL.Format( "%s/rest/status_client?clientId=%d", strWeb, id );
+
+	return urlGetInfo( (string)strURL, m );
 }

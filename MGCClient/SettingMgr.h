@@ -17,9 +17,15 @@ private:
 
 public:
 	CStringW	_strWeb;
+	int			_strClientID;
 
 	// 全局信息
 	CStringW	_strPhone;
+
+
+	CStringW	_duration;
+	CStringW	_charging;
+	CStringW	_cost;
 };
 
 

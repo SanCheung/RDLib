@@ -25,6 +25,9 @@ private:
 
 	HWND		_hHostWnd;
 
+	shared_ptr<Image>	_spImageBK;
+	shared_ptr<Image>	_spImage2w;
+
 	int			_time;
 };
 

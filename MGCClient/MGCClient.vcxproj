@@ -88,7 +88,7 @@
     <ClInclude Include="DemoDlg.h" />
     <ClInclude Include="DlgConfirm.h" />
     <ClInclude Include="DlgPayment.h" />
-    <ClInclude Include="ExitTPWindow.h" />
+    <ClInclude Include="ChargeWnd.h" />
     <ClInclude Include="InfoWindow.h" />
     <ClInclude Include="MainHelper.h" />
     <ClInclude Include="MGCClient.h" />
@@ -104,7 +104,7 @@
     <ClCompile Include="DemoDlg.cpp" />
     <ClCompile Include="DlgConfirm.cpp" />
     <ClCompile Include="DlgPayment.cpp" />
-    <ClCompile Include="ExitTPWindow.cpp" />
+    <ClCompile Include="ChargeWnd.cpp" />
     <ClCompile Include="InfoWindow.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="MGCClient.cpp" />

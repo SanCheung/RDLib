@@ -14,6 +14,8 @@ typedef map<string, string> maps2s;
 
 XDURL_API int urlReturn( string strURL, string &strValue );
 
+XDURL_API int urlDownload( string strURL, string strFile );
+
 // 获取信息
 XDURL_API int urlGetInfo( string strURL, maps2s &m );
 
@@ -22,7 +24,4 @@ XDURL_API int urlGetArray( string strURL, vector<maps2s> &as );
 
 #include "maps2s_shell.h"
 #endif
-
-
-
 

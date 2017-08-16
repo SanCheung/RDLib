@@ -103,6 +103,46 @@ int CHelper::jsValue2Map( Json::Value jv, maps2s &m )
 	return (int)m.size();
 }
 
+bool CHelper::curlDownload( string strURL, string strLocalFile, void *lpData, cbCurlProcess callback, int &nResCode )
+{
+	FILE* pFile = NULL;
+	if( 0 != fopen_s( &pFile, (char *)strLocalFile.c_str(), "wb+" ) )
+		return false;
+
+	CURL* pCurl = curl_easy_init();
+
+	curl_easy_setopt(pCurl, CURLOPT_URL, strURL.c_str() );
+
+	curl_easy_setopt(pCurl, CURLOPT_WRITEDATA, (void*)pFile );
+	curl_easy_setopt(pCurl, CURLOPT_WRITEFUNCTION, write_data);
+	//使用1.1
+	curl_easy_setopt(pCurl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+	if( NULL != callback )
+	{
+		curl_easy_setopt(pCurl, CURLOPT_NOPROGRESS, FALSE); 
+		curl_easy_setopt(pCurl, CURLOPT_PROGRESSFUNCTION, callback );
+		curl_easy_setopt(pCurl, CURLOPT_PROGRESSDATA, lpData );
+	}
+
+
+	CURLcode res = curl_easy_perform(pCurl);
+
+	nResCode = 0;
+	if( CURLE_OK == res )
+		curl_easy_getinfo( pCurl, CURLINFO_RESPONSE_CODE, &nResCode); 
+
+	fclose(pFile);
+
+	curl_easy_cleanup(pCurl);
+	return CURLE_OK==res;
+}
+
+size_t CHelper::write_data( char *buffer,size_t size, size_t nitems,void *outstream )
+{
+	int written = fwrite(buffer, size, nitems, (FILE*)outstream);
+	return written;
+}
+
 int CHelper::urlReturn( string strURL, string &strValue )
 {
 	// 访问接口

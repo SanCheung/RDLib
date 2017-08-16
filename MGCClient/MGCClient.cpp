@@ -4,7 +4,7 @@
 #include "stdafx.h"
 #include "MGCClient.h"
 
-#include "ExitTPWindow.h"
+#include "ChargeWnd.h"
 #include "DlgTestVideo.h"
 #include "VlcWindow.h"
 #include "InfoWindow.h"
@@ -42,15 +42,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return -1;
 	}
 
-	// 如果无法获取客服电话，网络未设置，或web服务未通
-	CStringW	strPhone = CMainHelper::webServiceNum();
-	if( strPhone.IsEmpty() )
-	{
-		mgTrace( L"无法获取客服电话" );
-		return -1;
-	}
-	SetMgr()->_strPhone = strPhone;
-	//SetMgr()->_strPhone = L"999-888-777";
+	//// 如果无法获取客服电话，网络未设置，或web服务未通
+	//CStringW	strPhone = CMainHelper::webServiceNum();
+	//if( strPhone.IsEmpty() )
+	//{
+	//	mgTrace( L"无法获取客服电话" );
+	//	return -1;
+	//}
+	//SetMgr()->_strPhone = strPhone;
+	
+	
+	SetMgr()->_strPhone = L"999-888-777";
 	
 
 

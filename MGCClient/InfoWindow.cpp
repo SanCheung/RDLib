@@ -7,6 +7,8 @@ CInfoWindow*	CInfoWindow::s_instance = nullptr;
 CInfoWindow::CInfoWindow(void)
 	: _hHostWnd( nullptr )
 {
+	_spImageBK.reset( new Image( CAppData::GetInstancePath() + L"mgc/infobk.png" ) );
+	_spImage2w.reset( new Image( CAppData::GetInstancePath() + L"mgc/info2w.png" ) );
 }
 
 
@@ -23,7 +25,7 @@ LRESULT CInfoWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 	case WM_TIMER:
 		{
-			 if( CMainHelper::TestTimeOut( 5000 ) )
+			 if( CMainHelper::TestTimeOut( 10000 ) )
 			 {
 				 Hide();
 				 ::PostMessage( _hHostWnd, WM_SHOWA, 1, 0 );
@@ -31,7 +33,8 @@ LRESULT CInfoWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			 }
 
 			 _time = ::GetTickCount() - IdleTrackerGetLastTickCount();
-			 ::InvalidateRect(m_hWnd, NULL, FALSE);
+			 CDUIRect	rt( 0, 0, 200, 30 );
+			 ::InvalidateRect(m_hWnd, rt, FALSE);
 		}
 		break;
 
@@ -80,24 +83,36 @@ LRESULT CInfoWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 			Graphics		gr( hDC );
 
-			CStringW		strFile = CAppData::GetInstancePath() + L"mgc/2wm.png";
-
 			CDUIRect		rt;
 			GetClientRect( m_hWnd, rt );
 
-			Image			img( strFile );
-			gr.DrawImage( &img, Rect(0,0,rt.Width(),rt.Height()), 0, 0, img.GetWidth(), img.GetHeight(), UnitPixel );
+			int w = rt.GetWidth();
+			int h = rt.GetHeight();
 
 
-			Font		ft( L"Microsoft Yahei", 32.f );
+			gr.DrawImage( _spImageBK.get(), 
+				Rect(0,0,w,h), 0, 0, 
+				_spImageBK->GetWidth(), _spImageBK->GetHeight(), UnitPixel );
+
+
+			int iw = _spImage2w->GetWidth();
+			int ih = _spImage2w->GetHeight();
+			int isw = 200;
+			int ish = 200;
+
+			gr.DrawImage( _spImage2w.get(), 
+				Rect((w-isw)/2,(h-ish)/2,isw,ish), 0, 0, iw, ih, UnitPixel );
+
+
+			Font		ft( L"Microsoft Yahei", 20.f );
 
 			static wchar_t	 buf[32] = {0};
 			wsprintf( buf, L"%d", _time );
-			gr.DrawString( buf, wcslen(buf), &ft, PointF(100, 100), &SolidBrush(Color::Red));
+			gr.DrawString( buf, wcslen(buf), &ft, PointF(0, 0), &SolidBrush(Color::Red));
 
 			Font		ft2( L"Microsoft Yahei", 12.f );
-			CStringW	str = L"请点击任意位置模拟扫描二维码的动作，测试5秒没动作就回到视频界面";
-			gr.DrawString( str, str.GetLength(), &ft2, PointF(100, 0), &SolidBrush(Color::White));
+			CStringW	str = L"请点击任意位置模拟扫描二维码的动作，测试10秒没动作就回到视频界面";
+			gr.DrawString( str, str.GetLength(), &ft2, PointF(20, h-20), &SolidBrush(Color::White));
 
 
 			EndPaint(*this, &ps);
@@ -168,7 +183,7 @@ void CInfoWindow::Release()
 HWND CInfoWindow::CreateThis( HWND hHostWnd )
 {
 	//Create( hHostWnd, NULL, WS_POPUP|WS_BORDER, 0, 0, 0, 400, 300 );
-	Create( hHostWnd, NULL, WS_POPUP, 0, 0, 0, 400, 300 );
+	Create( hHostWnd, NULL, WS_POPUP, 0, 0, 0, 1, 1 );
 	_hHostWnd = hHostWnd;
 
 	::ShowWindow( m_hWnd, SW_SHOWMAXIMIZED);

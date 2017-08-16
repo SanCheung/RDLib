@@ -35,3 +35,11 @@ XDURL_API int urlGetArray( string strURL, vector<maps2s> &as )
 {
 	return CHelper::urlGetArray( strURL, as );
 }
+
+
+XDURL_API int urlDownload( string strURL, string strFile )
+{
+	int nResCode = -1;
+	CHelper::curlDownload( strURL, strFile, NULL, NULL, nResCode );
+	return nResCode;
+}

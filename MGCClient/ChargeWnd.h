@@ -2,11 +2,12 @@
 
 #define		WM_EXITTPWND_CLICK				WM_APP + 100
 
-class CExitTPWindow : public CWindowWnd
+class CChargeWnd : public CWindowWnd
+				 , xdmp::ThreadWrap
 {
 public:
-	CExitTPWindow(void);
-	virtual ~CExitTPWindow(void);
+	CChargeWnd(void);
+	virtual ~CChargeWnd(void);
 
 	virtual LPCTSTR GetWindowClassName() const { return L"mgc_windowclass"; }
 	virtual UINT	GetClassStyle() const { return CS_HREDRAW | CS_VREDRAW | CS_IME | CS_DBLCLKS; }
@@ -18,7 +19,9 @@ public:
 	static void		Release();
 
 protected:
-	HWND		CreateThis( HWND hHostWnd );
+	HWND			CreateThis( HWND hHostWnd );
+
+	virtual void	thread_main();
 
 private:
 	void	Update( int nType );
@@ -29,8 +32,11 @@ private:
 	CDUIPoint	_ptNow;
 	HWND		_hHostWnd;
 
-	//CWndShadow	m_shadow;
+	static	CChargeWnd*	s_instance;
 
-	static	CExitTPWindow*	s_instance;
+
+	//CStringW	_duration;
+	//CStringW	_charging;
+	//CStringW	_cost;
 };
 

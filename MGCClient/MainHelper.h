@@ -21,6 +21,11 @@ public:
 
 	// http://47.92.114.240:8080/rest/serviceNum
 	static CStringW webServiceNum();
+
+	// api名称：获取用户上机状态
+	// 功能描述：获取用户当前的上机状态
+	// http://47.92.114.240:8080/rest/status_client?clientId=1
+	static int		webStatus_client( maps2s &m );
 };
 
 

@@ -1,17 +1,20 @@
 #include "StdAfx.h"
-#include "ExitTPWindow.h"
+#include "ChargeWnd.h"
 #include "MainHelper.h"
 
 #include "DlgConfirm.h"
 #include "DlgPayment.h"
 
-CExitTPWindow*	CExitTPWindow::s_instance = nullptr;
+#include "MainHelper.h"
+#include "SettingMgr.h"
+
 
 #define		PNG_WIDTH		320
 #define		PNG_HEIGHT		340
 
+CChargeWnd*	CChargeWnd::s_instance = nullptr;
 
-CExitTPWindow::CExitTPWindow(void)
+CChargeWnd::CChargeWnd(void)
 	: m_bMouseTracking( false )
 	, m_bPosChanged( false )
 	, _hHostWnd( nullptr )
@@ -23,11 +26,11 @@ CExitTPWindow::CExitTPWindow(void)
 }
 
 
-CExitTPWindow::~CExitTPWindow(void)
+CChargeWnd::~CChargeWnd(void)
 {
 }
 
-LRESULT CExitTPWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
+LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	static BOOL		ldown;
 	static POINT	TheFirstPoint;
@@ -141,6 +144,7 @@ LRESULT CExitTPWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 	case WM_CREATE:
 		{
+			thStart();
 			Update( 0 );
 
 			////添加阴影
@@ -155,7 +159,7 @@ LRESULT CExitTPWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	return CWindowWnd::HandleMessage( uMsg, wParam, lParam );
 }
 
-HWND CExitTPWindow::CreateThis( HWND hHostWnd )
+HWND CChargeWnd::CreateThis( HWND hHostWnd )
 {
 	//CreateWindowEx(WS_EX_LAYERED, TEXT("AppTest"), GetWindowClassName(), WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_POPUP/*无边框风格*/
 	//	, 0, 0, 114, 52,
@@ -173,7 +177,7 @@ HWND CExitTPWindow::CreateThis( HWND hHostWnd )
 	return m_hWnd;
 }
 
-void CExitTPWindow::Update( int nType )
+void CChargeWnd::Update( int nType )
 {
 	//CStringW	strFile = CAppData::GetInstancePath() + L"tp/exittp_normal.png";
 	//if( 1 == nType )
@@ -213,9 +217,28 @@ void CExitTPWindow::Update( int nType )
 
 	StringFormat	sf2;
 	sf2.SetAlignment( StringAlignmentFar );
-	gr.DrawString( L"1小时23分", 6, &ft, PointF(290,84), &sf2, &sbInfo );
-	gr.DrawString( L"1元/10分钟", 7, &ft, PointF(290,84+46), &sf2, &sbInfo );
-	gr.DrawString( L"55.6元", 6, &ft, PointF(290,84+46+46), &sf2, &sbInfo );
+
+
+	CSettingMgr		*s = SetMgr();
+
+	CStringW		str;
+	int		minute = s->_duration.ToInt();
+	if( minute >= 60 )
+	{
+		if( minute%60 == 0 )
+			str.Format( L"%d小时", minute/60 );
+		else
+			str.Format( L"%d小时%d分钟", minute/60, minute%60 );
+	}
+	else
+		str.Format( L"%d分钟", minute );
+	gr.DrawString( str, str.GetLength(), &ft, PointF(290,84), &sf2, &sbInfo );
+
+	str.Format( L"%s元/分钟", s->_charging );
+	gr.DrawString( str, str.GetLength(), &ft, PointF(290,84+46), &sf2, &sbInfo );
+
+	str.Format( L"%s元", s->_cost );
+	gr.DrawString( str, str.GetLength(), &ft, PointF(290,84+46+46), &sf2, &sbInfo );
 
 	SolidBrush	sbButton( Color(0xFF222222) );
 	if( 2 == nType )
@@ -249,11 +272,11 @@ void CExitTPWindow::Update( int nType )
 	ReleaseDC(m_hWnd, hdcScreen);
 }
 
-void CExitTPWindow::Show( HWND hParentWnd )
+void CChargeWnd::Show( HWND hParentWnd )
 {
 	if( s_instance == nullptr )
 	{
-		s_instance = new CExitTPWindow;
+		s_instance = new CChargeWnd;
 		s_instance->CreateThis( hParentWnd );
 	}
 	else
@@ -263,7 +286,7 @@ void CExitTPWindow::Show( HWND hParentWnd )
 	}
 }
 
-bool CExitTPWindow::Hide()
+bool CChargeWnd::Hide()
 {
 	if( s_instance != nullptr && 
 		IsWindow( s_instance->GetHWND() ) )
@@ -280,9 +303,30 @@ bool CExitTPWindow::Hide()
 	return false;
 }
 
-void CExitTPWindow::Release()
+void CChargeWnd::Release()
 {
 	DestroyWindow( s_instance->m_hWnd );
 	delete s_instance;
 	s_instance = nullptr;
+}
+
+void CChargeWnd::thread_main()
+{
+	maps2s			m;
+	maps2s_shell	ms( &m );
+	CSettingMgr		*s = SetMgr();
+	while(1)
+	{
+		int nRet = CMainHelper::webStatus_client( m );
+		if( nRet > 0 )
+		{
+			s->_duration = ms.stringValue( "duration" ).c_str();
+			s->_charging = ms.stringValue( "charging" ).c_str();
+			s->_cost = ms.stringValue( "cost" ).c_str();
+			Update(0);
+		}
+
+		if( WAIT_OBJECT_0 == thWaitEvent(10000) )
+			break;
+	}
 }

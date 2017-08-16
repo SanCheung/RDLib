@@ -34,7 +34,7 @@ LRESULT CVlcWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 	case WM_LBUTTONDOWN:
 		{
-			MessageBox( m_hWnd, L"CVlcWindow::WM_LBUTTONDOWN", 0, 0 );
+			//MessageBox( m_hWnd, L"CVlcWindow::WM_LBUTTONDOWN", 0, 0 );
 		}
 		break;
 	case WM_LBUTTONUP:
@@ -186,7 +186,7 @@ void CVlcWindow::Release()
 
 HWND CVlcWindow::CreateThis( HWND hHostWnd )
 {
-	Create( NULL, NULL, WS_POPUP|WS_BORDER|WS_VISIBLE, 0, 0, 0, 640, 480 );
+	Create( NULL, NULL, WS_POPUP|WS_BORDER|WS_VISIBLE, 0, 0, 0, 1, 1 );
 	_hHostWnd = hHostWnd;
 
 	//::ShowWindow( m_hWnd, SW_SHOW);
@@ -272,7 +272,7 @@ void CVlcWindow::thread_main()
 			break;
 		}
 
-		if( WAIT_OBJECT_0 == WaitEvent(500) )
+		if( WAIT_OBJECT_0 == thWaitEvent(500) )
 			break;
 	}
 }
@@ -282,7 +282,7 @@ void CVlcWindow::onShow()
 	// 播放视频/显示提示/开始检测键鼠
 	Replay();
 	CWindowTip::Show( m_hWnd );
-	Start();
+	thStart();
 }
 
 void CVlcWindow::onHide()

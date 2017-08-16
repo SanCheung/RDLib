@@ -10,21 +10,18 @@ public:
 	ThreadWrap(void);
 	virtual ~ThreadWrap(void);
 
-	void	Start();
-	//void	Shutdown();
-	void	ShutdownUseEvent();
+	void	thStart();
+	void	thShutdownUseEvent();
 
-	//void	SetExitFlag(){ _bExitFlag = true; }
-
-	int		Wait( int nMs = 3000 );
-	int		WaitEvent( int nMs = 3000 );
+	int		thWait( int nMs = 3000 );
+	int		thWaitEvent( int nMs = 3000 );
 	
-	bool	IsRunning();
+	bool	thIsRunning();
 
 protected:
 	virtual void	thread_main();
 
-	void	Close();
+	void	thClose();
 	//bool	GetExitFlag(){ return _bExitFlag; }
 
 private:  // ½ûÖ¹¸´ÖÆ

@@ -6,7 +6,7 @@
 
 #include "InfoWindow.h"
 #include "DlgConfirm.h"
-#include "ExitTPWindow.h"
+#include "ChargeWnd.h"
 
 #include "DlgPayment.h"
 
@@ -68,7 +68,7 @@ void CDemoDlg::Notify( TNotifyUI& msg )
 		}
 		else if( strSenderName == L"bn3" )
 		{
-			CExitTPWindow::Show( m_hWnd );
+			CChargeWnd::Show( m_hWnd );
 		}
 		else if( strSenderName == L"bn4" )
 		{
@@ -91,8 +91,7 @@ void CDemoDlg::Notify( TNotifyUI& msg )
 		else if( strSenderName == L"bn7" )
 		{
 			//ShowInfo( L"hello world" );
-
-			Start();
+			thStart();
 		}
 	}
 }
@@ -101,7 +100,7 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	if( WM_TIMER == uMsg )
 	{
-		PostMessage( WM_SHOWA, 1 );
+		//PostMessage( WM_SHOWA, 1 );
 		KillTimer( m_hWnd, 1 );
 	}
 	else if( WM_SHOWA == uMsg )
@@ -111,7 +110,7 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		else if( wParam == 2 )
 			CInfoWindow::Show( m_hWnd );
 		else if( wParam == 3 )
-			CExitTPWindow::Show( m_hWnd );
+			CChargeWnd::Show( m_hWnd );
 		else if( wParam == 4 )
 		{
 			CDlgConfirm		dlg;

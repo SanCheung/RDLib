@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "ThreadWrap.h"
 
-#include "Helper.h"
+//#include "Helper.h"
 #include <process.h>
 
 namespace xdmp
@@ -12,13 +12,14 @@ ThreadWrap::ThreadWrap(void)
 	: _hThread( nullptr )
 	, _bExitFlag( false )
 {
-	_hExitEvent = ::CreateEvent( &CGlobalSecurityAttributes::instance(), FALSE, FALSE, L"" );
+	//_hExitEvent = ::CreateEvent( &CGlobalSecurityAttributes::instance(), FALSE, FALSE, L"" );
+	_hExitEvent = ::CreateEvent( NULL, FALSE, FALSE, L"" );
 }
 
 
 ThreadWrap::~ThreadWrap(void)
 {
-	Close();
+	thClose();
 
 	if( nullptr != _hExitEvent )
 	{
@@ -31,16 +32,17 @@ ThreadWrap::~ThreadWrap(void)
 UINT WINAPI ThreadWrap::funProcess( LPVOID pVoid )
 {
 	ThreadWrap *pThis = (ThreadWrap *)pVoid;
-	ASSERT(pThis!=nullptr);
-	if(pThis){
+	//ASSERT(pThis!=nullptr);
+	if(pThis)
+	{
 		pThis->thread_main();
-		pThis->Close();
+		pThis->thClose();
 	}
 	
 	return 0;
 }
 
-void ThreadWrap::Close()
+void ThreadWrap::thClose()
 {
 	if( _hThread != nullptr )
 	{
@@ -49,13 +51,13 @@ void ThreadWrap::Close()
 	}
 }
 
-int ThreadWrap::Wait( int nMs /*= 3000 */ )
+int ThreadWrap::thWait( int nMs /*= 3000 */ )
 {
 	return ::WaitForSingleObject( _hThread, nMs );
 }
 
 
-int ThreadWrap::WaitEvent( int nMs /*= 3000 */ )
+int ThreadWrap::thWaitEvent( int nMs /*= 3000 */ )
 {
 	return ::WaitForSingleObject( _hExitEvent, nMs );
 }
@@ -63,15 +65,15 @@ int ThreadWrap::WaitEvent( int nMs /*= 3000 */ )
 
 void ThreadWrap::thread_main()
 {
-	ASSERT( FALSE );
+	//ASSERT( FALSE );
 }
 
-void ThreadWrap::Start()
+void ThreadWrap::thStart()
 {
-	if( IsRunning() )
+	if( thIsRunning() )
 		return;
 
-	Close();
+	thClose();
 
 	DWORD	_dwWriteThreadID= 0;
 	_hThread = (HANDLE)_beginthreadex(	NULL, 0, funProcess, this, CREATE_SUSPENDED,
@@ -95,18 +97,18 @@ void ThreadWrap::Start()
 //}
 
 
-void ThreadWrap::ShutdownUseEvent()
+void ThreadWrap::thShutdownUseEvent()
 {
-	if( !IsRunning() )
+	if( !thIsRunning() )
 		return;
 
 	::SetEvent( _hExitEvent );
-	int nRet = Wait(INFINITE);
-	Close();
+	int nRet = thWait(INFINITE);
+	thClose();
 }
 
 
-bool ThreadWrap::IsRunning()
+bool ThreadWrap::thIsRunning()
 {
 	return ( _hThread != nullptr );
 }
