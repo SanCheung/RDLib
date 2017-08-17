@@ -10,5 +10,7 @@ public:
 	void	Init();
 
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+	int		m_nLeftSecond;
 };
 

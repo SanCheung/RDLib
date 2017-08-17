@@ -2,6 +2,7 @@
 <Window size="640,760" sizebox="4,4,6,6" >
   <Font name="Microsoft YaHei" size="30" />
   <Font name="Microsoft YaHei" size="20" />
+  <Font name="Microsoft YaHei" size="16" />
  
   <HBox bkcolor="#ff000000">
     <Control width="60" />
@@ -46,9 +47,13 @@
         </VBox>
       </HBox>
       <Control />
-      <Label name="lbInfo" textcolor="#FF999999" text="180秒后机器重启...立即重启" align="center" font="1" />
+      <HBox height="20">
+        <Control />
+        <Text width="220" name="txInfo" textcolor="#FF999999" showhtml="true" text="{f 2}180秒后机器重启...{a 1}立即重启{/a}{/f}" />
+        <Control />
+      </HBox>
       <Control />
-      <Label name="lbService" textcolor="#FF999999" text="联系客服： 400-3345-3445" align="center" font="1" />
+      <Label name="lbService" height="24" textcolor="#FF999999" text="联系客服： 400-3345-3445" align="center" font="1" />
       <Control height="36" />
     </VBox>
     <Control width="60" />

@@ -165,6 +165,8 @@ int CMainHelper::web_status_client( maps2s &m )
 	CStringA	strURL;
 	strURL.Format( "%s/rest/status_client?clientId=%d", strWeb, id );
 
+	//mgTraceA( strURL );
+
 	int nRet = urlGetInfo( (string)strURL, m );
 	return nRet;
 }
@@ -180,13 +182,13 @@ bool CMainHelper::web_clientStatus()
 	strURL.Format( "%s/rest/clientStatus?clientId=%d&clientStatus=2", strWeb, id );
 
 	maps2s			m;
-	int nRes = urlGetInfo( (string)strWeb, m );
+	int nRes = urlGetInfo( (string)strURL, m );
 
 	maps2s_shell	ms( &m );
 	int data = ms.intValue( "data" );
 	if( data == 0 )
 	{
-		mgTrace( L"web clientStatus fail. %s", maps2sToString(m) );
+		mgTrace( L"上报客户端状态 clientStatus fail. %s", maps2sToString(m) );
 		return false;
 	}
 
@@ -204,13 +206,13 @@ bool CMainHelper::web_offline()
 	strURL.Format( "%s/rest/offline?clientId=%d", strWeb, id );
 
 	maps2s			m;
-	int nRes = urlGetInfo( (string)strWeb, m );
+	int nRes = urlGetInfo( (string)strURL, m );
 
 	maps2s_shell	ms( &m );
 	int data = ms.intValue( "data" );
 	if( data == 0 )
 	{
-		mgTrace( L"web offline fail. %s", maps2sToString(m) );
+		mgTrace( L"下机 offline fail. %s", maps2sToString(m) );
 		return false;
 	}
 
@@ -228,4 +230,22 @@ CStringW CMainHelper::maps2sToString( maps2s &m )
 	}
 
 	return str;
+}
+
+int CMainHelper::web_download()
+{
+	// https://ip:port/files/background.png
+	CStringA	strWeb = (CStringA)SetMgr()->_strWeb;
+	strWeb += "/files/background.png";
+
+	int		nFileSizeWeb = curlGetDownloadFileSize( (string)strWeb );
+	if( nFileSizeWeb <= 0 )
+		return 1;
+
+	CStringW	strLocalFile =  CAppData::GetInstancePath() + L"mgc/infobk.png";
+	int			nFileSizeLocal = CHelper::getFileSize( strLocalFile );
+	if( nFileSizeWeb == nFileSizeLocal )
+		return 0;
+
+	return urlDownload( (string)strWeb, (string)(CStringA)strLocalFile );
 }

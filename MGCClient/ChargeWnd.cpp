@@ -71,7 +71,7 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 					CDlgConfirm		dlg;
 					if( IDOK == dlg.DoModalNoCaption( GetDesktopWindow() ) )
 					{
-						bool	bOK =  true;//CMainHelper::web_offline();
+						bool	bOK = CMainHelper::web_offline();
 						if( bOK )
 						{
 							Hide();

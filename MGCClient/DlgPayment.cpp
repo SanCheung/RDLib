@@ -41,8 +41,13 @@ void CDlgPayment::Init()
 	FindCtrl( L"lb2" )->SetText( str2 );
 	FindCtrl( L"lb3" )->SetText( str3 );
 
-	// 3分钟 = 180秒
-	::SetTimer( m_hWnd, 1, 5000, NULL );
+
+	paint_manager_.SetDefaultLinkFontColor( 0xFFffffff );
+	paint_manager_.SetDefaultLinkHoverFontColor( 0xFFffffff );
+
+	//// 3分钟 = 180秒
+	m_nLeftSecond = 180;
+	::SetTimer( m_hWnd, 1, 1000, NULL );
 }
 
 LRESULT CDlgPayment::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
@@ -69,8 +74,10 @@ void CDlgPayment::Notify( TNotifyUI& msg )
 			EndModal( IDOK );
 		}
 	}
-	else if( strType == L"timer" )
+	else if( strType == L"link" )
 	{
+		MsgBox( L"重启！" );
+		PostQuitMessage( 0 );
 	}
 }
 
@@ -86,7 +93,22 @@ LRESULT CDlgPayment::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	else if( WM_TIMER == uMsg )
 	{
+		//{f 1}180秒后机器重启...{a 1}立即重启{/a}{/f}
 		//::KillTimer( m_hWnd, 1 );
+
+		if( m_nLeftSecond <= 0 )
+		{
+			::KillTimer( m_hWnd, 1 );
+			MsgBox( L"关机！" );
+			PostQuitMessage( 0 );
+			return 1;
+		}
+
+		CStringW	str;
+		str.Format( L"{f 2}%d秒后机器重启...{a 1}立即重启{/a}{/f}", m_nLeftSecond );
+		FindCtrl( L"txInfo" )->SetText( str );
+
+		m_nLeftSecond--;
 
 		//maps2s			m;
 		//maps2s_shell	ms( &m );

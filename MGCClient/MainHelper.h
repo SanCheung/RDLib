@@ -39,6 +39,9 @@ public:
 	static bool		web_clientStatus();
 
 
+	static int		web_download();
+
+
 	static CStringW	 maps2sToString( maps2s &m );
 };
 

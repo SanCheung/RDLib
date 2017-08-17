@@ -181,7 +181,7 @@ void CDemoDlg::thread_main()
 		int nRet = CMainHelper::web_status_client( m );
 		if( nRet <= 0 || 0 == ms.intValue("data") )
 		{
-			mgTrace( L"webStatus_client fail! %d", nRet );
+			mgTrace( L"获取上机状态 status_client fail! %d", nRet );
 		}
 		else
 		{

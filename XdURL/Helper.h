@@ -21,9 +21,11 @@ public:
 
 
 	static bool		curlDownload( string strURL, string strLocalFile, void *lpData, cbCurlProcess callback, int &nResCode );
+	static int		curlGetDownloadFileSize( string strURL );
 
 private:
 	static size_t	write_data(char *buffer,size_t size, size_t nitems,void *outstream);
+	static size_t	save_header(void *ptr, size_t size, size_t nmemb, void *data);
 	
 	static string	unicode2Mbs( wstring ws );
 	static wstring	utf2Unicode( string str );

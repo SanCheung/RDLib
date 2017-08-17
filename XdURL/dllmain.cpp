@@ -43,3 +43,8 @@ XDURL_API int urlDownload( string strURL, string strFile )
 	CHelper::curlDownload( strURL, strFile, NULL, NULL, nResCode );
 	return nResCode;
 }
+
+XDURL_API int curlGetDownloadFileSize( string strURL )
+{
+	return CHelper::curlGetDownloadFileSize( strURL );
+}

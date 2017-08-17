@@ -42,6 +42,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return -1;
 	}
 
+	mgTraceA( "run!" );
+
 	// 如果无法获取客服电话，网络未设置，或web服务未通
 	CStringW	strPhone = CMainHelper::web_serviceNum();
 	if( strPhone.IsEmpty() )
@@ -51,6 +53,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return -1;
 	}
 	SetMgr()->_strPhone = strPhone;
+
+	CMainHelper::web_download();
 	
 	//SetMgr()->_strPhone = L"999-888-777";
 
@@ -93,6 +97,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	////CExitTPWindow::Release();
 
 	IdleTrackerTerm();
+
+	mgTraceA( "Quit!" );
 
 	::GdiplusShutdown(token);
 	CoUninitialize();

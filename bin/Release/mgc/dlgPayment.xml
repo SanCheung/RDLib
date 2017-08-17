@@ -2,6 +2,7 @@
 <Window size="640,760" sizebox="4,4,6,6" >
   <Font name="Microsoft YaHei" size="30" />
   <Font name="Microsoft YaHei" size="20" />
+  <Font name="Microsoft YaHei" size="16" />
  
   <HBox bkcolor="#ff000000">
     <Control width="60" />
@@ -10,7 +11,7 @@
       <HBox height="30">
         <Label textcolor="#FFdadada" text="已玩" align="left" font="0" />
         <Control />
-        <Label textcolor="#FFffffff" text="1小时15分钟" align="right" font="0" />
+        <Label name="lb1" textcolor="#FFffffff" text="1小时15分钟" align="right" font="0" />
       </HBox>
       <Control height="30" />
       <Control height="1" bkcolor="FFdadada" />
@@ -19,7 +20,7 @@
       <HBox height="30">
         <Label textcolor="#FFdadada" text="计费" align="left" font="0" />
         <Control />
-        <Label textcolor="#FFffffff" text="1元/10分钟" align="right" font="0" />
+        <Label name="lb2" textcolor="#FFffffff" text="1元/10分钟" align="right" font="0" />
       </HBox>
       <Control height="30" />
       <Control height="1" bkcolor="FFdadada" />
@@ -28,14 +29,15 @@
       <HBox height="30">
         <Label textcolor="#FFdadada" text="需支付" align="left" font="0" />
         <Control />
-        <Label textcolor="#FFffffff" text="70元" align="right" font="0" />
+        <Label name="lb3" textcolor="#FFffffff" text="70元" align="right" font="0" />
       </HBox>
       <Control height="30" />
       <Control height="1" bkcolor="FFdadada" />
 
-      <Control height="90" />
+      <Control />
       <HBox height="200">
-        <Button name="bn" bkcolor="0xFFff7f7f" width="200" text="我是二维，点我关闭" />
+        <!--<Button name="bn" bkcolor="0xFFff7f7f" width="200" text="我是二维，点我关闭" />-->
+        <Label bkimage="pay2w.jpg" width="200" />
         <VBox>
           <Control />
           <Label textcolor="#FFffffff" text="结束体验成功" align="center" font="0" height="30" />
@@ -44,9 +46,14 @@
           <Control />
         </VBox>
       </HBox>
-      
       <Control />
-      <Label name="lbService" textcolor="#FF999999" text="联系客服： 400-3345-3445" align="center" font="1" />
+      <HBox height="20">
+        <Control />
+        <Text width="220" name="txInfo" textcolor="#FF999999" showhtml="true" text="{f 2}180秒后机器重启...{a 1}立即重启{/a}{/f}" />
+        <Control />
+      </HBox>
+      <Control />
+      <Label name="lbService" height="24" textcolor="#FF999999" text="联系客服： 400-3345-3445" align="center" font="1" />
       <Control height="36" />
     </VBox>
     <Control width="60" />

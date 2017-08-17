@@ -212,3 +212,37 @@ int CHelper::urlGetArray( string strURL, vector<maps2s> &as )
 
 	return (int)as.size();
 }
+
+size_t CHelper::save_header(void *ptr, size_t size, size_t nmemb, void *data)
+{
+	return (size_t)(size * nmemb);
+}
+
+int CHelper::curlGetDownloadFileSize( string strURL )
+{
+	double len= 0.0;
+	CURL *handle = curl_easy_init();
+	curl_easy_setopt(handle, CURLOPT_URL, strURL.c_str() );
+	curl_easy_setopt(handle, CURLOPT_HEADER, 1);    //只要求header头
+	curl_easy_setopt(handle, CURLOPT_NOBODY, 1);    //不需求body
+	curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, save_header);
+
+	if (curl_easy_perform(handle) == CURLE_OK) 
+	{
+		if(CURLE_OK == curl_easy_getinfo(handle, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &len))
+		{
+			;
+		}
+		else 
+		{
+			;//pirntf("curl_easy_getinfo failed!\n");
+		}
+
+	} 
+	else 
+	{
+		len= -1;
+	}
+
+	return len;
+}
