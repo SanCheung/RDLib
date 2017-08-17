@@ -33,7 +33,7 @@
       <Control height="30" />
       <Control height="1" bkcolor="FFdadada" />
 
-      <Control height="90" />
+      <Control />
       <HBox height="200">
         <!--<Button name="bn" bkcolor="0xFFff7f7f" width="200" text="我是二维，点我关闭" />-->
         <Label bkimage="pay2w.jpg" width="200" />
@@ -45,7 +45,8 @@
           <Control />
         </VBox>
       </HBox>
-      
+      <Control />
+      <Label name="lbInfo" textcolor="#FF999999" text="180秒后机器重启...立即重启" align="center" font="1" />
       <Control />
       <Label name="lbService" textcolor="#FF999999" text="联系客服： 400-3345-3445" align="center" font="1" />
       <Control height="36" />

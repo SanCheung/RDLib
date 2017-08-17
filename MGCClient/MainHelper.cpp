@@ -140,7 +140,7 @@ bool CMainHelper::TestTimeOut( int nTimeOut )
 	return true;
 }
 
-CStringW CMainHelper::webServiceNum()
+CStringW CMainHelper::web_serviceNum()
 {
 	CStringA	strWeb = (CStringA)SetMgr()->_strWeb;
 	strWeb += "/rest/serviceNum";
@@ -156,7 +156,7 @@ CStringW CMainHelper::webServiceNum()
 	return (CStringW)ms.stringValue( "phone" ).c_str();
 }
 
-int CMainHelper::webStatus_client( maps2s &m )
+int CMainHelper::web_status_client( maps2s &m )
 {
 	CStringA	strWeb = (CStringA)SetMgr()->_strWeb;
 	int			id = SetMgr()->_strClientID;
@@ -165,5 +165,67 @@ int CMainHelper::webStatus_client( maps2s &m )
 	CStringA	strURL;
 	strURL.Format( "%s/rest/status_client?clientId=%d", strWeb, id );
 
-	return urlGetInfo( (string)strURL, m );
+	int nRet = urlGetInfo( (string)strURL, m );
+	return nRet;
+}
+
+
+bool CMainHelper::web_clientStatus()
+{
+	CStringA	strWeb = (CStringA)SetMgr()->_strWeb;
+	int			id = SetMgr()->_strClientID;
+
+	// http://47.92.114.240:8080/rest/clientStatus?clientId=1&clientStatus=2
+	CStringA	strURL;
+	strURL.Format( "%s/rest/clientStatus?clientId=%d&clientStatus=2", strWeb, id );
+
+	maps2s			m;
+	int nRes = urlGetInfo( (string)strWeb, m );
+
+	maps2s_shell	ms( &m );
+	int data = ms.intValue( "data" );
+	if( data == 0 )
+	{
+		mgTrace( L"web clientStatus fail. %s", maps2sToString(m) );
+		return false;
+	}
+
+	return true;
+}
+
+
+bool CMainHelper::web_offline()
+{
+	CStringA	strWeb = (CStringA)SetMgr()->_strWeb;
+	int			id = SetMgr()->_strClientID;
+
+	// http://47.92.114.240:8080/rest/offline?clientId=1
+	CStringA	strURL;
+	strURL.Format( "%s/rest/offline?clientId=%d", strWeb, id );
+
+	maps2s			m;
+	int nRes = urlGetInfo( (string)strWeb, m );
+
+	maps2s_shell	ms( &m );
+	int data = ms.intValue( "data" );
+	if( data == 0 )
+	{
+		mgTrace( L"web offline fail. %s", maps2sToString(m) );
+		return false;
+	}
+
+	return true;
+}
+
+CStringW CMainHelper::maps2sToString( maps2s &m )
+{
+	CStringW	str;
+	for( auto it = m.begin(); it != m.end(); ++it )
+	{
+		CStringW strKV;
+		strKV.Format( L"%s:%s\n", it->first.c_str(), it->second.c_str() );
+		str += strKV;
+	}
+
+	return str;
 }

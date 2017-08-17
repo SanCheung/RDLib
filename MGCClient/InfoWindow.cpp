@@ -26,23 +26,23 @@ LRESULT CInfoWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 	case WM_TIMER:
 		{
-			 if( CMainHelper::TestTimeOut( 10000 ) )
-			 {
-				 Hide();
-				 ::PostMessage( _hHostWnd, WM_SHOWA, 1, 0 );
-				 break;
-			 }
+			if( CMainHelper::TestTimeOut( 20000 ) )
+			{
+				Hide();
+				::PostMessage( _hHostWnd, WM_SHOWA, 1, 0 );
+				break;
+			}
 
-			 _time = ::GetTickCount() - IdleTrackerGetLastTickCount();
-			 CDUIRect	rt( 0, 0, 200, 30 );
-			 ::InvalidateRect(m_hWnd, rt, FALSE);
+			//_time = ::GetTickCount() - IdleTrackerGetLastTickCount();
+			//CDUIRect	rt( 0, 0, 200, 30 );
+			//::InvalidateRect(m_hWnd, rt, FALSE);
 		}
 		break;
 
 	case WM_LBUTTONDOWN:
 		{
-			Hide();
-			::PostMessage( _hHostWnd, WM_SHOWA, 3, 0 );
+			//Hide();
+			//::PostMessage( _hHostWnd, WM_SHOWA, 3, 0 );
 		}
 		break;
 	case WM_LBUTTONUP:
@@ -73,7 +73,7 @@ LRESULT CInfoWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 	case WM_CREATE:
 		{
-			//::SetTimer( m_hWnd, 1, 1000, NULL );
+			::SetTimer( m_hWnd, 1, 1000, NULL );
 		}
 		break;
 
@@ -104,16 +104,16 @@ LRESULT CInfoWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			gr.DrawImage( _spImage2w.get(), 
 				Rect((w-isw)/2,(h-ish)/2,isw,ish), 0, 0, iw, ih, UnitPixel );
 
+			//////// 测试提示
+			//Font		ft( L"Microsoft Yahei", 20.f );
 
-			Font		ft( L"Microsoft Yahei", 20.f );
+			//static wchar_t	 buf[32] = {0};
+			//wsprintf( buf, L"%d", _time );
+			//gr.DrawString( buf, wcslen(buf), &ft, PointF(0, 0), &SolidBrush(Color::Red));
 
-			static wchar_t	 buf[32] = {0};
-			wsprintf( buf, L"%d", _time );
-			gr.DrawString( buf, wcslen(buf), &ft, PointF(0, 0), &SolidBrush(Color::Red));
-
-			Font		ft2( L"Microsoft Yahei", 12.f );
-			CStringW	str = L"请点击任意位置模拟扫描二维码的动作，测试10秒没动作就回到视频界面";
-			gr.DrawString( str, str.GetLength(), &ft2, PointF(20, h-20), &SolidBrush(Color::White));
+			//Font		ft2( L"Microsoft Yahei", 12.f );
+			//CStringW	str = L"请点击任意位置模拟扫描二维码的动作，测试10秒没动作就回到视频界面";
+			//gr.DrawString( str, str.GetLength(), &ft2, PointF(20, h-20), &SolidBrush(Color::White));
 
 
 			EndPaint(*this, &ps);
@@ -196,23 +196,22 @@ HWND CInfoWindow::CreateThis( HWND hHostWnd )
 void CInfoWindow::thread_main()
 {
 	Sleep(2000);
+	//maps2s			m;
+	//maps2s_shell	ms( &m );
+	//while(1)
+	//{
+	//	int nRet = CMainHelper::webStatus_client( m );
+	//	if( nRet > 0 )
+	//	{
+	//		if( ms.intValue("onlineStatus") == 2 )
+	//		{
+	//			Hide();
+	//			::PostMessage( _hHostWnd, WM_SHOWA, 3, 0 );
+	//			break;
+	//		}
+	//	}
 
-	maps2s			m;
-	maps2s_shell	ms( &m );
-	while(1)
-	{
-		int nRet = CMainHelper::webStatus_client( m );
-		if( nRet > 0 )
-		{
-			if( ms.intValue("onlineStatus") == 2 )
-			{
-				Hide();
-				::PostMessage( _hHostWnd, WM_SHOWA, 3, 0 );
-				break;
-			}
-		}
-
-		if( WAIT_OBJECT_0 == thWaitEvent(1000) )
-			break;
-	}
+	//	if( WAIT_OBJECT_0 == thWaitEvent(1000) )
+	//		break;
+	//}
 }

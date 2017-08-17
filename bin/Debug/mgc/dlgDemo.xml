@@ -14,12 +14,12 @@
       <Button width="200" name="bn1" text="视频框 打开/关闭" />
       <Button width="200" name="bn2" text="二维码扫描窗口" visible="false" />
       <Button width="200" name="bn3" text="计费窗口" />
-      <Button width="200" name="bn4" text="计费确认窗口" />
-      <Button width="200" name="bn5" text="付款窗口" />
+      <Button width="200" name="bn4" text="计费确认窗口" visible="false"/>
+      <Button width="200" name="bn5" text="付款窗口" visible11="false" />
 
       <Control />
       <Button width="200" name="bn6" text="任务栏隐藏/显示" />
-      <Button width="200" name="bn7" text="检测当前hook时间" />
+      <Button width="200" name="bn7" text="检测当前hook时间" visible="false" />
       
       
       <Control />

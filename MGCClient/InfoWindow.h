@@ -1,6 +1,6 @@
 #pragma once
 class CInfoWindow  : public CWindowWnd
-				   , xdmp::ThreadWrap
+				   //, xdmp::ThreadWrap
 {
 public:
 	CInfoWindow(void);

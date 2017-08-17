@@ -71,10 +71,13 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 					CDlgConfirm		dlg;
 					if( IDOK == dlg.DoModalNoCaption( GetDesktopWindow() ) )
 					{
-						 Hide();
+						bool	bOK =  true;//CMainHelper::web_offline();
+						if( bOK )
+						{
+							Hide();
+							::PostMessage( _hHostWnd, WM_SHOWA, 5, 0 );
+						}
 
-						 CDlgPayment		dlg;
-						 dlg.DoModalNoCaption( GetDesktopWindow() );
 					}
 				}
 			}
@@ -312,30 +315,30 @@ void CChargeWnd::Release()
 
 void CChargeWnd::thread_main()
 {
-	maps2s			m;
-	maps2s_shell	ms( &m );
-	CSettingMgr		*s = SetMgr();
-	while(1)
-	{
-		int nRet = CMainHelper::webStatus_client( m );
-		if( nRet > 0 )
-		{
-			s->_duration = ms.stringValue( "duration" ).c_str();
-			s->_charging = ms.stringValue( "charging" ).c_str();
-			s->_cost = ms.stringValue( "cost" ).c_str();
-			Update(0);
+	//maps2s			m;
+	//maps2s_shell	ms( &m );
+	//CSettingMgr		*s = SetMgr();
+	//while(1)
+	//{
+	//	int nRet = CMainHelper::webStatus_client( m );
+	//	if( nRet > 0 )
+	//	{
+	//		s->_duration = ms.stringValue( "duration" ).c_str();
+	//		s->_charging = ms.stringValue( "charging" ).c_str();
+	//		s->_cost = ms.stringValue( "cost" ).c_str();
+	//		Update(0);
 
 
-			int		onlineStatus = 	ms.intValue("onlineStatus");
-			if( onlineStatus != 2 )
-			{
-				MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
-				//Hide();
-				break;
-			}
-		}
+	//		int		onlineStatus = 	ms.intValue("onlineStatus");
+	//		if( onlineStatus != 2 )
+	//		{
+	//			MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
+	//			//Hide();
+	//			break;
+	//		}
+	//	}
 
-		if( WAIT_OBJECT_0 == thWaitEvent(10000) )
-			break;
-	}
+	//	if( WAIT_OBJECT_0 == thWaitEvent(10000) )
+	//		break;
+	//}
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+class CDlgPayment;
 class CDemoDlg  : public CDialogBase
 				, xdmp::ThreadWrap
 {
@@ -17,5 +18,9 @@ public:
 	void	ShowInfo( CStringW strInfo );
 
 	virtual void	thread_main();
+
+	int		m_nCurrentPage;
+
+	CDlgPayment *m_pDlgPayment;
 };
 

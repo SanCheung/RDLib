@@ -47,7 +47,7 @@ void CDlgPayment::Init()
 
 LRESULT CDlgPayment::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	EndModal( 0 );
+	EndModal( IDCANCEL );
 	return 0;
 }
 
@@ -86,21 +86,21 @@ LRESULT CDlgPayment::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	else if( WM_TIMER == uMsg )
 	{
-		::KillTimer( m_hWnd, 1 );
+		//::KillTimer( m_hWnd, 1 );
 
-		maps2s			m;
-		maps2s_shell	ms( &m );
-		int nRet = CMainHelper::webStatus_client( m );
-		if( nRet > 0 )
-		{
-			int		onlineStatus = 	ms.intValue("onlineStatus");
-			//if( onlineStatus == 1 )
-			{
-				MessageBox( m_hWnd, L"支付晚，待上机状态!!!\n这种情况下会重启计算机！", L"", 0 );
-				//Hide();
-				EndModal( 0 );
-			}
-		}
+		//maps2s			m;
+		//maps2s_shell	ms( &m );
+		//int nRet = CMainHelper::webStatus_client( m );
+		//if( nRet > 0 )
+		//{
+		//	int		onlineStatus = 	ms.intValue("onlineStatus");
+		//	//if( onlineStatus == 1 )
+		//	{
+		//		MessageBox( m_hWnd, L"支付晚，待上机状态!!!\n这种情况下会重启计算机！", L"", 0 );
+		//		//Hide();
+		//		EndModal( 0 );
+		//	}
+		//}
 	}
 
 	return CDialogBase::HandleMessage(uMsg, wParam, lParam);

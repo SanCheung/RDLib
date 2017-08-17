@@ -42,19 +42,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		return -1;
 	}
 
-	//// 如果无法获取客服电话，网络未设置，或web服务未通
-	//CStringW	strPhone = CMainHelper::webServiceNum();
-	//if( strPhone.IsEmpty() )
-	//{
-	//	mgTrace( L"无法获取客服电话" );
-	//	return -1;
-	//}
-	//SetMgr()->_strPhone = strPhone;
+	// 如果无法获取客服电话，网络未设置，或web服务未通
+	CStringW	strPhone = CMainHelper::web_serviceNum();
+	if( strPhone.IsEmpty() )
+	{
+		MessageBox( GetDesktopWindow(), L"无法获取客服电话，程序将退出！", 0, MB_OK );
+		mgTrace( L"无法获取客服电话" );
+		return -1;
+	}
+	SetMgr()->_strPhone = strPhone;
 	
-	
-	SetMgr()->_strPhone = L"999-888-777";
-	
-
+	//SetMgr()->_strPhone = L"999-888-777";
 
 	IdleTrackerInit();
 

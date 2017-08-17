@@ -22,7 +22,7 @@ void CDlgConfirm::Init()
 
 LRESULT CDlgConfirm::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	EndModal( 0 );
+	EndModal( IDCANCEL );
 	return 0;
 }
 

@@ -9,9 +9,12 @@
 #include "ChargeWnd.h"
 
 #include "DlgPayment.h"
+#include "SettingMgr.h"
+#include "MainHelper.h"
 
 
 CDemoDlg::CDemoDlg(void)
+	: m_pDlgPayment( nullptr )
 {
 }
 
@@ -23,10 +26,19 @@ CDemoDlg::~CDemoDlg(void)
 void CDemoDlg::Init()
 {
 	::SetTimer( m_hWnd, 1, 1000, NULL );
+	thStart();
 }
 
 LRESULT CDemoDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
+	thShutdownUseEvent();
+
+	if( m_pDlgPayment != nullptr && IsWindow( m_pDlgPayment->GetHWND() ) )
+	{
+		DestroyWindow( m_pDlgPayment->GetHWND() );
+		DEL( m_pDlgPayment );
+	}
+
 	PostQuitMessage( 0 );
 	return 0;
 }
@@ -113,15 +125,25 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			CChargeWnd::Show( m_hWnd );
 		else if( wParam == 4 )
 		{
-			CDlgConfirm		dlg;
-			dlg.DoModalNoCaption( m_hWnd );
+			//CDlgConfirm		dlg;
+			//dlg.DoModalNoCaption( GetDesktopWindow() );
 		}
 		else if( wParam == 5 )
 		{
-			CDlgPayment		dlg;
-			dlg.DoModalNoCaption( m_hWnd );
+			//CDlgPayment		dlg;
+			//dlg.DoModalNoCaption( GetDesktopWindow() );
+
+			if( nullptr == m_pDlgPayment )
+			{
+				m_pDlgPayment = new CDlgPayment;
+				m_pDlgPayment->Create( GetDesktopWindow(), L"", WS_POPUPWINDOW, WS_EX_WINDOWEDGE );
+				m_pDlgPayment->CenterWindow();
+			}
+
+			m_pDlgPayment->ShowWindow();
 		}
 
+		m_nCurrentPage = wParam;
 	}
 	else if( WM_LBUTTONDOWN == uMsg )
 	{
@@ -134,16 +156,78 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 void CDemoDlg::thread_main()
 {
-	while( 1 )
+	//while( 1 )
+	//{
+	//	///原来用于测试Idle时间
+	//	//DWORD tNow = ::GetTickCount();
+	//	//DWORD tLast = IdleTrackerGetLastTickCount();
+
+	//	//CStringW	str;
+	//	//str.Format( L"%d", tNow-tLast );
+	//	//ShowInfo( str );
+
+	//	//Sleep(1000);
+
+	//}
+
+
+	maps2s			m;
+	maps2s_shell	ms( &m );
+	CSettingMgr		*s = SetMgr();
+
+	int			nTime = 0;
+	while(1)
 	{
-		DWORD tNow = ::GetTickCount();
-		DWORD tLast = IdleTrackerGetLastTickCount();
+		int nRet = CMainHelper::web_status_client( m );
+		if( nRet <= 0 || 0 == ms.intValue("data") )
+		{
+			mgTrace( L"webStatus_client fail! %d", nRet );
+		}
+		else
+		{
+			s->_duration = ms.stringValue( "duration" ).c_str();
+			s->_charging = ms.stringValue( "charging" ).c_str();
+			s->_cost = ms.stringValue( "cost" ).c_str();
+			int	 onlineStatus = ms.intValue("onlineStatus");
 
-		CStringW	str;
-		str.Format( L"%d", tNow-tLast );
-		ShowInfo( str );
+			if( onlineStatus == 2 )
+			{
+				if( m_nCurrentPage == 1 )
+				{
+					CVlcWindow::Hide();
+					PostMessage( WM_SHOWA, 3 );
+				}
+				else if( m_nCurrentPage == 2 )
+				{
+					CInfoWindow::Hide();
+					PostMessage( WM_SHOWA, 3 );
+				}	
+			}
+			else if( m_nCurrentPage == 3 )
+			{
+				MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
+				CChargeWnd::Hide();
+			}
+			else if( m_nCurrentPage == 5 && onlineStatus == 1 )
+			{
+				MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
+				m_pDlgPayment->ShowWindow( false );
+			}
+		}
 
-		Sleep(1000);
+
+		if( nTime >= 10 )
+		{
+			nTime = 0;
+			CMainHelper::web_clientStatus();
+		}
+
+		nTime++;
+
+		// 两秒轮询一次
+		if( WAIT_OBJECT_0 == thWaitEvent(2000) )
+			break;
+
 	}
 }
 
