@@ -73,7 +73,6 @@ LRESULT CInfoWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 	case WM_CREATE:
 		{
-			::SetTimer( m_hWnd, 1, 1000, NULL );
 		}
 		break;
 

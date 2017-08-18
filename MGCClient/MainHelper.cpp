@@ -191,9 +191,31 @@ bool CMainHelper::web_clientStatus()
 		mgTrace( L"上报客户端状态 clientStatus fail. %s", maps2sToString(m) );
 		return false;
 	}
+	return true;
+}
+
+bool CMainHelper::web_orderStatus( maps2s &m )
+{
+	CStringA	strWeb = (CStringA)SetMgr()->_strWeb;
+	CStringA	strOrderID = (CStringA)SetMgr()->_strOrderID;
+
+	// http://47.92.114.240:8080/rest/orderStatus?orderId=?
+	CStringA	strURL;
+	strURL.Format( "%s/rest/orderStatus?orderId=%s", strWeb, strOrderID );
+
+	int nRes = urlGetInfo( (string)strURL, m );
+
+	maps2s_shell	ms( &m );
+	int data = ms.intValue( "data" );
+	if( data == 0 )
+	{
+		mgTrace( L"获取订单状态 orderStatus fail. %s", maps2sToString(m) );
+		return false;
+	}
 
 	return true;
 }
+
 
 
 bool CMainHelper::web_offline()
@@ -216,8 +238,12 @@ bool CMainHelper::web_offline()
 		return false;
 	}
 
+	SetMgr()->_strOrderID = (CStringW)ms.stringValue( "orderId" ).c_str();
 	return true;
 }
+
+
+
 
 CStringW CMainHelper::maps2sToString( maps2s &m )
 {
@@ -248,4 +274,13 @@ int CMainHelper::web_download()
 		return 0;
 
 	return urlDownload( (string)strWeb, (string)(CStringA)strLocalFile );
+}
+
+int CMainHelper::Reboot()
+{
+	MessageBox( GetDesktopWindow(), L"正式版本 会重启计算机！", L"", 0 );
+	PostQuitMessage( 0 );
+	return 1;
+
+	//return ExitWindowsEx( EWX_REBOOT|EWX_FORCE, 0 );
 }

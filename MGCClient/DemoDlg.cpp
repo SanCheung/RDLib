@@ -143,7 +143,8 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			m_pDlgPayment->ShowWindow();
 		}
 
-		m_nCurrentPage = wParam;
+		//m_nCurrentPage = wParam;
+		::InterlockedExchange( (LPLONG)&m_nCurrentPage, wParam );
 	}
 	else if( WM_LBUTTONDOWN == uMsg )
 	{
@@ -178,56 +179,78 @@ void CDemoDlg::thread_main()
 	int			nTime = 0;
 	while(1)
 	{
-		int nRet = CMainHelper::web_status_client( m );
-		if( nRet <= 0 || 0 == ms.intValue("data") )
+		if( m_nCurrentPage == 5 )
 		{
-			mgTrace( L"获取上机状态 status_client fail! %d", nRet );
+			int nRet = CMainHelper::web_orderStatus( m );
+			if( nRet <= 0 || 0 == ms.intValue("data") )
+			{
+				mgTrace( L"获取订单状态 orderStatus fail! %d", nRet );
+			}
+			else
+			{
+				if( 1 == ms.intValue("orderStatus") )
+				{
+					CMainHelper::Reboot();
+					break;
+				}
+			}
+
+			// 5s轮询一次
+			if( WAIT_OBJECT_0 == thWaitEvent(5000) )
+				break;
 		}
 		else
 		{
-			s->_duration = ms.stringValue( "duration" ).c_str();
-			s->_charging = ms.stringValue( "charging" ).c_str();
-			s->_cost = ms.stringValue( "cost" ).c_str();
-			int	 onlineStatus = ms.intValue("onlineStatus");
-
-			if( onlineStatus == 2 )
+			int nRet = CMainHelper::web_status_client( m );
+			if( nRet <= 0 || 0 == ms.intValue("data") )
 			{
-				if( m_nCurrentPage == 1 )
+				mgTrace( L"获取上机状态 status_client fail! %d", nRet );
+			}
+			else
+			{
+				s->_duration = ms.stringValue( "duration" ).c_str();
+				s->_charging = ms.stringValue( "charging" ).c_str();
+				s->_cost = ms.stringValue( "cost" ).c_str();
+				int	 onlineStatus = ms.intValue("onlineStatus");
+
+				if( onlineStatus == 2 )
 				{
-					CVlcWindow::Hide();
-					PostMessage( WM_SHOWA, 3 );
+					if( m_nCurrentPage == 1 )
+					{
+						CVlcWindow::Hide();
+						PostMessage( WM_SHOWA, 3 );
+					}
+					else if( m_nCurrentPage == 2 )
+					{
+						CInfoWindow::Hide();
+						PostMessage( WM_SHOWA, 3 );
+					}
 				}
-				else if( m_nCurrentPage == 2 )
+				else if( m_nCurrentPage == 3 )
 				{
-					CInfoWindow::Hide();
-					PostMessage( WM_SHOWA, 3 );
-				}	
+					CChargeWnd::Hide();
+					CMainHelper::Reboot();
+				}
+				//else if( m_nCurrentPage == 5 && onlineStatus == 1 )
+				//{
+				//	MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
+				//	m_pDlgPayment->ShowWindow( false );
+				//}
 			}
-			else if( m_nCurrentPage == 3 )
+
+			if( nTime >= 10 )
 			{
-				MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
-				CChargeWnd::Hide();
+				nTime = 0;
+				// 每隔20s上报一次客户端状态
+				CMainHelper::web_clientStatus();
 			}
-			else if( m_nCurrentPage == 5 && onlineStatus == 1 )
-			{
-				MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
-				m_pDlgPayment->ShowWindow( false );
-			}
+
+			nTime++;
+
+			// 两秒轮询一次
+			if( WAIT_OBJECT_0 == thWaitEvent(2000) )
+				break;
 		}
-
-
-		if( nTime >= 10 )
-		{
-			nTime = 0;
-			CMainHelper::web_clientStatus();
-		}
-
-		nTime++;
-
-		// 两秒轮询一次
-		if( WAIT_OBJECT_0 == thWaitEvent(2000) )
-			break;
-
 	}
 }
 

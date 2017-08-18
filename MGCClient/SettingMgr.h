@@ -21,6 +21,7 @@ public:
 
 	// 全局信息
 	CStringW	_strPhone;
+	CStringW	_strOrderID;
 
 
 	CStringW	_duration;

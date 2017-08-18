@@ -38,9 +38,16 @@ public:
 	// http://ip:port/rest/clientStatus  
 	static bool		web_clientStatus();
 
+	//	api名称：获取订单状态
+	//		功能描述：获取用户订单的状态以及信息
+	//		输入参数：订单orderId
+	//		返回结果：结果1-调用成功{订单id、本单开始时间、本单结束时间、本单时长、本单计费标准、本单客户端id、订单状态、订单金额、实付金额、付款时间}，结果0-调用失败
+	//请求地址：http://ip:port/rest/orderStatus
+	static bool		web_orderStatus( maps2s &m );
 
 	static int		web_download();
 
+	static int		Reboot();
 
 	static CStringW	 maps2sToString( maps2s &m );
 };

@@ -99,7 +99,8 @@ LRESULT CDlgPayment::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		if( m_nLeftSecond <= 0 )
 		{
 			::KillTimer( m_hWnd, 1 );
-			MsgBox( L"¹Ø»ú£¡" );
+			ShowWindow( false );
+			CMainHelper::Reboot();
 			PostQuitMessage( 0 );
 			return 1;
 		}
