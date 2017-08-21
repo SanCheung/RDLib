@@ -24,7 +24,8 @@ protected:
 	virtual void	thread_main();
 
 private:
-	void	Update( int nType );
+	//void	Update( int nType );
+	void	Update();
 
 	bool	m_bMouseTracking;
 	bool	m_bPosChanged;
@@ -34,9 +35,6 @@ private:
 
 	static	CChargeWnd*	s_instance;
 
-
-	//CStringW	_duration;
-	//CStringW	_charging;
-	//CStringW	_cost;
+	int		_nType;
 };
 

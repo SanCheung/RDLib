@@ -147,6 +147,8 @@ bool CInfoWindow::IsShow()
 
 void CInfoWindow::Show( HWND hParentWnd )
 {
+	mgTrace( L"CInfoWindow::Show" );
+
 	if( s_instance == nullptr )
 	{
 		s_instance = new CInfoWindow;
@@ -162,6 +164,7 @@ void CInfoWindow::Show( HWND hParentWnd )
 
 bool CInfoWindow::Hide()
 {
+	mgTrace( L"CInfoWindow::Hide" );
 	if( s_instance != nullptr && 
 		IsWindow( s_instance->GetHWND() ) )
 	{

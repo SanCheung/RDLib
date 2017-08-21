@@ -9,7 +9,7 @@
 #pragma comment( lib, "libvlccore.lib" )
 
 
-#define			VIDEO_FILE				"clip.wmv"
+#define			VIDEO_FILE				"video.mp4"
 
 CVlcWindow*	CVlcWindow::s_instance = nullptr;
 
@@ -253,7 +253,7 @@ void CVlcWindow::Replay()
 
 void CVlcWindow::thread_main()
 {
-	Sleep(2000);
+	Sleep(1000);
 
 	while( 1 )
 	{
@@ -266,13 +266,13 @@ void CVlcWindow::thread_main()
 		//	break;
 		//}
 
-		if( !CMainHelper::TestTimeOut( 500 ) )
+		if( !CMainHelper::TestTimeOut( 100 ) )
 		{
 			CVlcWindow::Hide();
 			break;
 		}
 
-		if( WAIT_OBJECT_0 == thWaitEvent(500) )
+		if( WAIT_OBJECT_0 == thWaitEvent(100) )
 			break;
 	}
 }

@@ -11,18 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E31F6738-A464-4705-B271-F1F9F52D59DF}</ProjectGuid>
+    <ProjectGuid>{62EA2427-D618-4B00-BE3F-3BDB821E058B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>MGCClient</RootNamespace>
+    <RootNamespace>PreventAction</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
@@ -52,13 +52,12 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../XdBase;../RDLib;../libvlc_include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PREVENTACTION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\$(Configuration);$(SolutionDir)libvlc_lib</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)libs\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,58 +67,38 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../XdBase;../RDLib;../libvlc_include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PREVENTACTION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\$(Configuration);$(SolutionDir)libvlc_lib</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)libs\$(Configuration)\$(TargetName).lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="logo.ico" />
-    <None Include="MGCClient.ico" />
     <None Include="ReadMe.txt" />
-    <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DemoDlg.h" />
-    <ClInclude Include="DlgConfirm.h" />
-    <ClInclude Include="DlgPayment.h" />
-    <ClInclude Include="ChargeWnd.h" />
-    <ClInclude Include="InfoWindow.h" />
-    <ClInclude Include="MainHelper.h" />
-    <ClInclude Include="MGCClient.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="SettingMgr.h" />
+    <ClInclude Include="PreventAction.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="ThreadWrap.h" />
-    <ClInclude Include="VlcWindow.h" />
-    <ClInclude Include="WindowTip.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DemoDlg.cpp" />
-    <ClCompile Include="DlgConfirm.cpp" />
-    <ClCompile Include="DlgPayment.cpp" />
-    <ClCompile Include="ChargeWnd.cpp" />
-    <ClCompile Include="InfoWindow.cpp" />
-    <ClCompile Include="MainHelper.cpp" />
-    <ClCompile Include="MGCClient.cpp" />
-    <ClCompile Include="SettingMgr.cpp" />
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="PreventAction.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ThreadWrap.cpp" />
-    <ClCompile Include="VlcWindow.cpp" />
-    <ClCompile Include="WindowTip.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="MGCClient.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

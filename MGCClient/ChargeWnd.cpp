@@ -23,6 +23,7 @@ CChargeWnd::CChargeWnd(void)
 	int sh = GetSystemMetrics( SM_CYSCREEN );
 
 	_ptNow.SetPoint( sw-PNG_WIDTH-10, sh-PNG_HEIGHT-50 );
+	_nType = 0;
 }
 
 
@@ -37,13 +38,20 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 	switch (uMsg)
 	{
+	case WM_TIMER:
+		Update();
+		break;
+
 	case WM_LBUTTONDOWN:
 		{
 			ldown = TRUE;
 			SetCapture( m_hWnd );
 			TheFirstPoint.x = LOWORD(lParam);
 			TheFirstPoint.y = HIWORD(lParam);
-			Update( 1 );
+
+			_nType = 1;
+			Update();
+			//Update( 1 );
 
 			m_bPosChanged = false;
 		}
@@ -91,11 +99,13 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 			RECT rt = {50, 250, 50+220, 250+50};
 			if( PtInRect( &rt, pt ) )
-			{
-				Update( 2 );
-			}
+				_nType = 2;
+				//Update( 2 );
 			else
-				Update( 1 );
+				_nType = 1;
+				//Update( 1 );
+
+			Update();
 
 // 			if( !m_bMouseTracking )
 // 			{
@@ -133,7 +143,9 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	case WM_MOUSEHOVER:
 		{
 			m_bMouseTracking = false;
-			Update( 1 );
+			//Update( 1 );
+			_nType = 1;
+			Update();
 		}
 		break;
 
@@ -141,14 +153,18 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		{
 			if( m_bMouseTracking ) ::SendMessage(m_hWnd, WM_MOUSEMOVE, 0, (LPARAM) -1);
 			m_bMouseTracking = false;
-			Update( 0 );
+			//Update( 0 );
+			_nType = 0;
+			Update();
 		}
 		break;
 
 	case WM_CREATE:
 		{
-			thStart();
-			Update( 0 );
+			//thStart();
+			_nType = 0;
+			Update();
+			SetTimer( m_hWnd, 1, 100, NULL );
 
 			////Ìí¼ÓÒõÓ°
 			//CWndShadow::Initialize(CAppData::GetInstance());
@@ -180,7 +196,7 @@ HWND CChargeWnd::CreateThis( HWND hHostWnd )
 	return m_hWnd;
 }
 
-void CChargeWnd::Update( int nType )
+void CChargeWnd::Update()
 {
 	//CStringW	strFile = CAppData::GetInstancePath() + L"tp/exittp_normal.png";
 	//if( 1 == nType )
@@ -244,7 +260,7 @@ void CChargeWnd::Update( int nType )
 	gr.DrawString( str, str.GetLength(), &ft, PointF(290,84+46+46), &sf2, &sbInfo );
 
 	SolidBrush	sbButton( Color(0xFF222222) );
-	if( 2 == nType )
+	if( 2 == _nType )
 		sbButton.SetColor( Color(0xCF222222) );
 
 	GraphicsPath	gp;
@@ -285,7 +301,8 @@ void CChargeWnd::Show( HWND hParentWnd )
 	else
 	{
 		s_instance->ShowWindow();
-		s_instance->Update( 0 );
+		s_instance->_nType = 0;
+		s_instance->Update();
 	}
 }
 

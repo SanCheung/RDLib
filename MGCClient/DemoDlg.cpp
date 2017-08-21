@@ -21,6 +21,7 @@ CDemoDlg::CDemoDlg(void)
 
 CDemoDlg::~CDemoDlg(void)
 {
+	PATerm();
 }
 
 void CDemoDlg::Init()
@@ -57,6 +58,7 @@ void CDemoDlg::Notify( TNotifyUI& msg )
 	{
 		if( strSenderName == L"bn1" )
 		{
+			m_nCurrentPage = 1;
 			if( CVlcWindow::IsShow() )
 			{
 				CVlcWindow::Hide();
@@ -112,17 +114,24 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
 	if( WM_TIMER == uMsg )
 	{
-		//PostMessage( WM_SHOWA, 1 );
+		m_nCurrentPage = 1;
+		CVlcWindow::Show( m_hWnd );
+
+		PAInit();
+
 		KillTimer( m_hWnd, 1 );
 	}
 	else if( WM_SHOWA == uMsg )
 	{
-		if( wParam == 1 )
+		if( wParam == 1 && m_nCurrentPage == 2 )
 			CVlcWindow::Show( m_hWnd );
-		else if( wParam == 2 )
+		else if( wParam == 2 && m_nCurrentPage == 1 )
 			CInfoWindow::Show( m_hWnd );
 		else if( wParam == 3 )
+		{
+			PATerm();
 			CChargeWnd::Show( m_hWnd );
+		}
 		else if( wParam == 4 )
 		{
 			//CDlgConfirm		dlg;
@@ -217,13 +226,15 @@ void CDemoDlg::thread_main()
 				{
 					if( m_nCurrentPage == 1 )
 					{
-						CVlcWindow::Hide();
 						PostMessage( WM_SHOWA, 3 );
+						CVlcWindow::Hide();
+						CInfoWindow::Hide();
 					}
 					else if( m_nCurrentPage == 2 )
 					{
-						CInfoWindow::Hide();
 						PostMessage( WM_SHOWA, 3 );
+						CVlcWindow::Hide();
+						CInfoWindow::Hide();
 					}
 				}
 				else if( m_nCurrentPage == 3 )
@@ -231,11 +242,6 @@ void CDemoDlg::thread_main()
 					CChargeWnd::Hide();
 					CMainHelper::Reboot();
 				}
-				//else if( m_nCurrentPage == 5 && onlineStatus == 1 )
-				//{
-				//	MessageBox( m_hWnd, L"非上机中!!!\n正式版，这种情况下会重启计算机！", L"", 0 );
-				//	m_pDlgPayment->ShowWindow( false );
-				//}
 			}
 
 			if( nTime >= 10 )

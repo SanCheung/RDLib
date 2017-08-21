@@ -45,6 +45,9 @@ using namespace Gdiplus;
 #include "../XdURL/XdURLlib.h"
 #pragma comment(lib, "XdURL.lib")
 
+#include "../PreventAction/PreventAction.h"
+#pragma comment(lib, "PreventAction.lib")
+
 #include "ThreadWrap.h"
 
 #define		LOG_FILE			"\\mgcclient.log"

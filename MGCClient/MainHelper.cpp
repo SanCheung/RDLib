@@ -113,21 +113,21 @@ void CMainHelper::ShowTrayWndAndStartWnd( bool bShow )
 	::ShowWindow( hWndStart, nCmd );
 }
 
-void CMainHelper::ShowA( HWND hWnd )
-{
-	if( CVlcWindow::IsShow() )
-		return;
-
-	CVlcWindow::Show( hWnd );
-}
-
-void CMainHelper::ShowB( HWND hWnd )
-{
-	if( CInfoWindow::IsShow() )
-		return;
-
-	CInfoWindow::Show( hWnd );
-}
+//void CMainHelper::ShowA( HWND hWnd )
+//{
+//	if( CVlcWindow::IsShow() )
+//		return;
+//
+//	CVlcWindow::Show( hWnd );
+//}
+//
+//void CMainHelper::ShowB( HWND hWnd )
+//{
+//	if( CInfoWindow::IsShow() )
+//		return;
+//
+//	CInfoWindow::Show( hWnd );
+//}
 
 bool CMainHelper::TestTimeOut( int nTimeOut )
 {
@@ -278,9 +278,12 @@ int CMainHelper::web_download()
 
 int CMainHelper::Reboot()
 {
-	MessageBox( GetDesktopWindow(), L"正式版本 会重启计算机！", L"", 0 );
-	PostQuitMessage( 0 );
-	return 1;
+	//MessageBox( GetDesktopWindow(), L"正式版本 会重启计算机！", L"", 0 );
+	//PostQuitMessage( 0 );
 
+
+	KsSystemDown ksd;
+	ksd.SuperReboot();
+	return 1;
 	//return ExitWindowsEx( EWX_REBOOT|EWX_FORCE, 0 );
 }

@@ -63,11 +63,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	CDemoDlg		*pMainWnd = new CDemoDlg;
 
-	pMainWnd->Create( NULL, L"MGC Demo", UI_WNDSTYLE_FRAME, 0 );
+	//pMainWnd->Create( NULL, L"MGC Demo", UI_WNDSTYLE_FRAME, 0 );
+	pMainWnd->Create( NULL, L"MGC", WS_OVERLAPPEDWINDOW, 0 );
+	
 	//pMainWnd->CenterWindow();
 	//pMainWnd->ShowWindow( false );
 	::SetWindowPos( pMainWnd->GetHWND(), NULL, GetSystemMetrics( SM_CXSCREEN )-440, 100, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
-
+	pMainWnd->SetIcon( IDC_MGCCLIENT );
+	
 	CAppData::MessageLoop();
 	DEL( pMainWnd );
 

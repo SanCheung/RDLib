@@ -32,6 +32,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XdURL", "XdURL\XdURL.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testXdURL", "testXdURL\testXdURL.vcxproj", "{D9785F22-A99A-435D-A261-6C8919577C25}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PreventAction", "PreventAction\PreventAction.vcxproj", "{62EA2427-D618-4B00-BE3F-3BDB821E058B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -74,6 +76,10 @@ Global
 		{D9785F22-A99A-435D-A261-6C8919577C25}.Debug|Win32.Build.0 = Debug|Win32
 		{D9785F22-A99A-435D-A261-6C8919577C25}.Release|Win32.ActiveCfg = Release|Win32
 		{D9785F22-A99A-435D-A261-6C8919577C25}.Release|Win32.Build.0 = Release|Win32
+		{62EA2427-D618-4B00-BE3F-3BDB821E058B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{62EA2427-D618-4B00-BE3F-3BDB821E058B}.Debug|Win32.Build.0 = Debug|Win32
+		{62EA2427-D618-4B00-BE3F-3BDB821E058B}.Release|Win32.ActiveCfg = Release|Win32
+		{62EA2427-D618-4B00-BE3F-3BDB821E058B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

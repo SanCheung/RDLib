@@ -76,8 +76,9 @@ void CDlgPayment::Notify( TNotifyUI& msg )
 	}
 	else if( strType == L"link" )
 	{
-		MsgBox( L"÷ÿ∆Ù£°" );
-		PostQuitMessage( 0 );
+		//MsgBox( L"÷ÿ∆Ù£°" );
+		//PostQuitMessage( 0 );
+		CMainHelper::Reboot();
 	}
 }
 

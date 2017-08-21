@@ -9,8 +9,8 @@ public:
 	static void AddRoundRect( GraphicsPath &gp, INT x, INT y, INT width, INT height, INT cornerX, INT cornerY);
 	static void	ShowTrayWndAndStartWnd( bool bShow = true );
 
-	static void ShowA( HWND hWnd );
-	static void ShowB( HWND hWnd );
+	//static void ShowA( HWND hWnd );
+	//static void ShowB( HWND hWnd );
 
 	static FILE*	traceFile();
 	static void		traceToFile( LPCWSTR format, ... );
