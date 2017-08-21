@@ -123,6 +123,12 @@ LRESULT CVlcWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		}
 		break;
+	case WM_CLOSE:
+		{
+			CMainHelper::ShowTrayWndAndStartWnd( true );
+			PostQuitMessage(0);
+		}
+		break;
 	}
 
 	return CWindowWnd::HandleMessage( uMsg, wParam, lParam );

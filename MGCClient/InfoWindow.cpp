@@ -125,6 +125,12 @@ LRESULT CInfoWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			CMainHelper::ShowTrayWndAndStartWnd( !bShow );
 		}
 		break;
+	case WM_CLOSE:
+		{
+			CMainHelper::ShowTrayWndAndStartWnd( true );
+			PostQuitMessage(0);
+		}
+		break;
 	}
 
 	if( handled )

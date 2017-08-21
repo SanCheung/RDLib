@@ -160,6 +160,10 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		int x = LOWORD( wParam );
 		int y = HIWORD( wParam );
 	}
+	else if( WM_CLOSE == uMsg )
+	{
+		int i = 0;
+	}
 
 	return CDialogBase::HandleMessage(uMsg, wParam, lParam);
 }
