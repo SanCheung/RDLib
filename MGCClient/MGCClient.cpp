@@ -69,8 +69,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	//pMainWnd->CenterWindow();
 	//pMainWnd->ShowWindow( false );
 	::SetWindowPos( pMainWnd->GetHWND(), NULL, GetSystemMetrics( SM_CXSCREEN )-440, 100, -1, -1, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
-	pMainWnd->SetIcon( IDC_MGCCLIENT );
-	
+	//pMainWnd->SetIcon( IDC_MGCCLIENT );
+
+	CMainHelper::RunAsAdmin( L"mcGuardian.exe" );
+
 	CAppData::MessageLoop();
 	DEL( pMainWnd );
 

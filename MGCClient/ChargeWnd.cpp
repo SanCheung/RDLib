@@ -10,7 +10,7 @@
 
 
 #define		PNG_WIDTH		320
-#define		PNG_HEIGHT		340
+#define		PNG_HEIGHT		304
 
 CChargeWnd*	CChargeWnd::s_instance = nullptr;
 
@@ -69,7 +69,7 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			{
 				::SendMessage( _hHostWnd, WM_EXITTPWND_CLICK, 0, 0 );
 
-				RECT rt = {50, 250, 50+220, 250+50};
+				RECT rt = {50, 226, 50+220, 226+50};
 				if( PtInRect( &rt, TheFirstPoint ) )
 				{
 					////MessageBox( m_hWnd, L"", L"", MB_OK );
@@ -97,7 +97,7 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			pt.x = LOWORD(lParam);
 			pt.y = HIWORD(lParam);
 
-			RECT rt = {50, 250, 50+220, 250+50};
+			RECT rt = {50, 226, 50+220, 226+50};
 			if( PtInRect( &rt, pt ) )
 				_nType = 2;
 				//Update( 2 );
@@ -184,7 +184,7 @@ HWND CChargeWnd::CreateThis( HWND hHostWnd )
 	//	, 0, 0, 114, 52,
 	//	NULL, NULL, hInstance, NULL);
 
-	Create( NULL, NULL, WS_POPUP, WS_EX_LAYERED|WS_EX_TOPMOST|WS_EX_TOOLWINDOW, 0, 0, PNG_WIDTH, PNG_HEIGHT );
+	Create( NULL, NULL, WS_POPUP, WS_EX_LAYERED|WS_EX_TOOLWINDOW, 0, 0, PNG_WIDTH, PNG_HEIGHT );
 	_hHostWnd = hHostWnd;
 
 	 //RegisterTouchWindow(_hHostWnd, 0);  
@@ -264,7 +264,7 @@ void CChargeWnd::Update()
 		sbButton.SetColor( Color(0xCF222222) );
 
 	GraphicsPath	gp;
-	CMainHelper::AddRoundRect( gp, 50, 240, 220, 50, 24, 24 );
+	CMainHelper::AddRoundRect( gp, 50, 226, 220, 50, 24, 24 );
 	gr.FillPath( &sbButton, &gp );
 
 	Font			ft2( L"微软雅黑", 16 );
@@ -272,7 +272,7 @@ void CChargeWnd::Update()
 	sf3.SetAlignment( StringAlignmentCenter );
 
 
-	gr.DrawString( L"结束体验 >", 6, &ft2, RectF(50, 250, 220, 50), &sf3, &SolidBrush(Color::White) );
+	gr.DrawString( L"结束体验 >", 6, &ft2, RectF(50, 236, 220, 50), &sf3, &SolidBrush(Color::White) );
 
 
 	BLENDFUNCTION blend = { 0 };

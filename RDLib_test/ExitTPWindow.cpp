@@ -4,7 +4,7 @@
 CExitTPWindow*	CExitTPWindow::s_instance = nullptr;
 
 #define		PNG_WIDTH		320
-#define		PNG_HEIGHT		340
+#define		PNG_HEIGHT		304
 
 
 CExitTPWindow::CExitTPWindow(void)
@@ -54,7 +54,7 @@ LRESULT CExitTPWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			{
 				::SendMessage( _hHostWnd, WM_EXITTPWND_CLICK, 0, 0 );
 
-				RECT rt = {50, 250, 50+220, 250+50};
+				RECT rt = {50, 226, 50+220, 226+50};
 				if( PtInRect( &rt, TheFirstPoint ) )
 				{
 					//MessageBox( m_hWnd, L"", L"", MB_OK );
@@ -69,7 +69,7 @@ LRESULT CExitTPWindow::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			pt.x = LOWORD(lParam);
 			pt.y = HIWORD(lParam);
 
-			RECT rt = {50, 250, 50+220, 250+50};
+			RECT rt = {50, 226, 50+220, 226+50};
 			if( PtInRect( &rt, pt ) )
 			{
 				Update( 2 );
@@ -184,7 +184,7 @@ void CExitTPWindow::Update( int nType )
 	//	strFile = CAppData::GetInstancePath() + L"tp/exittp_hover.png";
 	//else if( 2 == nType )
 	//	strFile = CAppData::GetInstancePath() + L"tp/exittp_pushed.png";
-	CStringW	strFile = CAppData::GetInstancePath() + L"tp/mgc_bg.png";
+	CStringW	strFile = CAppData::GetInstancePath() + L"tp/mgc_bg2.png";
 
 	Image	 image( strFile );
 	int iWidth = image.GetWidth();
@@ -225,7 +225,7 @@ void CExitTPWindow::Update( int nType )
 		sbButton.SetColor( Color(0xCF222222) );
 
 	GraphicsPath	gp;
-	AddRoundRect( gp, 50, 240, 220, 50, 24, 24 );
+	AddRoundRect( gp, 50, 226, 220, 50, 24, 24 );
 	gr.FillPath( &sbButton, &gp );
 
 	Font			ft2( L"微软雅黑", 16 );
@@ -233,7 +233,7 @@ void CExitTPWindow::Update( int nType )
 	sf3.SetAlignment( StringAlignmentCenter );
 
 
-	gr.DrawString( L"结束体验 >", 6, &ft2, RectF(50, 250, 220, 50), &sf3, &SolidBrush(Color::White) );
+	gr.DrawString( L"结束体验 >", 6, &ft2, RectF(50, 236, 220, 50), &sf3, &SolidBrush(Color::White) );
 
 
 	BLENDFUNCTION blend = { 0 };

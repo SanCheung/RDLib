@@ -50,6 +50,8 @@ public:
 	static int		Reboot();
 
 	static CStringW	 maps2sToString( maps2s &m );
+
+	static bool		RunAsAdmin( LPCWSTR strExe, int nShow = SW_SHOW );
 };
 
 

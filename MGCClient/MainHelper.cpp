@@ -7,6 +7,8 @@
 #include "Helper.h"
 #include "SettingMgr.h"
 
+#include <Shellapi.h>
+
 
 CMainHelper::CMainHelper(void)
 {
@@ -286,4 +288,17 @@ int CMainHelper::Reboot()
 	ksd.SuperReboot();
 	return 1;
 	//return ExitWindowsEx( EWX_REBOOT|EWX_FORCE, 0 );
+}
+
+bool CMainHelper::RunAsAdmin( LPCWSTR strExe, int nShow /*= SW_SHOW */ )
+{
+	SHELLEXECUTEINFO	si = {0};
+	si.cbSize = sizeof( SHELLEXECUTEINFO );
+	si.fMask = SEE_MASK_INVOKEIDLIST;
+	//si.lpVerb = L"runas";
+	si.lpVerb = L"open";
+	si.lpFile = strExe;
+	si.nShow = nShow;
+
+	return (TRUE==ShellExecuteEx( &si ));
 }
