@@ -192,7 +192,7 @@ void CVlcWindow::Release()
 
 HWND CVlcWindow::CreateThis( HWND hHostWnd )
 {
-	Create( NULL, NULL, WS_POPUP|WS_BORDER|WS_VISIBLE, 0, 0, 0, 1, 1 );
+	Create( NULL, NULL, WS_POPUP|WS_BORDER|WS_VISIBLE, WS_EX_TOPMOST, 0, 0, 1, 1 );
 	_hHostWnd = hHostWnd;
 
 	//::ShowWindow( m_hWnd, SW_SHOW);
@@ -287,7 +287,7 @@ void CVlcWindow::onShow()
 {
 	// 播放视频/显示提示/开始检测键鼠
 	Replay();
-	CWindowTip::Show( m_hWnd );
+	//CWindowTip::Show( m_hWnd );
 	thStart();
 }
 
@@ -295,7 +295,7 @@ void CVlcWindow::onHide()
 {
 	// 停止播放视频/隐藏提示
 	libvlc_media_player_stop( libvlc_mp );
-	CWindowTip::Hide();
+	//CWindowTip::Hide();
 
 	::PostMessage( _hHostWnd, WM_SHOWA, 2, 0 );
 }

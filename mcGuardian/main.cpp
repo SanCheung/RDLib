@@ -68,6 +68,6 @@ int APIENTRY _tWinMain( HINSTANCE hInstance,
 			//}
 		}
 
-		Sleep(5000);
+		Sleep(15000);
 	}
 }
