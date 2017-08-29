@@ -45,13 +45,19 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	mgTraceA( "run!" );
 
 	// 如果无法获取客服电话，网络未设置，或web服务未通
-	CStringW	strPhone = CMainHelper::web_serviceNum();
-	if( strPhone.IsEmpty() )
+	CStringW	strPhone;
+	while(1)
 	{
-		MessageBox( GetDesktopWindow(), L"无法获取客服电话，程序将退出！", 0, MB_OK );
+		strPhone = CMainHelper::web_serviceNum();
+		if( !strPhone.IsEmpty() )
+			break;
+	
 		mgTrace( L"无法获取客服电话" );
-		return -1;
+		Sleep(1000);
+		//MessageBox( GetDesktopWindow(), L"无法获取客服电话，程序将退出！", 0, MB_OK );
+		//return -1;
 	}
+
 	SetMgr()->_strPhone = strPhone;
 
 	CMainHelper::web_download();
@@ -64,7 +70,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	CDemoDlg		*pMainWnd = new CDemoDlg;
 
 	//pMainWnd->Create( NULL, L"MGC Demo", UI_WNDSTYLE_FRAME, 0 );
-	pMainWnd->Create( NULL, L"MGC", WS_OVERLAPPEDWINDOW, 0 );
+	pMainWnd->Create( NULL, L"MGC", WS_OVERLAPPEDWINDOW, WS_EX_TOOLWINDOW );
 	
 	//pMainWnd->CenterWindow();
 	//pMainWnd->ShowWindow( false );
