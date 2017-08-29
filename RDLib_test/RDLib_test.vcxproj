@@ -97,6 +97,7 @@
     <ClInclude Include="DlgTestList.h" />
     <ClInclude Include="ExitTPWindow.h" />
     <ClInclude Include="IconPathViewD2UI.h" />
+    <ClInclude Include="LayeredWindowDrawer.h" />
     <ClInclude Include="ListHortElementUI.h" />
     <ClInclude Include="ListLabelElementUIEx.h" />
     <ClInclude Include="MainDlg.h" />
@@ -125,6 +126,7 @@
     <ClCompile Include="DlgTestList.cpp" />
     <ClCompile Include="ExitTPWindow.cpp" />
     <ClCompile Include="IconPathViewD2UI.cpp" />
+    <ClCompile Include="LayeredWindowDrawer.cpp" />
     <ClCompile Include="ListHortElementUI.cpp" />
     <ClCompile Include="ListLabelElementUIEx.cpp" />
     <ClCompile Include="MainDlg.cpp" />

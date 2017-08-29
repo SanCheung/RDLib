@@ -36,5 +36,12 @@ private:
 	static	CChargeWnd*	s_instance;
 
 	int		_nType;
+
+	void	UpdateNormal();
+	void	UpdateHover();
+	void	UpdateButtonHover();
+
+	void	DrawButton( Graphics *pGr, int top, bool bButtonHover );
+	void	DrawInfo( Graphics *pGr );
 };
 

@@ -8,9 +8,14 @@
 #include "MainHelper.h"
 #include "SettingMgr.h"
 
+#include "LayeredWindowDrawer.h"
+#pragma comment( lib, "comctl32.lib")
 
 #define		PNG_WIDTH		320
-#define		PNG_HEIGHT		304
+#define		PNG_HEIGHT1		304
+#define		PNG_HEIGHT		166
+#define		BUTTON_TOP1		226
+#define		BUTTON_TOP		88
 
 CChargeWnd*	CChargeWnd::s_instance = nullptr;
 
@@ -19,11 +24,11 @@ CChargeWnd::CChargeWnd(void)
 	, m_bPosChanged( false )
 	, _hHostWnd( nullptr )
 {
-	int	sw = GetSystemMetrics( SM_CXSCREEN );
-	int sh = GetSystemMetrics( SM_CYSCREEN );
+	//int	sw = GetSystemMetrics( SM_CXSCREEN );
+	//int sh = GetSystemMetrics( SM_CYSCREEN );
 
-	_ptNow.SetPoint( sw-PNG_WIDTH-10, sh-PNG_HEIGHT-50 );
-	_nType = 0;
+	//_ptNow.SetPoint( sw-PNG_WIDTH-10, sh-PNG_HEIGHT-50 );
+	//_nType = 0;
 }
 
 
@@ -69,7 +74,8 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			{
 				::SendMessage( _hHostWnd, WM_EXITTPWND_CLICK, 0, 0 );
 
-				RECT rt = {50, 226, 50+220, 226+50};
+				//RECT rt = {50, BUTTON_TOP, 50+220, BUTTON_TOP+50};
+				RECT rt = {50, BUTTON_TOP1, 50+220, BUTTON_TOP1+50};
 				if( PtInRect( &rt, TheFirstPoint ) )
 				{
 					////MessageBox( m_hWnd, L"", L"", MB_OK );
@@ -97,7 +103,8 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			pt.x = LOWORD(lParam);
 			pt.y = HIWORD(lParam);
 
-			RECT rt = {50, 226, 50+220, 226+50};
+			//RECT rt = {50, BUTTON_TOP, 50+220, BUTTON_TOP+50};
+			RECT rt = {50, BUTTON_TOP1, 50+220, BUTTON_TOP1+50};
 			if( PtInRect( &rt, pt ) )
 				_nType = 2;
 				//Update( 2 );
@@ -107,16 +114,16 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 			Update();
 
-// 			if( !m_bMouseTracking )
-// 			{
-// 				TRACKMOUSEEVENT tme = { 0 };
-// 				tme.cbSize = sizeof(TRACKMOUSEEVENT);
-// 				tme.dwFlags = TME_HOVER | TME_LEAVE;
-// 				tme.hwndTrack = m_hWnd;
-// 				tme.dwHoverTime = 200;
-// 				_TrackMouseEvent(&tme);
-// 				m_bMouseTracking = true;
-// 			}
+			if( !m_bMouseTracking )
+			{
+				TRACKMOUSEEVENT tme = { 0 };
+				tme.cbSize = sizeof(TRACKMOUSEEVENT);
+				tme.dwFlags = TME_HOVER | TME_LEAVE;
+				tme.hwndTrack = m_hWnd;
+				tme.dwHoverTime = 200;
+				_TrackMouseEvent(&tme);
+				m_bMouseTracking = true;
+			}
 // 
 // 			if (ldown)
 // 			{
@@ -142,7 +149,7 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 	case WM_MOUSEHOVER:
 		{
-			m_bMouseTracking = false;
+			//m_bMouseTracking = false;
 			//Update( 1 );
 			_nType = 1;
 			Update();
@@ -151,7 +158,9 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 	case WM_MOUSELEAVE:
 		{
-			if( m_bMouseTracking ) ::SendMessage(m_hWnd, WM_MOUSEMOVE, 0, (LPARAM) -1);
+			if( m_bMouseTracking ) 
+				::SendMessage(m_hWnd, WM_MOUSEMOVE, 0, (LPARAM) -1);
+
 			m_bMouseTracking = false;
 			//Update( 0 );
 			_nType = 0;
@@ -196,47 +205,101 @@ HWND CChargeWnd::CreateThis( HWND hHostWnd )
 	return m_hWnd;
 }
 
-void CChargeWnd::Update()
+
+
+
+void CChargeWnd::UpdateNormal()
 {
-	//CStringW	strFile = CAppData::GetInstancePath() + L"tp/exittp_normal.png";
-	//if( 1 == nType )
-	//	strFile = CAppData::GetInstancePath() + L"tp/exittp_hover.png";
-	//else if( 2 == nType )
-	//	strFile = CAppData::GetInstancePath() + L"tp/exittp_pushed.png";
-	CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_bg.png";
-
+	CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_bg3.png";
 	Image	 image( strFile );
-	int iWidth = image.GetWidth();
-	int iHeight = image.GetHeight();
 
-	HDC hdcScreen = GetDC(NULL);
-	HDC hdcMem = CreateCompatibleDC(hdcScreen);
-	HBITMAP hBitmap = CreateCompatibleBitmap(hdcScreen, iWidth, iHeight);
-	HBITMAP hBitmapOld = (HBITMAP)SelectObject(hdcMem, hBitmap);
+	int	sw = GetSystemMetrics( SM_CXSCREEN );
+	int sh = GetSystemMetrics( SM_CYSCREEN );
+	POINT	ptNow ={ sw-PNG_WIDTH-10, sh-PNG_HEIGHT-50 };
 
-	Graphics gr(hdcMem);
-	gr.SetSmoothingMode( SmoothingModeHighQuality );
-	gr.SetTextRenderingHint( TextRenderingHintAntiAlias );
-	gr.DrawImage(&image, 0, 0);//将png图像绘制到后台DC中
+	CLayeredWindowDrawer	lwd( m_hWnd, &image, ptNow );
 
+	Graphics	*pGr = lwd.getDrawer();
+	DrawButton( pGr, BUTTON_TOP, false );
+}
+
+
+void CChargeWnd::UpdateHover()
+{
+	CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_bg2.png";
+	Image	 image( strFile );
+
+	int	sw = GetSystemMetrics( SM_CXSCREEN );
+	int sh = GetSystemMetrics( SM_CYSCREEN );
+	POINT	ptNow ={ sw-PNG_WIDTH-10, sh-PNG_HEIGHT1-50 };
+
+	CLayeredWindowDrawer	lwd( m_hWnd, &image, ptNow );
+
+	Graphics	*pGr = lwd.getDrawer();
+	DrawInfo( pGr );
+	DrawButton( pGr, BUTTON_TOP1, false );
+}
+
+void CChargeWnd::UpdateButtonHover()
+{
+	CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_bg2.png";
+	Image	 image( strFile );
+
+	int	sw = GetSystemMetrics( SM_CXSCREEN );
+	int sh = GetSystemMetrics( SM_CYSCREEN );
+	POINT	ptNow ={ sw-PNG_WIDTH-10, sh-PNG_HEIGHT1-50 };
+
+	CLayeredWindowDrawer	lwd( m_hWnd, &image, ptNow );
+
+	Graphics	*pGr = lwd.getDrawer();
+	DrawInfo( pGr );
+	DrawButton( pGr, BUTTON_TOP1, true );
+}
+
+void CChargeWnd::DrawButton( Graphics *pGr, int top, bool bButtonHover )
+{
+#define		BTN_LEFT		50
+
+#define		BTN_W			220
+#define		BTN_H			50
+
+	SolidBrush	sbButton( Color(0xFF222222) );
+	if( bButtonHover )
+		sbButton.SetColor( Color(0xCF222222) );
+
+	GraphicsPath	gp;
+	CMainHelper::AddRoundRect( gp, BTN_LEFT, top, BTN_W, BTN_H, 24, 24 );
+	pGr->FillPath( &sbButton, &gp );
+
+	Font			ft2( L"微软雅黑", 16 );
+	StringFormat	sf3;
+	sf3.SetAlignment( StringAlignmentCenter );
+
+
+	pGr->DrawString( L"结束体验 >", 6, &ft2, RectF(BTN_LEFT, top+10, BTN_W, BTN_H), &sf3, &SolidBrush(Color::White) );
+}
+
+void CChargeWnd::DrawInfo( Graphics *pGr )
+{
 	Pen		penLine( Color(0xFF999999), 1 );	
-	gr.DrawLine( &penLine, 30, 120, 290, 120 );
-	gr.DrawLine( &penLine, 30, 166, 290, 166 );
+	pGr->DrawLine( &penLine, 30, 120, 290, 120 );
+	pGr->DrawLine( &penLine, 30, 166, 290, 166 );
 
 	SolidBrush	sbLabel( Color(0xFF999999) );
 	SolidBrush	sbInfo( Color(0xFF222222) );
 
 	Font			ft( L"微软雅黑", 14 );
 	StringFormat	sf;
-	//sf.SetAlignment( StringAlignmentCenter );
 
-	gr.DrawString( L"已玩", 2, &ft, PointF(30,84), &sf, &sbLabel );
-	gr.DrawString( L"计费", 2, &ft, PointF(30,84+46), &sf, &sbLabel );
-	gr.DrawString( L"需支付", 3, &ft, PointF(30,84+46+46), &sf, &sbLabel );
+	pGr->DrawString( L"已玩", 2, &ft, PointF(30,84), &sf, &sbLabel );
+	pGr->DrawString( L"计费", 2, &ft, PointF(30,84+46), &sf, &sbLabel );
+	pGr->DrawString( L"需支付", 3, &ft, PointF(30,84+46+46), &sf, &sbLabel );
 
 	StringFormat	sf2;
 	sf2.SetAlignment( StringAlignmentFar );
-
+	//pGr->DrawString( L"1小时23分", 6, &ft, PointF(290,84), &sf2, &sbInfo );
+	//pGr->DrawString( L"1元/10分钟", 7, &ft, PointF(290,84+46), &sf2, &sbInfo );
+	//pGr->DrawString( L"55.6元", 6, &ft, PointF(290,84+46+46), &sf2, &sbInfo );
 
 	CSettingMgr		*s = SetMgr();
 
@@ -251,44 +314,122 @@ void CChargeWnd::Update()
 	}
 	else
 		str.Format( L"%d分钟", minute );
-	gr.DrawString( str, str.GetLength(), &ft, PointF(290,84), &sf2, &sbInfo );
+	pGr->DrawString( str, str.GetLength(), &ft, PointF(290,84), &sf2, &sbInfo );
 
 	str.Format( L"%s元/分钟", s->_charging );
-	gr.DrawString( str, str.GetLength(), &ft, PointF(290,84+46), &sf2, &sbInfo );
+	pGr->DrawString( str, str.GetLength(), &ft, PointF(290,84+46), &sf2, &sbInfo );
 
 	str.Format( L"%s元", s->_cost );
-	gr.DrawString( str, str.GetLength(), &ft, PointF(290,84+46+46), &sf2, &sbInfo );
-
-	SolidBrush	sbButton( Color(0xFF222222) );
-	if( 2 == _nType )
-		sbButton.SetColor( Color(0xCF222222) );
-
-	GraphicsPath	gp;
-	CMainHelper::AddRoundRect( gp, 50, 226, 220, 50, 24, 24 );
-	gr.FillPath( &sbButton, &gp );
-
-	Font			ft2( L"微软雅黑", 16 );
-	StringFormat	sf3;
-	sf3.SetAlignment( StringAlignmentCenter );
+	pGr->DrawString( str, str.GetLength(), &ft, PointF(290,84+46+46), &sf2, &sbInfo );
+}
 
 
-	gr.DrawString( L"结束体验 >", 6, &ft2, RectF(50, 236, 220, 50), &sf3, &SolidBrush(Color::White) );
 
 
-	BLENDFUNCTION blend = { 0 };
-	blend.BlendOp = AC_SRC_OVER;
-	blend.SourceConstantAlpha = 255;
-	blend.AlphaFormat = AC_SRC_ALPHA;//按通道混合
 
-	POINT	pSrc = { 0, 0 };
-	SIZE	sizeWnd = { iWidth, iHeight };
-	UpdateLayeredWindow( m_hWnd, hdcScreen, &_ptNow, &sizeWnd, hdcMem, &pSrc, NULL, &blend, ULW_ALPHA);//更新分层窗口
-	//收尾清理工作
-	SelectObject(hdcMem, hBitmapOld);
-	DeleteObject(hBitmap);
-	DeleteDC(hdcMem);
+void CChargeWnd::Update()
+{
+	if( _nType == 0 )
+		UpdateNormal();
+	else if( _nType == 1 )
+		UpdateHover();
+	else if( _nType == 2 )
+		UpdateButtonHover();
 
-	ReleaseDC(m_hWnd, hdcScreen);
+	return;
+
+
+	////CStringW	strFile = CAppData::GetInstancePath() + L"tp/exittp_normal.png";
+	////if( 1 == nType )
+	////	strFile = CAppData::GetInstancePath() + L"tp/exittp_hover.png";
+	////else if( 2 == nType )
+	////	strFile = CAppData::GetInstancePath() + L"tp/exittp_pushed.png";
+	//CStringW	strFile = CAppData::GetInstancePath() + L"mgc/mgc_bg.png";
+
+	//Image	 image( strFile );
+	//int iWidth = image.GetWidth();
+	//int iHeight = image.GetHeight();
+
+	//HDC hdcScreen = GetDC(NULL);
+	//HDC hdcMem = CreateCompatibleDC(hdcScreen);
+	//HBITMAP hBitmap = CreateCompatibleBitmap(hdcScreen, iWidth, iHeight);
+	//HBITMAP hBitmapOld = (HBITMAP)SelectObject(hdcMem, hBitmap);
+
+	//Graphics gr(hdcMem);
+	//gr.SetSmoothingMode( SmoothingModeHighQuality );
+	//gr.SetTextRenderingHint( TextRenderingHintAntiAlias );
+	//gr.DrawImage(&image, 0, 0);//将png图像绘制到后台DC中
+
+	////Pen		penLine( Color(0xFF999999), 1 );	
+	////gr.DrawLine( &penLine, 30, 120, 290, 120 );
+	////gr.DrawLine( &penLine, 30, 166, 290, 166 );
+
+	////SolidBrush	sbLabel( Color(0xFF999999) );
+	////SolidBrush	sbInfo( Color(0xFF222222) );
+
+	////Font			ft( L"微软雅黑", 14 );
+	////StringFormat	sf;
+	//////sf.SetAlignment( StringAlignmentCenter );
+
+	////gr.DrawString( L"已玩", 2, &ft, PointF(30,84), &sf, &sbLabel );
+	////gr.DrawString( L"计费", 2, &ft, PointF(30,84+46), &sf, &sbLabel );
+	////gr.DrawString( L"需支付", 3, &ft, PointF(30,84+46+46), &sf, &sbLabel );
+
+	////StringFormat	sf2;
+	////sf2.SetAlignment( StringAlignmentFar );
+
+
+	////CSettingMgr		*s = SetMgr();
+
+	////CStringW		str;
+	////int		minute = s->_duration.ToInt();
+	////if( minute >= 60 )
+	////{
+	////	if( minute%60 == 0 )
+	////		str.Format( L"%d小时", minute/60 );
+	////	else
+	////		str.Format( L"%d小时%d分钟", minute/60, minute%60 );
+	////}
+	////else
+	////	str.Format( L"%d分钟", minute );
+	////gr.DrawString( str, str.GetLength(), &ft, PointF(290,84), &sf2, &sbInfo );
+
+	////str.Format( L"%s元/分钟", s->_charging );
+	////gr.DrawString( str, str.GetLength(), &ft, PointF(290,84+46), &sf2, &sbInfo );
+
+	////str.Format( L"%s元", s->_cost );
+	////gr.DrawString( str, str.GetLength(), &ft, PointF(290,84+46+46), &sf2, &sbInfo );
+
+	//SolidBrush	sbButton( Color(0xFF222222) );
+	//if( 2 == _nType )
+	//	sbButton.SetColor( Color(0xCF222222) );
+
+	//GraphicsPath	gp;
+	//CMainHelper::AddRoundRect( gp, 50, BUTTON_TOP, 220, 50, 24, 24 );
+	//gr.FillPath( &sbButton, &gp );
+
+	//Font			ft2( L"微软雅黑", 16 );
+	//StringFormat	sf3;
+	//sf3.SetAlignment( StringAlignmentCenter );
+
+
+	//gr.DrawString( L"结束体验 >", 6, &ft2, RectF(50, BUTTON_TOP+10, 220, 50), &sf3, &SolidBrush(Color::White) );
+
+
+	//BLENDFUNCTION blend = { 0 };
+	//blend.BlendOp = AC_SRC_OVER;
+	//blend.SourceConstantAlpha = 255;
+	//blend.AlphaFormat = AC_SRC_ALPHA;//按通道混合
+
+	//POINT	pSrc = { 0, 0 };
+	//SIZE	sizeWnd = { iWidth, iHeight };
+	//UpdateLayeredWindow( m_hWnd, hdcScreen, &_ptNow, &sizeWnd, hdcMem, &pSrc, NULL, &blend, ULW_ALPHA);//更新分层窗口
+	////收尾清理工作
+	//SelectObject(hdcMem, hBitmapOld);
+	//DeleteObject(hBitmap);
+	//DeleteDC(hdcMem);
+
+	//ReleaseDC(m_hWnd, hdcScreen);
 }
 
 void CChargeWnd::Show( HWND hParentWnd )

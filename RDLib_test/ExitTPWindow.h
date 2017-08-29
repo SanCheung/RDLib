@@ -22,11 +22,17 @@ protected:
 
 private:
 	void	Update( int nType );
+	void	UpdateNormal();
+	void	UpdateHover();
+	void	UpdateButtonHover();
+
+	void	DrawButton( Graphics *pGr, int top, bool bButtonHover );
+	void	DrawInfo( Graphics *pGr );
 
 	bool	m_bMouseTracking;
 	bool	m_bPosChanged;
 
-	CDUIPoint	_ptNow;
+	//CDUIPoint	_ptNow;
 	HWND		_hHostWnd;
 
 	CWndShadow	m_shadow;

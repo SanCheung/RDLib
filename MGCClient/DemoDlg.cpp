@@ -119,6 +119,9 @@ LRESULT CDemoDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		PAInit();
 
+		//// 单独测试计费窗口
+		//CChargeWnd::Show( m_hWnd );
+
 		KillTimer( m_hWnd, 1 );
 	}
 	else if( WM_SHOWA == uMsg )

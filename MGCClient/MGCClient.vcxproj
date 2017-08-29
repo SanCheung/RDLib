@@ -92,6 +92,7 @@
     <ClInclude Include="DlgPayment.h" />
     <ClInclude Include="ChargeWnd.h" />
     <ClInclude Include="InfoWindow.h" />
+    <ClInclude Include="LayeredWindowDrawer.h" />
     <ClInclude Include="MainHelper.h" />
     <ClInclude Include="MGCClient.h" />
     <ClInclude Include="Resource.h" />
@@ -108,6 +109,7 @@
     <ClCompile Include="DlgPayment.cpp" />
     <ClCompile Include="ChargeWnd.cpp" />
     <ClCompile Include="InfoWindow.cpp" />
+    <ClCompile Include="LayeredWindowDrawer.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="MGCClient.cpp" />
     <ClCompile Include="SettingMgr.cpp" />
