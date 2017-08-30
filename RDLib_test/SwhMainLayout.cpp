@@ -37,7 +37,7 @@ CControlUI* CSwhMainLayout::CreateControl( LPCTSTR pstrClass )
 
 LRESULT CSwhMainLayout::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	PostQuitMessage( 0 );
+	//PostQuitMessage( 0 );
 	return 0;
 }
 

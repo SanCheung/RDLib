@@ -192,7 +192,7 @@ void CVlcWindow::Release()
 
 HWND CVlcWindow::CreateThis( HWND hHostWnd )
 {
-	Create( NULL, NULL, WS_POPUP|WS_BORDER|WS_VISIBLE, WS_EX_TOPMOST, 0, 0, 1, 1 );
+	Create( NULL, APP_TITLE, WS_POPUP|WS_BORDER|WS_VISIBLE, WS_EX_TOPMOST|WS_EX_TOOLWINDOW, 0, 0, 1, 1 );
 	_hHostWnd = hHostWnd;
 
 	//::ShowWindow( m_hWnd, SW_SHOW);
