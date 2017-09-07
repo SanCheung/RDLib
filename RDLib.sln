@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PreventAction", "PreventAct
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mcGuardian", "mcGuardian\mcGuardian.vcxproj", "{CAF7220C-8B89-4778-886E-40AD84814BBF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MGCClient2", "MGCClient2\MGCClient2.vcxproj", "{8ED5604C-0A38-4166-B358-14287494C299}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -87,6 +89,10 @@ Global
 		{CAF7220C-8B89-4778-886E-40AD84814BBF}.Debug|Win32.Build.0 = Debug|Win32
 		{CAF7220C-8B89-4778-886E-40AD84814BBF}.Release|Win32.ActiveCfg = Release|Win32
 		{CAF7220C-8B89-4778-886E-40AD84814BBF}.Release|Win32.Build.0 = Release|Win32
+		{8ED5604C-0A38-4166-B358-14287494C299}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8ED5604C-0A38-4166-B358-14287494C299}.Debug|Win32.Build.0 = Debug|Win32
+		{8ED5604C-0A38-4166-B358-14287494C299}.Release|Win32.ActiveCfg = Release|Win32
+		{8ED5604C-0A38-4166-B358-14287494C299}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" ?>
+<Window size="400,600" caption="0,0,0,48" sizebox="4,4,6,6" >
+  <!--Include & Default-->
+  <Include source="sb/sb.xml" />
+  <Include source="font.xml" />
+  <Include source="ctrl.xml" />
+  
+  <HBox>
+    <Control />
+    <VBox bkcolor="#ffAFAFAF" inset="0,10,0,10" childpadding="10" width="200" >
+      <Control height="20"/>
+      <Label name="lb" text="info" />
+      <Control height="20"/>
+      <Button width="200" name="bn1" text="01扫码进入" />
+      <Button width="200" name="bn2" text="02游戏列表"/>
+      <Button width="200" name="bn3" text="03游戏详情（游戏视频）" />
+      <Button width="200" name="bn4" text="04确认结束提示"/>
+      <Button width="200" name="bn5" text="05断网报错（体验前）"/>
+      <Button width="200" name="bn6" text="06运维登录"/>
+      <Button width="200" name="bn7" text="07扫码付款"/>
+      <Button width="200" name="bn8" text="08断网提示（体验中）"/>
+
+      <Control />
+      <Button width="200" name="bn6" text="任务栏隐藏/显示" visible="false" />
+      <Button width="200" name="bn7" text="检测当前hook时间" visible="false" />
+      
+      
+      <Control />
+    </VBox>
+    <Control />
+  </HBox>
+</Window>

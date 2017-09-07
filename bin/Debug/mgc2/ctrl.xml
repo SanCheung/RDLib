@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DefaultConfigs>
+  <Default name="Button" value="width=&quot;120&quot; height=&quot;30&quot; normalimage=&quot;file='ctrl/btn_normal.png' corner='4,4,4,4'&quot; hotimage=&quot;file='ctrl/btn_highlight.png' corner='4,4,4,4'&quot; pushedimage=&quot;file='ctrl/btn_down.png' corner='4,4,4,4'&quot;" />
+  <Default name="Combo" value="normalimage=&quot;file='ctrl/Combo_nor.bmp' corner='2,2,24,2'&quot; hotimage=&quot;file='ctrl/Combo_over.bmp' corner='2,2,24,2'&quot; pushedimage=&quot;file='ctrl/Combo_over.bmp' corner='2,2,24,2'&quot; disabledimage=&quot;file='ctrl/Combo_disabled.bmp' corner='2,2,24,2'&quot;" />
+  <Default name="Label" value="font=&quot;5&quot;" />
+  <Default name="ListLabelElement" value="font=&quot;5&quot;" />
+  <Default name="CheckBox" value="checkimagesize=&quot;16,16&quot; uncheckedimage=&quot;file='ctrl/checkbox.png' source='0,0,16,16'&quot; checkedimage=&quot;file='ctrl/checkbox.png' source='0,16,16,32'&quot; checkdisableimage=&quot;file='ctrl/checkbox.png' source='0,32,16,48'&quot;" />
+  <Default name="Switch" value="closeimage=&quot;file='ctrl/toggle.png' source='16,0,32,16'&quot; openimage=&quot;file='ctrl/toggle.png' source='0,0,16,16'&quot; hotimage=&quot;file='ctrl/toggle.png' source='0,16,16,32'&quot;" />
+  <!--<Default name="Option" value="normalimage=&quot;file='ctrl/checkbox.png' source='0,0,16,16'&quot; selectedimage=&quot;file='ctrl/checkbox.png' source='0,16,16,32'&quot; hotimage=&quot;file='ctrl/checkbox.png' source='0,32,16,48'&quot;" />-->
+</DefaultConfigs>
