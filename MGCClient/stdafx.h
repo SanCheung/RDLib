@@ -52,6 +52,7 @@ using namespace Gdiplus;
 
 #define		LOG_FILE			"\\mgcclient.log"
 #define		CONFIG_INI			L"mgcclient.ini"
+#define		APP_TITLE			L"MGCΩ· ¯ÃÂ—È"
 
 #define		WM_SHOWA		(WM_APP+1)
 

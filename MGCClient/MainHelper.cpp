@@ -283,7 +283,6 @@ int CMainHelper::Reboot()
 	//MessageBox( GetDesktopWindow(), L"正式版本 会重启计算机！", L"", 0 );
 	//PostQuitMessage( 0 );
 
-
 	KsSystemDown ksd;
 	ksd.SuperReboot();
 	return 1;

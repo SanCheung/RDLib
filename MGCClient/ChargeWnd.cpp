@@ -23,6 +23,7 @@ CChargeWnd::CChargeWnd(void)
 	: m_bMouseTracking( false )
 	, m_bPosChanged( false )
 	, _hHostWnd( nullptr )
+	, _bOfflineing( false )
 {
 	//int	sw = GetSystemMetrics( SM_CXSCREEN );
 	//int sh = GetSystemMetrics( SM_CYSCREEN );
@@ -76,11 +77,14 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 				//RECT rt = {50, BUTTON_TOP, 50+220, BUTTON_TOP+50};
 				RECT rt = {50, BUTTON_TOP1, 50+220, BUTTON_TOP1+50};
-				if( PtInRect( &rt, TheFirstPoint ) )
+				if( PtInRect( &rt, TheFirstPoint ) && !_bOfflineing )
 				{
 					////MessageBox( m_hWnd, L"", L"", MB_OK );
 					////PostQuitMessage( WM_QUIT );
 					//Hide();
+
+
+					_bOfflineing = true;
 
 					CDlgConfirm		dlg;
 					if( IDOK == dlg.DoModalNoCaption( GetDesktopWindow() ) )
@@ -91,8 +95,9 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 							Hide();
 							::PostMessage( _hHostWnd, WM_SHOWA, 5, 0 );
 						}
-
 					}
+
+					_bOfflineing = false;
 				}
 			}
 		}
@@ -182,6 +187,13 @@ LRESULT CChargeWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			//m_shadow.SetPosition(1, 1);
 		}
 		break;
+	case WM_CLOSE:
+		{
+			//::PostMessage( _hHostWnd, WM_SHOWA, 3, 0 );
+			Show( _hHostWnd );
+			return 1;
+		}
+		break;
 	}
 
 	return CWindowWnd::HandleMessage( uMsg, wParam, lParam );
@@ -193,14 +205,14 @@ HWND CChargeWnd::CreateThis( HWND hHostWnd )
 	//	, 0, 0, 114, 52,
 	//	NULL, NULL, hInstance, NULL);
 
-	Create( NULL, NULL, WS_POPUP, WS_EX_LAYERED|WS_EX_TOOLWINDOW, 0, 0, PNG_WIDTH, PNG_HEIGHT );
+	//Create( NULL, APP_TITLE, WS_POPUP, WS_EX_LAYERED|WS_EX_TOPMOST|WS_EX_TOOLWINDOW, 0, 0, PNG_WIDTH, PNG_HEIGHT );
+	Create( NULL, APP_TITLE, WS_POPUP, WS_EX_LAYERED, 0, 0, PNG_WIDTH, PNG_HEIGHT );
 	_hHostWnd = hHostWnd;
 
 	 //RegisterTouchWindow(_hHostWnd, 0);  
 
 	::ShowWindow( m_hWnd, SW_SHOW);
 	UpdateWindow( m_hWnd );
-
 
 	return m_hWnd;
 }

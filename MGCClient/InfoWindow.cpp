@@ -192,7 +192,7 @@ void CInfoWindow::Release()
 HWND CInfoWindow::CreateThis( HWND hHostWnd )
 {
 	//Create( hHostWnd, NULL, WS_POPUP|WS_BORDER, 0, 0, 0, 400, 300 );
-	Create( hHostWnd, NULL, WS_POPUP, WS_EX_TOPMOST, 0, 0, 1, 1 );
+	Create( hHostWnd, APP_TITLE, WS_POPUP, WS_EX_TOPMOST|WS_EX_TOOLWINDOW, 0, 0, 1, 1 );
 	_hHostWnd = hHostWnd;
 
 	::ShowWindow( m_hWnd, SW_SHOWMAXIMIZED);

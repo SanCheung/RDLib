@@ -70,7 +70,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	CDemoDlg		*pMainWnd = new CDemoDlg;
 
 	//pMainWnd->Create( NULL, L"MGC Demo", UI_WNDSTYLE_FRAME, 0 );
-	pMainWnd->Create( NULL, L"MGC", WS_OVERLAPPEDWINDOW, WS_EX_TOOLWINDOW );
+	pMainWnd->Create( NULL, APP_TITLE, WS_POPUP, WS_EX_TOOLWINDOW );
 	
 	//pMainWnd->CenterWindow();
 	//pMainWnd->ShowWindow( false );

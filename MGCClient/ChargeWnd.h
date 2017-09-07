@@ -43,5 +43,8 @@ private:
 
 	void	DrawButton( Graphics *pGr, int top, bool bButtonHover );
 	void	DrawInfo( Graphics *pGr );
+
+	// 是否正在进行下线操作
+	bool	_bOfflineing;
 };
 
