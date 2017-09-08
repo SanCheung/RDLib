@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="01WndScanEnter.h" />
+    <ClInclude Include="02GamePadDlg.h" />
     <ClInclude Include="MainDlg.h" />
     <ClInclude Include="MainHelper.h" />
     <ClInclude Include="MGCClient2.h" />
@@ -94,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01WndScanEnter.cpp" />
+    <ClCompile Include="02GamePadDlg.cpp" />
     <ClCompile Include="MainDlg.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="MGCClient2.cpp" />

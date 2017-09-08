@@ -54,6 +54,9 @@
     <ClInclude Include="TSingletonWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="02GamePadDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -78,6 +81,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TSingletonWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="02GamePadDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

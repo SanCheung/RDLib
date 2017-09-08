@@ -9,6 +9,7 @@ C01WndScanEnter::C01WndScanEnter(void)
 	_spImageBn.reset( new Image( CAppData::GetInstancePath() + L"mgc2/btn-1.png" ) );
 
 	_bHover = 0;
+	_time = 30;
 }
 
 
@@ -25,9 +26,25 @@ LRESULT C01WndScanEnter::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam 
 	{
 	case WM_TIMER:
 		{
-			//_time = ::GetTickCount() - IdleTrackerGetLastTickCount();
-			//CDUIRect	rt( 0, 0, 200, 30 );
-			//::InvalidateRect(m_hWnd, rt, FALSE);
+			CDUIRect		rt;
+			GetClientRect( m_hWnd, rt );
+
+			int w = rt.GetWidth();
+			int h = rt.GetHeight();
+
+			int iw = _spImageBn->GetWidth();
+			int ih = _spImageBn->GetHeight();
+
+			CDUIPoint		pt( LOWORD(lParam), HIWORD(lParam) );
+			CDUIRect		rtHover( w-iw, 0,  w, ih );
+			InvalidateRect( m_hWnd, rtHover, FALSE );
+
+			_time--;
+			if( _time <= 0 )
+			{
+				KillTimer( m_hWnd, 1 );
+				PostQuitMessage( 0 );
+			}
 		}
 		break;
 
@@ -76,13 +93,16 @@ LRESULT C01WndScanEnter::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam 
 			PAINTSTRUCT ps;
 			HDC hDC = BeginPaint(*this, &ps);
 
-			Graphics		gr( hDC );
+			Graphics		g( hDC );
 
 			CDUIRect		rt;
 			GetClientRect( m_hWnd, rt );
 
 			int w = rt.GetWidth();
 			int h = rt.GetHeight();
+
+			Bitmap	bmp( w, h );
+			Graphics		gr( &bmp );
 
 			int iw = _spImageBK->GetWidth();
 			int ih = _spImageBK->GetHeight();
@@ -129,20 +149,22 @@ LRESULT C01WndScanEnter::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam 
 			sf.SetAlignment( StringAlignmentCenter );
 
 			CStringW		str;
-			str.Format( L"返回首页（%ds）", 30 );
+			str.Format( L"返回首页（%ds）", _time );
 
 			gr.DrawString( str, str.GetLength(), &ft, RectF(w-iw+20,10,iw,ih), &sf, &sbLabel );
+
+			g.DrawImage( &bmp, 0, 0 );
 
 			EndPaint(*this, &ps);
 			handled = TRUE;
 		}
 		break;
-	//case WM_SHOWWINDOW:
-	//	{
-	//		bool bShow = (wParam==TRUE);
-	//		CMainHelper::ShowTrayWndAndStartWnd( !bShow );
-	//	}
-	//	break;
+	case WM_SHOWWINDOW:
+		{
+			//bool bShow = (wParam==TRUE);
+			//CMainHelper::ShowTrayWndAndStartWnd( !bShow );
+		}
+		break;
 	case WM_CLOSE:
 		{
 			//CMainHelper::ShowTrayWndAndStartWnd( true );

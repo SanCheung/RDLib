@@ -14,10 +14,11 @@
 #include "MainHelper.h"
 
 #include "01WndScanEnter.h"
+#include "02GamePadDlg.h"
 
 
 CMainDlg::CMainDlg(void)
-	: m_pDlgPayment( nullptr )
+	//: m_pDlgPayment( nullptr )
 {
 }
 
@@ -79,14 +80,8 @@ void CMainDlg::Notify( TNotifyUI& msg )
 		}								   
 		else if( strSenderName == L"bn2" )
 		{
-			//if( CInfoWindow::IsShow() )
-			//{
-			//	CInfoWindow::Hide();
-			//}
-			//else
-			//{
-			//	CInfoWindow::Show( m_hWnd );
-			//}
+			C02GamePadDlg		dlg;
+			dlg.DoModal( m_hWnd, L"" );
 		}
 		else if( strSenderName == L"bn3" )
 		{

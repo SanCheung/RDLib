@@ -1,6 +1,6 @@
 #pragma once
 
-class CDlgPayment;
+//class CDlgPayment;
 class CMainDlg  : public CDialogBase
 				, xdmp::ThreadWrap
 {
@@ -21,6 +21,6 @@ public:
 
 	int		m_nCurrentPage;
 
-	CDlgPayment *m_pDlgPayment;
+	//CDlgPayment *m_pDlgPayment;
 };
 

@@ -372,6 +372,8 @@ CControlUI* CDialogBuilder::_Parse(CMarkupNode* pRoot, CControlUI* pParent, CPai
         else {
             SIZE_T cchLen = _tcslen(pstrClass);
             switch( cchLen ) {
+			case 1:
+				if( EQUSTR(pstrClass, _T("p")) )			pControl = new CControlUI;
             case 4:
                 if( EQUSTR(pstrClass, _T("Edit")) )			pControl = new CEditUI;
 				else if( EQUSTR(pstrClass, _T("List")) )	pControl = new CListUI;

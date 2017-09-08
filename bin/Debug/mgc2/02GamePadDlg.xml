@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" ?>
+<Window size="1366,768" caption="0,0,0,48" sizebox="4,4,6,6" >
+  <Font name="Microsoft YaHei" size="30" bold="1" />
+
+  <HBox>
+    <p width="40" />
+    <VBox width="252">
+      <p height="40" />
+      <Label bkimage="MGC-LOGO.png" width="147" height="49" />
+
+      <p height="46" />
+      <Label text="推荐游戏" height="30" textcolor="#ff27B5FF" font="0" />
+      <p height="50" />
+      
+      <p />
+
+      <p height="60" text="登录开始体验" bkcolor="#FF27B5FF" bkcolor2="#FF007CEF" font="0" />
+
+      <p height="40" />
+    </VBox>
+    <p width="40" />
+    <p />
+  </HBox>
+</Window>

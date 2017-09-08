@@ -14,6 +14,7 @@ public:
 
 	int		_bHover;
 
+	int		_time;
 	virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 };
 
