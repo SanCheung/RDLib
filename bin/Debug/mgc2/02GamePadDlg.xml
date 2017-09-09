@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" ?>
 <Window size="1366,768" caption="0,0,0,48" sizebox="4,4,6,6" >
-  <Font name="Microsoft YaHei" size="30" bold="1" />
-
-  <HBox>
+  <Font name="Microsoft YaHei" size="30" bold="true" />
+  <Font name="Microsoft YaHei" size="20" bold="true" />
+  <Font name="Microsoft YaHei" size="30" />
+  
+  <HBox bkimage="bg.png">
     <p width="40" />
     <VBox width="252">
       <p height="40" />
@@ -10,15 +12,42 @@
 
       <p height="46" />
       <Label text="推荐游戏" height="30" textcolor="#ff27B5FF" font="0" />
-      <p height="50" />
+      <p height1="50" />
       
-      <p />
+      <!--<p bkcolor="#FFffffff" />-->
+      <Button text="射击" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
+      <p height1="20" />
 
-      <p height="60" text="登录开始体验" bkcolor="#FF27B5FF" bkcolor2="#FF007CEF" font="0" />
+      <Button text="动作" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
+      <p height1="20" />
+
+      <Button text="双人对战" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
+      <p height1="20" />
+
+      <Button text="解密" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
+      <p height1="20" />
+
+      <Button text="像素风" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
+      <p height1="20" />
+      
+      <Button text="动作冒险" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
+      <p height1="20" />
+      
+      <Button text="推塔" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
+      <p height1="20" />
+      
+      <p height="40" />
+      <Button height="60" text="登录开始体验" bkcolor="#FF27B5FF" bkcolor2="#FF007CEF" font="1"
+              text="登录开始游戏" textcolor="#FFffffff" />
 
       <p height="40" />
     </VBox>
     <p width="40" />
-    <p />
+
+    <VBox>
+      <p height="40" />
+      <p bkcolor="#FFffffff" />
+    </VBox>
+    
   </HBox>
 </Window>
