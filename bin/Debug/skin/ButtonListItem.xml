@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Window>
+  <VBox name="main" inset="2,2,2,2" >
+    <Button name="bn" text="hello world!" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="0" />
+  </VBox>
+
+</Window>

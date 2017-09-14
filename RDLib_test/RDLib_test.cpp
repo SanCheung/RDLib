@@ -10,6 +10,8 @@
 
 #include "ExitTPWindow.h"
 
+#include "DlgNew.h"
+
 
 //#include "commonstuff.hpp"
 //#include "JsEngine.h"
@@ -551,11 +553,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	//}
 	//else
 	//{
-		CSwhMainLayout	*pMainWnd = new CSwhMainLayout;
+		//CSwhMainLayout	*pMainWnd = new CSwhMainLayout;
 		//CMainDlg		*pMainWnd = new CMainDlg;
 		//CDlgTestList	*pMainWnd = new CDlgTestList;
 		//pMainWnd->Create( NULL, L"Title", UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE );
-		pMainWnd->Create( NULL, L"Title", WS_VISIBLE|WS_POPUPWINDOW, 0 );
+
+		CDlgNew			*pMainWnd = new CDlgNew;
+		pMainWnd->Create( NULL, L"Title", UI_WNDSTYLE_FRAME, 0 );
 		pMainWnd->CenterWindow();
 		CAppData::MessageLoop();
 		DEL( pMainWnd );

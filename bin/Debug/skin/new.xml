@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" ?>
+<Window size="900,600" mininfo="640,480"  sizebox="4,4,6,6" font="5" roundcorner="1,1" >
+  <!--Include & Default-->
+  <Include source="sb2/sb.xml" />
+  <Include source="ctrl.xml" />
+  
+  <Font name="Microsoft YaHei" size="30" />
+
+  <HBox bkcolor="#ff030303" >
+    <HBox width="200" maxwidth="300" minwidth="100" sepwidth="5" sepimm111="true" >
+      <VBox inset="10,0,10,0" childpadding="1"  >
+          <Control height="20"/>
+          <Button name="bn1" text="测试" hottextcolor1="#FFFF0000"/>
+          <Control  height="10"/>
+          <Category />
+      </VBox>     
+    </HBox>
+
+    <VBox>
+      <Gallery />
+    </VBox>
+  </HBox>
+</Window>

@@ -218,7 +218,7 @@ void CDlgTestList::Data2UI()
 	_list2->GetManager()->SetTimer( _list2, 1, 20 );
 
 
-	for( i = 0; i < 10; i++ )
+	for( i = 0; i < 100; i++ )
 	{
 		CVoteListElementUI *item = CVoteListElementUI::create( L"votelistitem.xml", _list3 );
 		if( i == 0 )

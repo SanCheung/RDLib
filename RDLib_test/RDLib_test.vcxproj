@@ -94,8 +94,11 @@
     <ClInclude Include="D2dObjectLib.h" />
     <ClInclude Include="D2ViewUI.h" />
     <ClInclude Include="DlgNetTest.h" />
+    <ClInclude Include="DlgNew.h" />
     <ClInclude Include="DlgTestList.h" />
     <ClInclude Include="ExitTPWindow.h" />
+    <ClInclude Include="CategoryUI.h" />
+    <ClInclude Include="GalleryUI.h" />
     <ClInclude Include="IconPathViewD2UI.h" />
     <ClInclude Include="LayeredWindowDrawer.h" />
     <ClInclude Include="ListHortElementUI.h" />
@@ -123,8 +126,11 @@
     <ClCompile Include="D2dObjectLib.cpp" />
     <ClCompile Include="D2ViewUI.cpp" />
     <ClCompile Include="DlgNetTest.cpp" />
+    <ClCompile Include="DlgNew.cpp" />
     <ClCompile Include="DlgTestList.cpp" />
     <ClCompile Include="ExitTPWindow.cpp" />
+    <ClCompile Include="CategoryUI.cpp" />
+    <ClCompile Include="GalleryUI.cpp" />
     <ClCompile Include="IconPathViewD2UI.cpp" />
     <ClCompile Include="LayeredWindowDrawer.cpp" />
     <ClCompile Include="ListHortElementUI.cpp" />

@@ -17,9 +17,8 @@
           <Button name="bn6" text="测试6" hottextcolor1="#FFFF0000"/>
           <Button name="bn7" text="测试7" hottextcolor1="#FFFF0000"/>
           <Control  height="10"/>
-          <List name="list3" inset="1,1,1,1" bkcolor="#ffffffff" header="hidden"
-                    vscrollbar111="true" itemalign="left" itemlinecolorxxx="0xFF7f7f7f"
-                    bordercolor111="0xFF7f7f7f" >
+          <List name="list3" inset="1,1,1,1" header="hidden"
+                    vscrollbar="true" itemalign="left" >
             <ListHeaderItem text="1" />
           </List>
       </VBox>      
@@ -28,7 +27,7 @@
     <VBox bkcolor="#ffEFEFEF" inset="5,5,5,5" >
       <Label height="15" name="info" />
       <VBox sepheight="10" sepimm="true" >
-        <List name="list" inset="1,1,1,1" bkcolor="#ffffffff" header11="hidden"
+        <List name="list" inset="1,1,1,1" bkcolor="#ffffffff" header="hidden"
             vscrollbar="true" itemalign="left" itemlinecolor="0xFF7f7f7f"
             bordercolor="0xFF7f7f7f" >
           <ListHeaderItem text="1" width="80" />
