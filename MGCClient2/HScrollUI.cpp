@@ -144,15 +144,44 @@ void CVScrollUI::DoPaint( HDC hDC, const RECT& rcPaint )
 	g.DrawImage( &bmp, rt.left, rt.top );
 }
 
-void CVScrollUI::Event( TEventUI& event )
+void CVScrollUI::Event( TEventUI& evt )
 {
 	CDUIRect		rt( m_rcItem );
 	int				w = rt.GetWidth();
 	int				h = rt.GetHeight();
 
-	if( UIEVENT_BUTTONDOWN == event.Type )
+	if( UIEVENT_SCROLLWHEEL == evt.Type)
 	{
-		int		yy = event.ptMouse.y - rt.top;
+		float r = _y*1.f/(h-100);
+
+		if( r >= 0 )
+		{
+			int nDir = LOWORD( evt.wParam );
+			if( SB_LINEUP == nDir )
+				r += .05f;
+			else
+				r -= .05f;
+
+			r = CLAMP( r, 0, 1 );
+
+			int newY = int(r*(h-100) + .5f);
+			if( newY != _y )
+			{
+				_y = newY;
+				Invalidate();
+
+				PointF	ptF;
+				ptF.X = -1;
+				ptF.Y = r;
+				if( nullptr != _host )
+					_host->OnSetRatio( ptF );
+			}
+
+		}
+	}
+	else if( UIEVENT_BUTTONDOWN == evt.Type )
+	{
+		int		yy = evt.ptMouse.y - rt.top;
 
 		if( yy > _y && yy < _y+100 )
 		{
@@ -161,11 +190,11 @@ void CVScrollUI::Event( TEventUI& event )
 			SetCapture( GetManager()->GetPaintWindow() );
 		}
 	}
-	else if( UIEVENT_MOUSEMOVE == event.Type )
+	else if( UIEVENT_MOUSEMOVE == evt.Type )
 	{
 		if( _bMouseDown )
 		{
-			int		yy = event.ptMouse.y - rt.top;
+			int		yy = evt.ptMouse.y - rt.top;
 
 			int		dy = yy - _yDown;
 			_y += dy;
@@ -180,7 +209,7 @@ void CVScrollUI::Event( TEventUI& event )
 
 				PointF	ptF;
 				ptF.X = -1;
-				ptF.Y = _yDown*1.f/(rt.GetHeight()-100);
+				ptF.Y = _yDown*1.f/(h-100);
 
 				ptF.Y = CLAMP( ptF.Y, 0, 1 );
 				//::SendMessage( GetManager()->GetPaintWindow(), WM_MAINDLG_SETRATIO, (WPARAM)&ptF, 0 );
@@ -190,7 +219,7 @@ void CVScrollUI::Event( TEventUI& event )
 
 		}
 	}
-	else if( UIEVENT_BUTTONUP == event.Type )
+	else if( UIEVENT_BUTTONUP == evt.Type )
 	{
 		_bMouseDown = false;
 		_yDown = 0;
@@ -198,7 +227,7 @@ void CVScrollUI::Event( TEventUI& event )
 		ReleaseCapture();
 	}
 
-	CControlUI::Event( event );
+	CControlUI::Event( evt );
 }
 
 void CVScrollUI::SetRatio( float fRatio )

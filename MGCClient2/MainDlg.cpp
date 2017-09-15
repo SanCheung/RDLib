@@ -68,20 +68,11 @@ void CMainDlg::Notify( TNotifyUI& msg )
 				C01WndScanEnter::Hide();
 			else
 				C01WndScanEnter::Show( m_hWnd );
-
-			//if( CVlcWindow::IsShow() )
-			//{
-			//	CVlcWindow::Hide();
-			//}
-			//else
-			//{
-			//	CVlcWindow::Show( m_hWnd );
-			//}
 		}								   
 		else if( strSenderName == L"bn2" )
 		{
 			C02GamePadDlg		dlg;
-			dlg.DoModal( m_hWnd, L"" );
+			dlg.DoModal( m_hWnd, L"", WS_POPUPWINDOW|WS_CAPTION|WS_SIZEBOX );
 		}
 		else if( strSenderName == L"bn3" )
 		{

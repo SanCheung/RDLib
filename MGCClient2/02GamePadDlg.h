@@ -1,5 +1,10 @@
 #pragma once
+#include "HScrollUI.h"
+
+class CGalleryUI;
+class CCategoryUI;
 class C02GamePadDlg : public CDialogBase
+					, public IScrollHost
 {
 public:
 	C02GamePadDlg(void);
@@ -11,5 +16,14 @@ public:
 	void	Init();
 
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+private:
+	void	Data2UI();
+
+	virtual void OnSetRatio( PointF pt );
+
+	CCategoryUI		*m_category;
+	CGalleryUI		*m_gallery;
+	CVScrollUI		*m_vs;
 };
 

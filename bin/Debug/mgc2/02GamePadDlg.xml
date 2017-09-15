@@ -11,10 +11,10 @@
       <Label bkimage="MGC-LOGO.png" width="147" height="49" />
 
       <p height="46" />
-      <Label text="推荐游戏" height="30" textcolor="#ff27B5FF" font="0" />
+      <!--<Label text="推荐游戏" height="30" textcolor="#ff27B5FF" font="0" />
       <p height1="50" />
       
-      <!--<p bkcolor="#FFffffff" />-->
+      --><!--<p bkcolor="#FFffffff" />--><!--
       <Button text="射击" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
       <p height1="20" />
 
@@ -34,7 +34,9 @@
       <p height1="20" />
       
       <Button text="推塔" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
-      <p height1="20" />
+      <p height1="20" />-->
+
+      <Category name="category" />
       
       <p height="40" />
       <Button height="60" normalimage="startlogin-normal.png"
@@ -43,11 +45,15 @@
 
       <p height="40" />
     </VBox>
+    
     <p width="40" />
 
     <VBox>
       <p height="40" />
-      <p bkcolor="#FFffffff" />
+      <HBox>
+        <Gallery name="gallery" />
+        <VScroll name="vs" width="40" />
+      </HBox>
     </VBox>
     
   </HBox>
