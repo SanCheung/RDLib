@@ -7,17 +7,24 @@
   <Font name="Microsoft YaHei" size="30" />
 
   <HBox bkcolor="#ff030303" >
-    <HBox width="200" maxwidth="300" minwidth="100" sepwidth="5" sepimm111="true" >
+    <HBox width="292" >
       <VBox inset="10,0,10,0" childpadding="1"  >
-          <Control height="20"/>
+          <p height="20"/>
           <Button name="bn1" text="测试" hottextcolor1="#FFFF0000"/>
-          <Control  height="10"/>
+          <p  height="10"/>
           <Category />
       </VBox>     
     </HBox>
 
+    <p width="40" />
+
     <VBox>
-      <Gallery />
+      <p height="40" />
+      <HBox>
+        <Gallery />        
+        <VScroll name="vsBar1" width="40" />
+      </HBox>
     </VBox>
+    
   </HBox>
 </Window>

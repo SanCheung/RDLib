@@ -37,8 +37,9 @@
       <p height1="20" />
       
       <p height="40" />
-      <Button height="60" text="登录开始体验" bkcolor="#FF27B5FF" bkcolor2="#FF007CEF" font="1"
-              text="登录开始游戏" textcolor="#FFffffff" />
+      <Button height="60" normalimage="startlogin-normal.png"
+              hotimage="startlogin-hover.png"
+              pushedimage="startlogin-pushed.png" />
 
       <p height="40" />
     </VBox>

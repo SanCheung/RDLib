@@ -1,5 +1,8 @@
 #pragma once
-class CDlgNew : public CDialogBase
+#include "HScrollUI.h"
+
+class CDlgNew	: public CDialogBase
+				, public IScrollHost
 {
 public:
 	CDlgNew(void);
@@ -12,4 +15,9 @@ public:
 
 private:
 	void	Data2UI();
+
+	virtual void OnSetRatio( PointF pt );
+
+
+	CVScrollUI		*m_vs;
 };

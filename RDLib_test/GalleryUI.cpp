@@ -155,10 +155,14 @@ void CGalleryUI::drawItem( Graphics &g, RectF rt, int index )
 
 void CGalleryUI::reCalcLimit()
 {
-	//int n = (int)m_asText.size();
+	int n = (int)m_asText.size();
 
-	//int nRealHeight = n * LINEHEIGHT;
-	//m_offsetMax = nRealHeight - m_rcItem.Height();
+	int nLine = n/3;
+	if( n%3 )
+		nLine++;
+
+	int nRealHeight = nLine * ITEM_HEIGHT;
+	m_offsetMax = nRealHeight - m_rcItem.Height();
 }
 
 void CGalleryUI::SetPos( RECT rc )

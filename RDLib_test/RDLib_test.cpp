@@ -559,7 +559,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 		//pMainWnd->Create( NULL, L"Title", UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE );
 
 		CDlgNew			*pMainWnd = new CDlgNew;
-		pMainWnd->Create( NULL, L"Title", UI_WNDSTYLE_FRAME, 0 );
+		pMainWnd->Create( NULL, L"Title", UI_WNDSTYLE_FRAME|WS_MAXIMIZE, 0 );
 		pMainWnd->CenterWindow();
 		CAppData::MessageLoop();
 		DEL( pMainWnd );

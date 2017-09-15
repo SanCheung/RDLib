@@ -3,6 +3,7 @@
 
 #include "CategoryUI.h"
 #include "GalleryUI.h"
+#include "HScrollUI.h"
 
 CDlgNew::CDlgNew(void)
 {
@@ -36,6 +37,9 @@ CControlUI* CDlgNew::CreateControl( LPCTSTR pstrClass )
 	else if( EQUSTR( pstrClass, L"Gallery" ) )
 		return new CGalleryUI;
 
+	else if( EQUSTR(pstrClass, L"VScroll") )
+		return new CVScrollUI;
+
 	return NULL;
 }
 
@@ -61,4 +65,9 @@ void CDlgNew::Notify( TNotifyUI& msg )
 
 void CDlgNew::Data2UI()
 {
+}
+
+void CDlgNew::OnSetRatio( PointF pt )
+{
+
 }
