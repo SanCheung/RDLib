@@ -34,16 +34,16 @@ void CHScrollUI::DoPaint( HDC hDC, const RECT& rcPaint )
 }
 
 
-void CHScrollUI::Event( TEventUI& event )
+void CHScrollUI::Event( TEventUI& evt )
 {
 	CDUIRect		rt( m_rcItem );
 	int				w = rt.GetWidth();
 	int				h = rt.GetHeight();
 
-	if( UIEVENT_BUTTONDOWN == event.Type )
+	if( UIEVENT_BUTTONDOWN == evt.Type )
 	{
-		int		xx = event.ptMouse.x - rt.left;
-		int		yy = event.ptMouse.y - rt.top;
+		int		xx = evt.ptMouse.x - rt.left;
+		int		yy = evt.ptMouse.y - rt.top;
 
 		if( xx > _x && xx < _x+100 )
 		{
@@ -53,12 +53,12 @@ void CHScrollUI::Event( TEventUI& event )
 			SetCapture( GetManager()->GetPaintWindow() );
 		}
 	}
-	else if( UIEVENT_MOUSEMOVE == event.Type )
+	else if( UIEVENT_MOUSEMOVE == evt.Type )
 	{
 		if( _bMouseDown )
 		{
-			int		xx = event.ptMouse.x - rt.left;
-			int		yy = event.ptMouse.y - rt.top;
+			int		xx = evt.ptMouse.x - rt.left;
+			int		yy = evt.ptMouse.y - rt.top;
 
 			
 			int		dx = xx-_xDown;
@@ -82,7 +82,7 @@ void CHScrollUI::Event( TEventUI& event )
 
 		}
 	}
-	else if( UIEVENT_BUTTONUP == event.Type )
+	else if( UIEVENT_BUTTONUP == evt.Type )
 	{
 		_bMouseDown = false;
 		_xDown = 0;
@@ -90,7 +90,7 @@ void CHScrollUI::Event( TEventUI& event )
 		ReleaseCapture();
 	}
 
-	CControlUI::Event( event );
+	CControlUI::Event( evt );
 }
 
 void CHScrollUI::SetRatio( float fRatio )
@@ -158,9 +158,9 @@ void CVScrollUI::Event( TEventUI& evt )
 		{
 			int nDir = LOWORD( evt.wParam );
 			if( SB_LINEUP == nDir )
-				r += .05f;
-			else
 				r -= .05f;
+			else
+				r += .05f;
 
 			r = CLAMP( r, 0, 1 );
 
@@ -176,7 +176,6 @@ void CVScrollUI::Event( TEventUI& evt )
 				if( nullptr != _host )
 					_host->OnSetRatio( ptF );
 			}
-
 		}
 	}
 	else if( UIEVENT_BUTTONDOWN == evt.Type )

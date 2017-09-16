@@ -5,6 +5,7 @@
 
 
 C02GamePadDlg::C02GamePadDlg(void)
+	: m_nLoginState( 0 )
 {
 }
 
@@ -47,12 +48,46 @@ void C02GamePadDlg::Notify( TNotifyUI& msg )
 
 	if( strType == L"click")
 	{
+		if( strSenderName == L"bn" )
+		{
+			CButtonUI	*pBn = FindCtrl<CButtonUI>( L"bn" );
+
+			m_nLoginState = !m_nLoginState;
+
+			if( m_nLoginState == 1 )
+			{
+				pBn->SetNormalImage( L"endlogin-normal.png" );
+				pBn->SetHotImage( L"endlogin-hover.png" );
+				pBn->SetPushedImage( L"endlogin-pushed.png" );
+			}
+			else
+			{
+				pBn->SetNormalImage( L"startlogin-normal.png" );
+				pBn->SetHotImage( L"startlogin-hover.png" );
+				pBn->SetPushedImage( L"startlogin-pushed.png" );
+			}
+
+		}
 
 	}
 }
 
 LRESULT C02GamePadDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
+	if( WM_GLY_SETVS_RATIO == uMsg )
+	{
+		float f = wParam/100.f;
+		m_vs->SetRatio( f );
+	}
+	else if( WM_GLY_CLICK_LEFT == uMsg )
+	{
+		ATLTRACE( L"WM_GLY_CLICK_LEFT %d\n", wParam );
+	}
+	else if( WM_GLY_CLICK_RIGHT == uMsg )
+	{
+		ATLTRACE( L"WM_GLY_CLICK_RIGHT %d\n", wParam );
+	}
+
 	return CDialogBase::HandleMessage(uMsg, wParam, lParam);
 }
 

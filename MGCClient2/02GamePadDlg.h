@@ -25,5 +25,8 @@ private:
 	CCategoryUI		*m_category;
 	CGalleryUI		*m_gallery;
 	CVScrollUI		*m_vs;
+
+	// 0: Î´µÇÂ¼		1: ÒÑµÇÂ¼
+	int			m_nLoginState;
 };
 

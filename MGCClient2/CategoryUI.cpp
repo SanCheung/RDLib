@@ -43,9 +43,9 @@ void CCategoryUI::Event( TEventUI& evt )
 		{
 			int nDir = LOWORD( evt.wParam );
 			if( SB_LINEUP == nDir )
-				m_offsetY += WHEELSTEP;
-			else
 				m_offsetY -= WHEELSTEP;
+			else
+				m_offsetY += WHEELSTEP;
 
 			if( m_offsetY < 0 )
 				m_offsetY = 0;

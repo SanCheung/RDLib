@@ -39,7 +39,8 @@
       <Category name="category" />
       
       <p height="40" />
-      <Button height="60" normalimage="startlogin-normal.png"
+      <Button name="bn" height="60" 
+              normalimage="startlogin-normal.png"
               hotimage="startlogin-hover.png"
               pushedimage="startlogin-pushed.png" />
 
