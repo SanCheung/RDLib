@@ -22,5 +22,7 @@ public:
 	int		m_nCurrentPage;
 
 	//CDlgPayment *m_pDlgPayment;
+
+	bool		OnChildEvent( void* paramters );
 };
 

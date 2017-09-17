@@ -66,6 +66,12 @@
     <ClInclude Include="HScrollUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LayeredWindowDrawer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="02FloatWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,6 +108,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HScrollUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LayeredWindowDrawer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="02FloatWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

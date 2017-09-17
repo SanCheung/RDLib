@@ -138,7 +138,7 @@ void CGalleryUI::drawItem( Graphics &g, RectF rt, int index )
 	g.FillRectangle( &SolidBrush( Color(0x7f7f7fff) ), Rect( rt.X, rt.Y, ITEM_WIDTH, ITEM_IMAGE_HEIGHT) );
 	
 	
-	Font			ft( TFontFace, 24, FontStyleBold );
+	Font			ft( TFontFace, 24, FontStyleBold, UnitPixel );
 
 	StringFormat	sf;
 	sf.SetLineAlignment( StringAlignmentCenter );

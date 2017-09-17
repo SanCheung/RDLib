@@ -83,9 +83,11 @@
   <ItemGroup>
     <ClInclude Include="01WndScanEnter.h" />
     <ClInclude Include="02GamePadDlg.h" />
+    <ClInclude Include="02FloatWnd.h" />
     <ClInclude Include="CategoryUI.h" />
     <ClInclude Include="GalleryUI.h" />
     <ClInclude Include="HScrollUI.h" />
+    <ClInclude Include="LayeredWindowDrawer.h" />
     <ClInclude Include="MainDlg.h" />
     <ClInclude Include="MainHelper.h" />
     <ClInclude Include="MGCClient2.h" />
@@ -99,9 +101,11 @@
   <ItemGroup>
     <ClCompile Include="01WndScanEnter.cpp" />
     <ClCompile Include="02GamePadDlg.cpp" />
+    <ClCompile Include="02FloatWnd.cpp" />
     <ClCompile Include="CategoryUI.cpp" />
     <ClCompile Include="GalleryUI.cpp" />
     <ClCompile Include="HScrollUI.cpp" />
+    <ClCompile Include="LayeredWindowDrawer.cpp" />
     <ClCompile Include="MainDlg.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="MGCClient2.cpp" />

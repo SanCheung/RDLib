@@ -3,6 +3,8 @@
 #include "CategoryUI.h"
 #include "GalleryUI.h"
 
+#include "02FloatWnd.h"
+
 
 C02GamePadDlg::C02GamePadDlg(void)
 	: m_nLoginState( 0 )
@@ -39,6 +41,9 @@ void C02GamePadDlg::Init()
 
 	m_vs = FindCtrl<CVScrollUI>( L"vs" );
 	m_vs->SetHost( this );
+
+	m_pBnLogin	= FindCtrl<CButtonUI>( L"bnLogin" );
+	m_pBnLogin->OnEvent += MakeDelegate(this, &C02GamePadDlg::OnButtonLoginEvent );
 }
 
 void C02GamePadDlg::Notify( TNotifyUI& msg )
@@ -48,27 +53,43 @@ void C02GamePadDlg::Notify( TNotifyUI& msg )
 
 	if( strType == L"click")
 	{
-		if( strSenderName == L"bn" )
+		if( strSenderName == L"bnLogin" )
 		{
-			CButtonUI	*pBn = FindCtrl<CButtonUI>( L"bn" );
-
 			m_nLoginState = !m_nLoginState;
 
 			if( m_nLoginState == 1 )
 			{
-				pBn->SetNormalImage( L"endlogin-normal.png" );
-				pBn->SetHotImage( L"endlogin-hover.png" );
-				pBn->SetPushedImage( L"endlogin-pushed.png" );
+				m_pBnLogin->SetNormalImage( L"endlogin-normal.png" );
+				m_pBnLogin->SetHotImage( L"endlogin-hover.png" );
+				m_pBnLogin->SetPushedImage( L"endlogin-pushed.png" );
 			}
 			else
 			{
-				pBn->SetNormalImage( L"startlogin-normal.png" );
-				pBn->SetHotImage( L"startlogin-hover.png" );
-				pBn->SetPushedImage( L"startlogin-pushed.png" );
+				m_pBnLogin->SetNormalImage( L"startlogin-normal.png" );
+				m_pBnLogin->SetHotImage( L"startlogin-hover.png" );
+				m_pBnLogin->SetPushedImage( L"startlogin-pushed.png" );
 			}
 
+			C02FloatWnd::Hide();
 		}
+	}
+	else if( strType == L"hover-loginbutton" )
+	{
+		if( !m_nLoginState )
+			return;
 
+		CDUIRect	rtItem = m_pBnLogin->GetPos();
+		CDUIPoint	ptLT = rtItem.TopLeft();
+		ptLT.Offset( 0, -190 );
+		MapWindowPoints( m_hWnd, GetDesktopWindow(), &ptLT, 1 );
+		C02FloatWnd::Show( m_hWnd, ptLT );
+	}
+	else if( strType == L"leave-loginbutton" )
+	{
+		if( !m_nLoginState )
+			return;
+
+		C02FloatWnd::Hide();
 	}
 }
 
@@ -99,4 +120,19 @@ void C02GamePadDlg::OnSetRatio( PointF pt )
 {
 	//ATLTRACE( L"%.2f %.2f\n", pt.X, pt.Y );
 	m_gallery->SetVSRatio( pt.Y );
+}
+
+bool C02GamePadDlg::OnButtonLoginEvent( void* paramters )
+{
+	TEventUI* pEvent = (TEventUI*)paramters;	
+	if( pEvent->Type == UIEVENT_MOUSEHOVER )
+	{
+		m_pBnLogin->GetManager()->SendNotify( m_pBnLogin, L"hover-loginbutton");
+	}
+	else if( pEvent->Type == UIEVENT_MOUSELEAVE )
+	{
+		m_pBnLogin->GetManager()->SendNotify( m_pBnLogin, L"leave-loginbutton");
+	}
+
+	return true;
 }

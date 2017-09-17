@@ -28,5 +28,9 @@ private:
 
 	// 0: Î´µÇÂ¼		1: ÒÑµÇÂ¼
 	int			m_nLoginState;
+
+
+	CButtonUI	*m_pBnLogin;
+	bool		OnButtonLoginEvent( void* paramters );
 };
 

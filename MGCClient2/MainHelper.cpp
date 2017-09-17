@@ -283,3 +283,40 @@ bool CMainHelper::RunAsAdmin( LPCWSTR strExe, int nShow /*= SW_SHOW */ )
 
 	return (TRUE==ShellExecuteEx( &si ));
 }
+
+
+BOOL CMainHelper::InstallFont()  
+{  
+	////检查字体是否安装  
+	//LOGFONT lf={0};  
+	//lf.lfCharSet = GB2312_CHARSET;  
+	//HWND hDesktop = ::GetDesktopWindow();  
+	//HDC hDC=::GetDC(hDesktop);  
+	//EnumFontFamiliesEx(hDC,&lf,(FONTENUMPROC)EnumFontProc,0,0);  
+	//::ReleaseDC(hDesktop,hDC);
+
+	//if (!g_bExistFont) //不存在字体 安装字体  
+	//{  
+	//	const TCHAR AryFontFileName[][16] =   
+	//	{  
+	//		ZLT("msyh.ttf"),        //微软雅黑  
+	//		ZLT("msyhbd.ttf"),  //微软雅黑粗体  
+	//	};  
+	//	const long lFontCount = ARRAYSIZE(AryFontFileName);  
+	//	CString strWindowsFontsPath = CrnGetSpecialFolder(CSIDL_FONTS);  
+	//	TCHAR szSrcPath[MAX_PATH] = {0}, szDscPath[MAX_PATH] = {0};  
+	//	for (long i = 0; i < lFontCount; ++i)  
+	//	{  
+	//		wsprintf(szSrcPath, ZLT("%sconfig\\font\\%s"), __main_home__, AryFontFileName[i]);  
+	//		wsprintf(szDscPath, ZLT("%s\\%s"), strWindowsFontsPath, AryFontFileName[i]);  
+
+	//		if(::AddFontResource(szSrcPath)!=0)  
+	//			//::PostMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);  
+	//			if(!::CopyFile(szSrcPath, szDscPath, FALSE))  
+	//			{  
+	//				AfxMessageBox(ZLT("安装微软雅黑字体失败，程序可能无法正常运行！"));  
+	//			}  
+	//	}  
+	//}  
+	return TRUE;  
+}  

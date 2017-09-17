@@ -130,8 +130,8 @@ void CCategoryUI::draw( Bitmap *pBmp )
 
 void CCategoryUI::drawItem( Graphics &g, RectF rt, int index )
 {
-	Font			ft( TFontFace, TFontSize );
-	Font			ft2( TFontFace, TFontSize, FontStyleBold );
+	Font			ft( TFontFace, TFontSize, 0, UnitPixel );
+	Font			ft2( TFontFace, TFontSize, FontStyleBold, UnitPixel );
 
 	Color		cr( TCNormal );
 	if( index == m_nIndexHover )

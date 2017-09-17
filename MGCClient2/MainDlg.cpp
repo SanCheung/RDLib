@@ -16,6 +16,8 @@
 #include "01WndScanEnter.h"
 #include "02GamePadDlg.h"
 
+#include "02FloatWnd.h"
+
 
 CMainDlg::CMainDlg(void)
 	//: m_pDlgPayment( nullptr )
@@ -32,17 +34,27 @@ void CMainDlg::Init()
 {
 	::SetTimer( m_hWnd, 1, 1000, NULL );
 	thStart();
+
+	CControlUI	*pCtrl = FindCtrl(L"bn3");
+	pCtrl->OnEvent += MakeDelegate(this, &CMainDlg::OnChildEvent);
+}
+
+bool CMainDlg::OnChildEvent( void* paramters )
+{
+	TEventUI* pEvent = (TEventUI*)paramters;	
+	//if (pEvent->Type > UIEVENT__MOUSEBEGIN && pEvent->Type < UIEVENT__MOUSEEND)
+	if( pEvent->Type == UIEVENT_MOUSEHOVER )
+	{
+		CControlUI	*pCtrl = FindCtrl(L"bn3");
+		pCtrl->GetManager()->SendNotify( pCtrl, L"mouse_hover_on_button");
+	}
+
+	return true;
 }
 
 LRESULT CMainDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
 	thShutdownUseEvent();
-
-	//if( m_pDlgPayment != nullptr && IsWindow( m_pDlgPayment->GetHWND() ) )
-	//{
-	//	DestroyWindow( m_pDlgPayment->GetHWND() );
-	//	DEL( m_pDlgPayment );
-	//}
 
 	PostQuitMessage( 0 );
 	return 0;
@@ -76,7 +88,7 @@ void CMainDlg::Notify( TNotifyUI& msg )
 		}
 		else if( strSenderName == L"bn3" )
 		{
-			//CChargeWnd::Show( m_hWnd );
+			//C02FloatWindow::Show( m_hWnd );
 		}
 		else if( strSenderName == L"bn4" )
 		{
@@ -84,7 +96,6 @@ void CMainDlg::Notify( TNotifyUI& msg )
 		}
 		else if( strSenderName == L"bn5" )
 		{
-			//PostMessage( WM_SHOWA, 5 );
 		}			
 		else if( strSenderName == L"bn6" )
 		{
@@ -101,6 +112,10 @@ void CMainDlg::Notify( TNotifyUI& msg )
 			//ShowInfo( L"hello world" );
 			thStart();
 		}
+	}
+	else if( L"mouse_hover_on_button" == strType )
+	{
+		ATLTRACE( L"hover\n" );
 	}
 }
 

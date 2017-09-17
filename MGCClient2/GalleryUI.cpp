@@ -245,7 +245,7 @@ void CGalleryUI::drawItem( Graphics &g, RectF rt, int index )
 	}
 	else
 	{
-		Font ft( TFontFace, 24, FontStyleBold );
+		Font ft( TFontFace, 24, FontStyleBold, UnitPixel );
 
 		StringFormat	sf;
 		sf.SetLineAlignment( StringAlignmentCenter );
