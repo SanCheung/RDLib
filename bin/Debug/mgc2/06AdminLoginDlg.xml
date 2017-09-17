@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" ?>
+<Window size="1366,768" sizebox="4,4,6,6" >
+  <Font name="Microsoft YaHei" size="48" bold="true" />
+  <Font name="Microsoft YaHei" size="20"/>
+  <Font name="Microsoft YaHei" size="24" bold="true" />
+  
+  <VBox bkimage="bg.png">
+    <p height11="335" />
+    <Label text="运维登录" align="center" height="52" textcolor="#FFfefefe" font="0" />
+    <p height="38" />
+    <HBox height="60" >
+      <p />
+      <Edit textpadding="20,15,20,15" width="330" 
+            banner="请输入运维管理员用户名" bannercolor="#FF999999" font="1"
+            bkcolor="#FF141921" nativebkcolor="#FF141921" textcolor="#FFfeffff" />
+      <p />
+    </HBox>
+    
+    <p height="30" />
+
+    <HBox height="60">
+      <p />
+      <Edit textpadding="20,15,20,15" width="330" 
+            banner="请输入运维管理员密码" bannercolor="#FF999999" font="1"
+            bkcolor="#FF141921" nativebkcolor="#FF141921" textcolor="#FFfeffff"  />
+      <p />
+    </HBox>
+
+    <p height="30" />
+
+    <HBox height="60" >
+      <p />
+      <Button name="bnOK" width="330" 
+        normalimage="ywlogin-normal.png"
+        hotimage="ywlogin-hover.png"
+        pushedimage="ywlogin-pushed.png" />
+      <p />
+    </HBox>
+    
+    <p />
+  </VBox>
+</Window>

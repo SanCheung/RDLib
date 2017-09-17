@@ -17,6 +17,13 @@
 #include "02GamePadDlg.h"
 
 #include "02FloatWnd.h"
+#include "04ConfirmDlg.h"
+
+#include "05NetErrorDlg.h"
+#include "06AdminLoginDlg.h"
+
+#include "07PayInfoDlg.h"
+#include "08NetInterruptDlg.h"
 
 
 CMainDlg::CMainDlg(void)
@@ -84,33 +91,36 @@ void CMainDlg::Notify( TNotifyUI& msg )
 		else if( strSenderName == L"bn2" )
 		{
 			C02GamePadDlg		dlg;
-			dlg.DoModal( m_hWnd, L"", WS_POPUPWINDOW|WS_CAPTION|WS_SIZEBOX );
+			dlg.DoModalNoCaption( m_hWnd );
 		}
 		else if( strSenderName == L"bn3" )
 		{
-			//C02FloatWindow::Show( m_hWnd );
+			MsgBox( L"Call sesame!");
 		}
 		else if( strSenderName == L"bn4" )
 		{
-			//PostMessage( WM_SHOWA, 4 );
+			C04ConfirmDlg		dlg;
+			dlg.DoModalNoCaption( m_hWnd );
 		}
 		else if( strSenderName == L"bn5" )
 		{
+			C05NetErrorDlg		dlg;
+			dlg.DoModalNoCaption( m_hWnd );
 		}			
 		else if( strSenderName == L"bn6" )
 		{
-			///////隐藏任务栏和开始菜单
-			//HWND hWndST = FindWindow( L"Shell_TrayWnd", NULL );
-			//HWND hWndStart = FindWindowEx( NULL, NULL, L"Button", NULL );
-
-			//int		nNewSW = ::IsWindowVisible(hWndST) ? SW_HIDE:SW_SHOW;
-			//::ShowWindow( hWndST, nNewSW );
-			//::ShowWindow( hWndStart, nNewSW );
+			C06AdminLoginDlg	dlg;
+			dlg.DoModalNoCaption( m_hWnd );
 		}
 		else if( strSenderName == L"bn7" )
 		{
-			//ShowInfo( L"hello world" );
-			thStart();
+			C07PayInfoDlg		dlg;
+			dlg.DoModalNoCaption( m_hWnd );
+		}
+		else if( strSenderName == L"bn8" )
+		{
+			C08NetInterruptDlg dlg;
+			dlg.DoModalNoCaption( m_hWnd );
 		}
 	}
 	else if( L"mouse_hover_on_button" == strType )

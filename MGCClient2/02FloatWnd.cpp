@@ -108,6 +108,10 @@ void C02FloatWnd::Update()
 	if( _ptNow.x + _ptNow.y <= 10 )
 		return;
 
+	CStringW strName, strPhone, strV1, strV2, strV3;
+	getInfo( strName, strPhone, strV1, strV2, strV3 );
+
+
 	CStringW	strFile = CAppData::GetResourcePath() + L"costbg.png";
 	Image	 image( strFile );
 
@@ -130,29 +134,24 @@ void C02FloatWnd::Update()
 	SolidBrush		sbWhite( Color::White );
 
 	// name
-	Font		ft18b( L"微软雅黑", 18, FontStyleBold, UnitPixel );
-	CStringW	strName = L"ramble";
+	Font		ft18b( L"Microsoft yahei", 18, FontStyleBold, UnitPixel );
 	pGr->DrawString( strName, strName.GetLength(), &ft18b, 
 		RectF(70.f, 15.5f, 182.f, 25.f), &sf, &sbWhite );
 
 	// phone6207
-	Font		ft12( L"微软雅黑", 12, 0, UnitPixel );
-	CStringW	strPhone = L"136****6207";
+	Font		ft12( L"Microsoft yahei", 12, 0, UnitPixel );
 	pGr->DrawString( strPhone, strPhone.GetLength(), &ft12, 
 		RectF(70.f, 40.f, 182.f, 25.f), &sf, &sbWhite );
 
-	Font		ft14( L"微软雅黑", 14, 0, UnitPixel );
+	Font		ft14( L"Microsoft yahei", 14, 0, UnitPixel );
 	SolidBrush	sbText( Color(0xFFd1d1d1) );
 	pGr->DrawString( L"已玩：", 3, &ft14, RectF(20,80,60,20), &sf, &sbText );
 	pGr->DrawString( L"计费：", 3, &ft14, RectF(20,80+30,60,20), &sf, &sbText );
 	pGr->DrawString( L"需付：", 3, &ft14, RectF(20,80+60,60,20), &sf, &sbText );
 
-	CStringW	str = L"122小时15分";
-	pGr->DrawString( str, str.GetLength(), &ft14, RectF(70,80,190,20), &sf, &sbText );
-	str = L"0.2元/分钟";
-	pGr->DrawString( str, str.GetLength(), &ft14, RectF(70,80+30,190,20), &sf, &sbText );
-	str = L"222元";
-	pGr->DrawString( str, str.GetLength(), &ft14, RectF(70,80+60,190,20), &sf, &sbText );
+	pGr->DrawString( strV1, strV1.GetLength(), &ft14, RectF(70,80,190,20), &sf, &sbText );
+	pGr->DrawString( strV2, strV2.GetLength(), &ft14, RectF(70,80+30,190,20), &sf, &sbText );
+	pGr->DrawString( strV3, strV3.GetLength(), &ft14, RectF(70,80+60,190,20), &sf, &sbText );
 }
 
 void C02FloatWnd::Show( HWND hHostWnd, const CDUIPoint &pt)
@@ -192,4 +191,14 @@ void C02FloatWnd::Release()
 void C02FloatWnd::thread_main()
 {
 
+}
+
+void C02FloatWnd::getInfo( CStringW &strName, CStringW &strPhone, CStringW &strV1, CStringW &strV2, CStringW &strV3 )
+{
+	//todo
+	strName = L"ramble";
+	strPhone = L"136****6207";
+	strV1 = L"122小时15分";
+	strV2 = L"0.2元/分钟";
+	strV3 = L"222元";
 }

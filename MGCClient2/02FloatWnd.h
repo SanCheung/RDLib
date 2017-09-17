@@ -25,5 +25,9 @@ private:
 	HWND		_hHostWnd;
 
 	static	C02FloatWnd*	s_instance;
+
+
+public:
+	void	getInfo( CStringW &strName, CStringW &strPhone, CStringW &strV1, CStringW &strV2, CStringW &strV3 );
 };
 

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" ?>
+<Window size="1366,768" sizebox="4,4,6,6" >
+  <Font name="Microsoft YaHei" size="48" bold="true" />
+  <Font name="Microsoft YaHei" size="24"/>
+  <Font name="Microsoft YaHei" size="24" bold="true" />
+  
+  <VBox bkimage="bg.png">
+    <p height11="424" />
+    <Label text="本机网络似乎有些问题" align="center" height="52" textcolor="#FFfefefe" font="0" />
+    <p height="40" />
+    <Label name="lbInfo" text="{f 1}正在进行第 {c #ffffff}1{/c} 次尝试重新连接...{/f}" align="center" height="25" textcolor="#FF999999" showhtml="true" />
+    <p height="40" />
+    <Label text="快联系客服小姐姐解决吧" align="center" height="25" textcolor="#FF999999" font="1" />
+    <p height="40" />
+    <Label text="4008-568-220" align="center" height="25" textcolor="#FFffffff" font="2" />
+    <p />
+  </VBox>
+</Window>

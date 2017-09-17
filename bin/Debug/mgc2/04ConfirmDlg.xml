@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" ?>
+<Window size="1366,768" sizebox="4,4,6,6" >
+  <Font name="Microsoft YaHei" size="48" bold="true" />
+  <Font name="Microsoft YaHei" size="20" bold="true" />
+  
+  <VBox bkimage="bg.png">
+    <p height11="430" />
+    <Label text="确认体验结束？" align="center" height="52" textcolor="#FFfefefe" font="0" />
+    <p height="100" />
+    <HBox height="60">
+      <p />
+      <Button name="bnCancel" width="180" 
+            normalimage="cancel-normal.png"
+            hotimage="cancel-hover.png"
+            pushedimage="cancel-pushed.png" />
+      <p width="40" />
+      <Button name="bnOK" width="180" 
+            normalimage="ok-normal.png"
+            hotimage="ok-hover.png"
+            pushedimage="ok-pushed.png" />
+      <p />
+    </HBox>
+    <p />
+  </VBox>
+</Window>

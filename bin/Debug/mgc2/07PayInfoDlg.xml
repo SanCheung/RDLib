@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" ?>
+<Window size="1366,768" sizebox="4,4,6,6" >
+  <Font name="Microsoft YaHei" size="24"/>
+  
+  <VBox bkimage="07bk.jpg">
+    <p height11="424" />
+    <HBox height="30">
+      <p />
+      <Text name="txInfo" width="360" showhtml="true" text="{f 0}{c #ffffff}180 {/c}秒后机器自动重启 {a 1}立即重启{/a} {/f}" align="center" height="30" textcolor="#FF999999" />
+      <p />
+    </HBox>
+    <p height="30" />
+    <Label showhtml="true" text="{f 0}联系客服：{c #ffffff}400-3345-3445{/c}{/f}" align="center" height="30" textcolor="#FF999999" />
+    <p height="70" />
+  </VBox>
+</Window>

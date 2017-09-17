@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" ?>
+<Window size="1366,768" sizebox="4,4,6,6" >
+  <Font name="Microsoft YaHei" size="48" bold="true" />
+  <Font name="Microsoft YaHei" size="24"/>
+  
+  <VBox bkimage="bg.png">
+    <p height11="424" />
+    <Label text="网络连接已断开" align="center" height="52" textcolor="#FFfefefe" font="0" />
+    <p height="66" />
+    <Label name="lbInfo" showhtml="true" text="{f 1}{c #27b5ff}60{c #999999} 秒后未重新连接{/c}{/f}" align="center" height="36" textcolor="#FF999999" font="1" />
+    <Label text="本机将自动重启" align="center" height="36" textcolor="#FF999999" font="1" />
+    <Label text="同时您也会自动下机" align="center" height="36" textcolor="#FF999999" font="1" />
+    <p height="76" />
+    <HBox height="300" >
+      <p />
+      <Label width="300" bkimage="pay2w.jpg" />
+      <p />
+    </HBox>
+
+    <p height="35" />
+    <Label text="微信扫码" align="center" height="36" textcolor="#FFffffff" font="1" />
+    <Label text="进入海米欧MGC小程序" align="center" height="36" textcolor="#FFffffff" font="1" />
+    <Label text="可立即下机" align="center" height="36" textcolor="#FFffffff" font="1" />
+    <p />
+  </VBox>
+</Window>

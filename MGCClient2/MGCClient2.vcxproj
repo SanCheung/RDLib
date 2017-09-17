@@ -84,6 +84,11 @@
     <ClInclude Include="01WndScanEnter.h" />
     <ClInclude Include="02GamePadDlg.h" />
     <ClInclude Include="02FloatWnd.h" />
+    <ClInclude Include="04ConfirmDlg.h" />
+    <ClInclude Include="05NetErrorDlg.h" />
+    <ClInclude Include="06AdminLoginDlg.h" />
+    <ClInclude Include="07PayInfoDlg.h" />
+    <ClInclude Include="08NetInterruptDlg.h" />
     <ClInclude Include="CategoryUI.h" />
     <ClInclude Include="GalleryUI.h" />
     <ClInclude Include="HScrollUI.h" />
@@ -102,6 +107,11 @@
     <ClCompile Include="01WndScanEnter.cpp" />
     <ClCompile Include="02GamePadDlg.cpp" />
     <ClCompile Include="02FloatWnd.cpp" />
+    <ClCompile Include="04ConfirmDlg.cpp" />
+    <ClCompile Include="05NetErrorDlg.cpp" />
+    <ClCompile Include="06AdminLoginDlg.cpp" />
+    <ClCompile Include="07PayInfoDlg.cpp" />
+    <ClCompile Include="08NetInterruptDlg.cpp" />
     <ClCompile Include="CategoryUI.cpp" />
     <ClCompile Include="GalleryUI.cpp" />
     <ClCompile Include="HScrollUI.cpp" />
