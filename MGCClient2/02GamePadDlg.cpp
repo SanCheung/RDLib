@@ -127,7 +127,7 @@ void C02GamePadDlg::OnSetRatio( PointF pt )
 bool C02GamePadDlg::OnButtonLoginEvent( void* paramters )
 {
 	TEventUI* pEvent = (TEventUI*)paramters;	
-	if( pEvent->Type == UIEVENT_MOUSEHOVER )
+	if( pEvent->Type == UIEVENT_MOUSEENTER || pEvent->Type == UIEVENT_MOUSEHOVER )
 	{
 		m_pBnLogin->GetManager()->SendNotify( m_pBnLogin, L"hover-loginbutton");
 	}

@@ -51,7 +51,14 @@ CGalleryUI::~CGalleryUI(void)
 
 void CGalleryUI::Event( TEventUI& evt )
 {
-	if( UIEVENT_SCROLLWHEEL == evt.Type)
+	if( UIEVENT_MOUSELEAVE == evt.Type )
+	{
+		m_nIndexHover = -1;
+		m_nLButtonState = -1;
+		m_nRButtonState = -1;
+		Invalidate();
+	}
+	else if( UIEVENT_SCROLLWHEEL == evt.Type )
 	{
 		if( m_offsetMax > 0 )
 		{
