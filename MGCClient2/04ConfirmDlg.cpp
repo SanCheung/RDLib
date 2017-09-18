@@ -16,6 +16,8 @@ void C04ConfirmDlg::Init()
 	//CStringW		str;
 	//str.Format( L"联系客服： %s", SetMgr()->_strPhone );
 	//FindCtrl( L"lbService" )->SetText( str );
+
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
 }
 
 LRESULT C04ConfirmDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )

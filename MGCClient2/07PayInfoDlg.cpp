@@ -16,6 +16,8 @@ void C07PayInfoDlg::Init()
 	paint_manager_.SetDefaultLinkHoverFontColor( 0xFF27b5ff );
 
 	SetTimer( m_hWnd, 1, 1000, nullptr );
+
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
 }
 
 LRESULT C07PayInfoDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )

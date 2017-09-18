@@ -14,6 +14,7 @@ C08NetInterruptDlg::~C08NetInterruptDlg(void)
 void C08NetInterruptDlg::Init()
 {
 	SetTimer( m_hWnd, 1, 1000, nullptr );
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
 }
 
 LRESULT C08NetInterruptDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )

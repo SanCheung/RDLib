@@ -14,6 +14,8 @@ C05NetErrorDlg::~C05NetErrorDlg(void)
 void C05NetErrorDlg::Init()
 {
 	tryTimeToUI( rand()%5 );
+
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
 }
 
 LRESULT C05NetErrorDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )

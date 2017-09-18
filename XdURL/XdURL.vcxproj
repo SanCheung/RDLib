@@ -83,6 +83,8 @@
       </ModuleDefinitionFile>
       <AdditionalLibraryDirectories>..\libs\$(Configuration)</AdditionalLibraryDirectories>
       <ImportLibrary>$(SolutionDir)libs\$(Configuration)\$(TargetName).lib</ImportLibrary>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

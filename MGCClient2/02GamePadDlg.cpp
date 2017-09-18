@@ -44,6 +44,8 @@ void C02GamePadDlg::Init()
 
 	m_pBnLogin	= FindCtrl<CButtonUI>( L"bnLogin" );
 	m_pBnLogin->OnEvent += MakeDelegate(this, &C02GamePadDlg::OnButtonLoginEvent );
+
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
 }
 
 void C02GamePadDlg::Notify( TNotifyUI& msg )

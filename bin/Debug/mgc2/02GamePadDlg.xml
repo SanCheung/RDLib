@@ -11,30 +11,6 @@
       <Label bkimage="MGC-LOGO.png" width="147" height="49" />
 
       <p height="46" />
-      <!--<Label text="推荐游戏" height="30" textcolor="#ff27B5FF" font="0" />
-      <p height1="50" />
-      
-      --><!--<p bkcolor="#FFffffff" />--><!--
-      <Button text="射击" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
-      <p height1="20" />
-
-      <Button text="动作" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
-      <p height1="20" />
-
-      <Button text="双人对战" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
-      <p height1="20" />
-
-      <Button text="解密" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
-      <p height1="20" />
-
-      <Button text="像素风" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
-      <p height1="20" />
-      
-      <Button text="动作冒险" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
-      <p height1="20" />
-      
-      <Button text="推塔" hottextcolor="#FFcccccc" textcolor="#FF5d6d77" pushedtextcolor="#FFffffff" align="left" font="2" />
-      <p height1="20" />-->
 
       <Category name="category" />
       

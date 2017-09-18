@@ -13,6 +13,7 @@ C06AdminLoginDlg::~C06AdminLoginDlg(void)
 
 void C06AdminLoginDlg::Init()
 {
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
 }
 
 LRESULT C06AdminLoginDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
