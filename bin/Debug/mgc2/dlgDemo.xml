@@ -21,8 +21,8 @@
       <Button width="200" name="bn8" text="08断网提示（体验中）"/>
 
       <Control />
-      <Button width="200" name="bn6" text="任务栏隐藏/显示" visible="false" />
-      <Button width="200" name="bn7" text="检测当前hook时间" visible="false" />
+      <Button width="200" name="bnTask1" text="任务1" />
+      <Button width="200" name="bnTask2" text="任务2" />
       
       
       <Control />

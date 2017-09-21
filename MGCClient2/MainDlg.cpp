@@ -25,6 +25,8 @@
 #include "07PayInfoDlg.h"
 #include "08NetInterruptDlg.h"
 
+#include "XTask.h"
+
 
 CMainDlg::CMainDlg(void)
 	//: m_pDlgPayment( nullptr )
@@ -44,6 +46,9 @@ void CMainDlg::Init()
 
 	CControlUI	*pCtrl = FindCtrl(L"bn3");
 	pCtrl->OnEvent += MakeDelegate(this, &CMainDlg::OnChildEvent);
+
+	_task1.reset( new XTask );
+	_task2.reset( new XTask );
 }
 
 bool CMainDlg::OnChildEvent( void* paramters )
@@ -121,6 +126,14 @@ void CMainDlg::Notify( TNotifyUI& msg )
 		{
 			C08NetInterruptDlg dlg;
 			dlg.DoModalNoCaption( m_hWnd );
+		}
+		else if( strSenderName == L"bnTask1" )
+		{
+			_task1->startTask( TASKBINDFN( CMainDlg::fnTask1 ) );
+		}	
+		else if( strSenderName == L"bnTask2" )
+		{
+			_task2->startTask( TASKBINDFN( CMainDlg::fnTask2 ) );
 		}
 	}
 	else if( L"mouse_hover_on_button" == strType )
@@ -290,4 +303,28 @@ void CMainDlg::ShowInfo( CStringW strInfo )
 {
    CLabelUI	 *lb = FindCtrl<CLabelUI>( L"lb" );
    lb->SetText( strInfo );
+}
+
+void CMainDlg::fnTask1()
+{
+	int i = 0;
+	while(1)
+	{
+		if( WAIT_OBJECT_0 == _task1->thWaitEvent( 2000 ) )
+			break;
+
+		ATLTRACE( L"task1 %d\n", i++ );
+	}
+}
+
+void CMainDlg::fnTask2()
+{
+	int i = 0;
+	while(1)
+	{
+		if( WAIT_OBJECT_0 == _task1->thWaitEvent( 3000 ) )
+			break;
+
+		ATLTRACE( L"task2 %d\n", i++ );
+	}
 }

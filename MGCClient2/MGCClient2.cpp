@@ -9,7 +9,6 @@
 #include "MainDlg.h"
 #include "MainHelper.h"
 
-
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
                      LPTSTR    lpCmdLine,
@@ -26,6 +25,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	CAppData::SetInstance(hInstance);
 	CAppData::SetResourcePath( CAppData::GetInstancePath() + L"mgc2/" );
+
 
 	if( nullptr == SetMgr() )
 	{

@@ -1,6 +1,6 @@
 #pragma once
 
-//class CDlgPayment;
+class XTask;
 class CMainDlg  : public CDialogBase
 				, xdmp::ThreadWrap
 {
@@ -20,9 +20,13 @@ public:
 	virtual void	thread_main();
 
 	int		m_nCurrentPage;
+	bool	OnChildEvent( void* paramters );
 
-	//CDlgPayment *m_pDlgPayment;
+	
+	void	fnTask1();	
+	shared_ptr<XTask>	_task1;
 
-	bool		OnChildEvent( void* paramters );
+	void	fnTask2();	
+	shared_ptr<XTask>	_task2;
 };
 

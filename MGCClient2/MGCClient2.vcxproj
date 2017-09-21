@@ -106,6 +106,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThreadWrap.h" />
     <ClInclude Include="TSingletonWindow.h" />
+    <ClInclude Include="XTask.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="01WndScanEnter.cpp" />
@@ -130,6 +131,7 @@
     </ClCompile>
     <ClCompile Include="ThreadWrap.cpp" />
     <ClCompile Include="TSingletonWindow.cpp" />
+    <ClCompile Include="XTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MGCClient2.rc" />

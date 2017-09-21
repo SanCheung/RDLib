@@ -87,6 +87,9 @@
     <ClInclude Include="07PayInfoDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="XTask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -144,6 +147,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="07PayInfoDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
