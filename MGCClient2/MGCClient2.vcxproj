@@ -96,6 +96,7 @@
     <ClInclude Include="CategoryUI.h" />
     <ClInclude Include="GalleryUI.h" />
     <ClInclude Include="HScrollUI.h" />
+    <ClInclude Include="LayeredDialogBase.h" />
     <ClInclude Include="LayeredWindowDrawer.h" />
     <ClInclude Include="MainDlg.h" />
     <ClInclude Include="MainHelper.h" />
@@ -120,6 +121,7 @@
     <ClCompile Include="CategoryUI.cpp" />
     <ClCompile Include="GalleryUI.cpp" />
     <ClCompile Include="HScrollUI.cpp" />
+    <ClCompile Include="LayeredDialogBase.cpp" />
     <ClCompile Include="LayeredWindowDrawer.cpp" />
     <ClCompile Include="MainDlg.cpp" />
     <ClCompile Include="MainHelper.cpp" />

@@ -2,6 +2,7 @@
 #include "04ConfirmDlg.h"
 
 
+
 C04ConfirmDlg::C04ConfirmDlg(void)
 {
 }
@@ -13,11 +14,7 @@ C04ConfirmDlg::~C04ConfirmDlg(void)
 
 void C04ConfirmDlg::Init()
 {
-	//CStringW		str;
-	//str.Format( L"联系客服： %s", SetMgr()->_strPhone );
-	//FindCtrl( L"lbService" )->SetText( str );
-
-	::ShowWindow( m_hWnd, SW_MAXIMIZE );
+	CLayeredDialogBase::Init();
 }
 
 LRESULT C04ConfirmDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
@@ -54,14 +51,7 @@ void C04ConfirmDlg::Notify( TNotifyUI& msg )
 
 LRESULT C04ConfirmDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-	if( WM_APP+1 == uMsg )
-	{
-	}
-	else if( WM_LBUTTONDOWN == uMsg )
-	{
-		int x = LOWORD( wParam );
-		int y = HIWORD( wParam );
-	}
-
 	return CDialogBase::HandleMessage(uMsg, wParam, lParam);
 }
+
+

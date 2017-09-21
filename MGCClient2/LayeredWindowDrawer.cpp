@@ -42,3 +42,39 @@ CLayeredWindowDrawer::~CLayeredWindowDrawer(void)
 
 	ReleaseDC( m_hWnd, _hDcScreen );
 }
+
+
+
+
+
+
+CLayeredWindowDrawer2::CLayeredWindowDrawer2( HWND hWnd, CDUIRect &rt )
+{
+	m_hWnd = hWnd;
+	m_rt = rt;
+
+	_hDcScreen = GetDC( m_hWnd );
+	_hDcMem = CreateCompatibleDC( _hDcScreen );
+
+	_hBitmap = CreateCompatibleBitmap( _hDcScreen, m_rt.Width(), m_rt.Height() );
+	_hBitmapOld = (HBITMAP)SelectObject( _hDcMem, _hBitmap);
+}
+
+CLayeredWindowDrawer2::~CLayeredWindowDrawer2()
+{
+	BLENDFUNCTION bf = { 0 };
+	bf.BlendOp = AC_SRC_OVER;
+	bf.SourceConstantAlpha = 225;
+	bf.AlphaFormat = AC_SRC_ALPHA;//按通道混合
+
+	POINT	pTo = { m_rt.left, m_rt.top };
+	POINT	pSrc = { 0, 0 };
+	SIZE	sizeWnd = { m_rt.Width(), m_rt.Height() };
+	UpdateLayeredWindow( m_hWnd, _hDcScreen, &pTo, &sizeWnd, _hDcMem, &pSrc, NULL, &bf, ULW_ALPHA);//更新分层窗口
+	// 
+	// SelectObject( _hDcMem, _hBitmapOld);
+	DeleteObject( _hBitmap );
+	DeleteDC( _hDcMem );
+
+	ReleaseDC( m_hWnd, _hDcScreen );
+}

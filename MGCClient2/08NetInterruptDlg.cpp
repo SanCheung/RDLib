@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "08NetInterruptDlg.h"
+#include "LayeredWindowDrawer.h"
 
 
 C08NetInterruptDlg::C08NetInterruptDlg(void)
@@ -14,7 +15,9 @@ C08NetInterruptDlg::~C08NetInterruptDlg(void)
 void C08NetInterruptDlg::Init()
 {
 	SetTimer( m_hWnd, 1, 1000, nullptr );
-	::ShowWindow( m_hWnd, SW_MAXIMIZE );
+	//::ShowWindow( m_hWnd, SW_MAXIMIZE );
+
+	CLayeredDialogBase::Init();
 }
 
 LRESULT C08NetInterruptDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )

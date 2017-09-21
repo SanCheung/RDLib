@@ -105,7 +105,9 @@ void CMainDlg::Notify( TNotifyUI& msg )
 		else if( strSenderName == L"bn4" )
 		{
 			C04ConfirmDlg		dlg;
-			dlg.DoModalNoCaption( m_hWnd );
+
+			dlg.Create( m_hWnd, L"", WS_POPUP|WS_MAXIMIZE, WS_EX_LAYERED );
+			dlg.ShowModal();
 		}
 		else if( strSenderName == L"bn5" )
 		{
@@ -125,7 +127,9 @@ void CMainDlg::Notify( TNotifyUI& msg )
 		else if( strSenderName == L"bn8" )
 		{
 			C08NetInterruptDlg dlg;
-			dlg.DoModalNoCaption( m_hWnd );
+			//dlg.DoModalNoCaption( m_hWnd );
+			dlg.Create( m_hWnd, L"", WS_POPUP|WS_MAXIMIZE, WS_EX_LAYERED );
+			dlg.ShowModal();
 		}
 		else if( strSenderName == L"bnTask1" )
 		{

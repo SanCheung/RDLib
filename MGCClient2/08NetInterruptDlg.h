@@ -1,5 +1,7 @@
 #pragma once
-class C08NetInterruptDlg  : public CDialogBase
+#include "LayeredDialogBase.h"
+
+class C08NetInterruptDlg  : public CLayeredDialogBase
 {
 public:
 	C08NetInterruptDlg(void);

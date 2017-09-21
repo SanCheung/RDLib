@@ -1,5 +1,7 @@
 #pragma once
-class C04ConfirmDlg  : public CDialogBase
+#include "LayeredDialogBase.h"
+
+class C04ConfirmDlg  : public CLayeredDialogBase
 {
 public:
 	C04ConfirmDlg(void);
@@ -11,5 +13,8 @@ public:
 	void	Init();
 
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	
+	//virtual LRESULT OnNcHitTest(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
+	//void	layerDraw();
 };
 
