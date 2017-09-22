@@ -88,6 +88,7 @@
     <ClInclude Include="01WndScanEnter.h" />
     <ClInclude Include="02GamePadDlg.h" />
     <ClInclude Include="02FloatWnd.h" />
+    <ClInclude Include="04ConfirmWnd.h" />
     <ClInclude Include="04ConfirmDlg.h" />
     <ClInclude Include="05NetErrorDlg.h" />
     <ClInclude Include="06AdminLoginDlg.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="01WndScanEnter.cpp" />
     <ClCompile Include="02GamePadDlg.cpp" />
     <ClCompile Include="02FloatWnd.cpp" />
+    <ClCompile Include="04ConfirmWnd.cpp" />
     <ClCompile Include="04ConfirmDlg.cpp" />
     <ClCompile Include="05NetErrorDlg.cpp" />
     <ClCompile Include="06AdminLoginDlg.cpp" />

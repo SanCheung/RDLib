@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<Window size="1366,768" sizebox="4,4,6,6" >
+<Window size="1366,768" sizebox="4,4,6,6" alpha="220" >
   <Font name="Microsoft YaHei" size="48" bold="true" />
   <Font name="Microsoft YaHei" size="24"/>
   

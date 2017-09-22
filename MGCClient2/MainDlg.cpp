@@ -31,12 +31,20 @@
 CMainDlg::CMainDlg(void)
 	//: m_pDlgPayment( nullptr )
 {
+	_pDlgCurrent = nullptr;
 }
 
 
 CMainDlg::~CMainDlg(void)
 {
 	PATerm();
+
+	for( auto it = _mapDlgs.begin(); it != _mapDlgs.end(); ++it )
+	{
+		delete it->second;
+	}
+
+	_mapDlgs.clear();
 }
 
 void CMainDlg::Init()
@@ -49,6 +57,22 @@ void CMainDlg::Init()
 
 	_task1.reset( new XTask );
 	_task2.reset( new XTask );
+
+	
+	_mapDlgs.insert( make_pair( 1, new C01ScanEnterDlg ) );
+	_mapDlgs.insert( make_pair( 2, new C02GamePadDlg ) );
+	_mapDlgs.insert( make_pair( 4, new C04ConfirmDlg ) );
+	_mapDlgs.insert( make_pair( 5, new C05NetErrorDlg ) );
+	_mapDlgs.insert( make_pair( 6, new C06AdminLoginDlg ) );
+	_mapDlgs.insert( make_pair( 7, new C07PayInfoDlg ) );
+	_mapDlgs.insert( make_pair( 8, new C08NetInterruptDlg ) );
+
+	//for( auto it = _mapDlgs.begin(); it != _mapDlgs.end(); ++it )
+	//{
+	//	CDialogBase	*pDlg = it->second;
+	//	pDlg->Create( m_hWnd, L"", WS_POPUPWINDOW, WS_EX_WINDOWEDGE );
+	//	pDlg->ShowWindow( false );
+	//}
 }
 
 bool CMainDlg::OnChildEvent( void* paramters )
@@ -86,17 +110,23 @@ void CMainDlg::Notify( TNotifyUI& msg )
 	{
 		if( strSenderName == L"bn1" )
 		{
-			m_nCurrentPage = 1;
+			//m_nCurrentPage = 1;
 
-			if( C01WndScanEnter::IsShow() )
-				C01WndScanEnter::Hide();
-			else
-				C01WndScanEnter::Show( m_hWnd );
+			//if( C01WndScanEnter::IsShow() )
+			//	C01WndScanEnter::Hide();
+			//else
+			//	C01WndScanEnter::Show( m_hWnd );
+
+			//C01ScanEnterDlg	dlg;
+			//dlg.DoModalNoCaption( m_hWnd );
+			onDlgShowModal(1);
 		}								   
 		else if( strSenderName == L"bn2" )
 		{
-			C02GamePadDlg		dlg;
-			dlg.DoModalNoCaption( m_hWnd );
+			//C02GamePadDlg		dlg;
+			//dlg.DoModalNoCaption( m_hWnd );
+
+			onDlgShowModal(2);
 		}
 		else if( strSenderName == L"bn3" )
 		{
@@ -104,32 +134,43 @@ void CMainDlg::Notify( TNotifyUI& msg )
 		}
 		else if( strSenderName == L"bn4" )
 		{
-			C04ConfirmDlg		dlg;
+			//C04ConfirmDlg		dlg;
+			//dlg.DoModalNoCaption( m_hWnd );
 
-			dlg.Create( m_hWnd, L"", WS_POPUP|WS_MAXIMIZE, WS_EX_LAYERED );
-			dlg.ShowModal();
+			//dlg.Create( m_hWnd, L"", WS_POPUP|WS_MAXIMIZE, WS_EX_LAYERED );
+			//dlg.ShowModal();
+
+			onDlgShowModal(4);
 		}
 		else if( strSenderName == L"bn5" )
 		{
-			C05NetErrorDlg		dlg;
-			dlg.DoModalNoCaption( m_hWnd );
+			//C05NetErrorDlg		dlg;
+			//dlg.DoModalNoCaption( m_hWnd );
+			
+			onDlgShowModal(5);
 		}			
 		else if( strSenderName == L"bn6" )
 		{
-			C06AdminLoginDlg	dlg;
-			dlg.DoModalNoCaption( m_hWnd );
+			//C06AdminLoginDlg	dlg;
+			//dlg.DoModalNoCaption( m_hWnd );
+
+			onDlgShowModal(6);
 		}
 		else if( strSenderName == L"bn7" )
 		{
-			C07PayInfoDlg		dlg;
-			dlg.DoModalNoCaption( m_hWnd );
+			//C07PayInfoDlg		dlg;
+			//dlg.DoModalNoCaption( m_hWnd );
+
+			onDlgShowModal(7);
 		}
 		else if( strSenderName == L"bn8" )
 		{
-			C08NetInterruptDlg dlg;
+			//C08NetInterruptDlg dlg;
 			//dlg.DoModalNoCaption( m_hWnd );
-			dlg.Create( m_hWnd, L"", WS_POPUP|WS_MAXIMIZE, WS_EX_LAYERED );
-			dlg.ShowModal();
+			////dlg.Create( m_hWnd, L"", WS_POPUP|WS_MAXIMIZE, WS_EX_LAYERED );
+			////dlg.ShowModal();
+
+			onDlgShowModal(8);
 		}
 		else if( strSenderName == L"bnTask1" )
 		{
@@ -314,10 +355,12 @@ void CMainDlg::fnTask1()
 	int i = 0;
 	while(1)
 	{
-		if( WAIT_OBJECT_0 == _task1->thWaitEvent( 2000 ) )
+		if( WAIT_OBJECT_0 == _task1->thWaitEvent( 5000 ) )
 			break;
 
-		ATLTRACE( L"task1 %d\n", i++ );
+		//ATLTRACE( L"task1 %d\n", i++ );
+
+		onDlgShowModal( 5 );
 	}
 }
 
@@ -330,5 +373,26 @@ void CMainDlg::fnTask2()
 			break;
 
 		ATLTRACE( L"task2 %d\n", i++ );
+	}
+}
+
+void CMainDlg::onDlgShowModal( int id )
+{
+	auto	it = _mapDlgs.find( id );
+	if( it == _mapDlgs.end() )
+		return;
+
+	CDialogBase *pDlg = it->second;
+
+	if( _pDlgCurrent != pDlg )
+	{
+		if( _pDlgCurrent != nullptr )
+			_pDlgCurrent->EndModal( 0 );
+
+		_pDlgCurrent = pDlg;
+
+		pDlg->Create( m_hWnd, L"", WS_POPUPWINDOW, WS_EX_WINDOWEDGE );
+		pDlg->ShowModal();
+		_pDlgCurrent = nullptr;
 	}
 }

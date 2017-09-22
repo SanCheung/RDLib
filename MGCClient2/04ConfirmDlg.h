@@ -1,7 +1,8 @@
 #pragma once
 #include "LayeredDialogBase.h"
 
-class C04ConfirmDlg  : public CLayeredDialogBase
+//class C04ConfirmDlg  : public CLayeredDialogBase
+class C04ConfirmDlg  : public CDialogBase
 {
 public:
 	C04ConfirmDlg(void);

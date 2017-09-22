@@ -35,6 +35,8 @@ private:
 	HWND		m_hWnd;
 	CDUIRect	m_rt;
 
+	HWND		m_hWnd2;
+
 
 	HDC		_hDcScreen;
 	HDC		_hDcMem;

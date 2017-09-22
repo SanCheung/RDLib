@@ -15,9 +15,9 @@ C08NetInterruptDlg::~C08NetInterruptDlg(void)
 void C08NetInterruptDlg::Init()
 {
 	SetTimer( m_hWnd, 1, 1000, nullptr );
-	//::ShowWindow( m_hWnd, SW_MAXIMIZE );
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
 
-	CLayeredDialogBase::Init();
+	//CLayeredDialogBase::Init();
 }
 
 LRESULT C08NetInterruptDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
@@ -76,4 +76,6 @@ void C08NetInterruptDlg::secondToUI( int nSecond )
 	CStringW	str;
 	str.Format( L"{f 1}{c #27b5ff}%2d{c #999999} 秒后未重新连接{/c}{/f}", nSecond );
 	FindCtrl( L"lbInfo" )->SetText( str );
+
+	//layerDraw();
 }

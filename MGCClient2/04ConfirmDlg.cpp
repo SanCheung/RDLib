@@ -14,7 +14,8 @@ C04ConfirmDlg::~C04ConfirmDlg(void)
 
 void C04ConfirmDlg::Init()
 {
-	CLayeredDialogBase::Init();
+	::ShowWindow( m_hWnd, SW_MAXIMIZE );
+	//CLayeredDialogBase::Init();
 }
 
 LRESULT C04ConfirmDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )

@@ -53,10 +53,30 @@ CLayeredWindowDrawer2::CLayeredWindowDrawer2( HWND hWnd, CDUIRect &rt )
 	m_hWnd = hWnd;
 	m_rt = rt;
 
+	//m_hWnd2 = GetDesktopWindow();
+
 	_hDcScreen = GetDC( m_hWnd );
 	_hDcMem = CreateCompatibleDC( _hDcScreen );
-
+	
 	_hBitmap = CreateCompatibleBitmap( _hDcScreen, m_rt.Width(), m_rt.Height() );
+
+	//BITMAPINFOHEADER bmih;
+	//memset(&bmih, 0, sizeof(BITMAPINFOHEADER));
+	//bmih.biSize = sizeof(BITMAPINFOHEADER);
+	//bmih.biBitCount = 24;
+	//bmih.biCompression = BI_RGB;
+	//bmih.biPlanes = 1;
+	//bmih.biWidth = m_rt.Width();
+	//bmih.biHeight = m_rt.Height();
+	//BITMAPINFO bmi;
+	//memset(&bmi, 0, sizeof(BITMAPINFO));
+	//bmi.bmiHeader = bmih;
+	//void* p; 
+	//_hBitmap = ::CreateDIBSection(_hDcScreen, &bmi, DIB_RGB_COLORS, &p, NULL, 0);
+
+
+
+
 	_hBitmapOld = (HBITMAP)SelectObject( _hDcMem, _hBitmap);
 }
 
@@ -64,15 +84,15 @@ CLayeredWindowDrawer2::~CLayeredWindowDrawer2()
 {
 	BLENDFUNCTION bf = { 0 };
 	bf.BlendOp = AC_SRC_OVER;
-	bf.SourceConstantAlpha = 225;
+	bf.SourceConstantAlpha = 250;
 	bf.AlphaFormat = AC_SRC_ALPHA;//按通道混合
 
 	POINT	pTo = { m_rt.left, m_rt.top };
 	POINT	pSrc = { 0, 0 };
 	SIZE	sizeWnd = { m_rt.Width(), m_rt.Height() };
 	UpdateLayeredWindow( m_hWnd, _hDcScreen, &pTo, &sizeWnd, _hDcMem, &pSrc, NULL, &bf, ULW_ALPHA);//更新分层窗口
-	// 
-	// SelectObject( _hDcMem, _hBitmapOld);
+	 
+	SelectObject( _hDcMem, _hBitmapOld);
 	DeleteObject( _hBitmap );
 	DeleteDC( _hDcMem );
 

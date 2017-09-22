@@ -93,6 +93,9 @@
     <ClInclude Include="LayeredDialogBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="04ConfirmWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -156,6 +159,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LayeredDialogBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="04ConfirmWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

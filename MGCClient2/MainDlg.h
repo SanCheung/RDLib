@@ -1,5 +1,14 @@
 #pragma once
 
+
+class C01WndScanEnter;
+class C02GamePadDlg;
+class C04ConfirmDlg;
+class C05NetErrorDlg;
+class C06AdminLoginDlg;
+class C07PayInfoDlg;
+class C08NetInterruptDlg;
+
 class XTask;
 class CMainDlg  : public CDialogBase
 				, xdmp::ThreadWrap
@@ -28,5 +37,10 @@ public:
 
 	void	fnTask2();	
 	shared_ptr<XTask>	_task2;
+
+	map< int, CDialogBase* >	_mapDlgs;
+	CDialogBase*	_pDlgCurrent;
+
+	void		onDlgShowModal( int id );
 };
 

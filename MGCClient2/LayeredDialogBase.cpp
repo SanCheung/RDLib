@@ -13,7 +13,7 @@ CLayeredDialogBase::~CLayeredDialogBase(void)
 
 void CLayeredDialogBase::Init()
 {
-	layerDraw();
+	//layerDraw();
 }
 
 void CLayeredDialogBase::layerDraw()
