@@ -6,9 +6,9 @@
     <HBox height="60">
       <p />
       <Button name="bnOK" width="280" text="返回首页"
-            normalimage="btn-1.png"
-            hotimage="btn-1.png"
-            pushedimage="btn-1.png"
+            normalimage="btn-1-normal.png"
+            hotimage="btn-1-hover.png"
+            pushedimage="btn-1-pushed.png"
               
             textcolor="#ffFFFFFF"
             font="0" />
