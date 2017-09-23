@@ -22,7 +22,8 @@ void C08NetInterruptDlg::Init()
 
 LRESULT C08NetInterruptDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	EndModal( IDCANCEL );
+	//EndModal( IDCANCEL );
+	ShowWindow( false );
 	return 0;
 }
 

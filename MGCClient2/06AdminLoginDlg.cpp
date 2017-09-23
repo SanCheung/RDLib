@@ -18,7 +18,8 @@ void C06AdminLoginDlg::Init()
 
 LRESULT C06AdminLoginDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	EndModal( IDCANCEL );
+	//EndModal( IDCANCEL );
+	ShowWindow( false );
 	return 0;
 }
 

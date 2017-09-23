@@ -30,7 +30,8 @@ CControlUI* C02GamePadDlg::CreateControl( LPCTSTR pstrClass )
 
 LRESULT C02GamePadDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	EndModal(1);
+	//EndModal(1);
+	ShowWindow( false );
 	return 0;
 }
 

@@ -20,7 +20,8 @@ void C04ConfirmDlg::Init()
 
 LRESULT C04ConfirmDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	EndModal( IDCANCEL );
+	//EndModal( IDCANCEL );
+	ShowWindow( false );
 	return 0;
 }
 
@@ -38,11 +39,13 @@ void C04ConfirmDlg::Notify( TNotifyUI& msg )
 	{
 		if( strSenderName == L"bnOK" )
 		{
-			EndModal( IDOK );
+			//EndModal( IDOK );
+			ShowWindow( false );
 		}
 		else if( strSenderName == L"bnCancel" )
 		{
-			EndModal( IDCANCEL );
+			//EndModal( IDCANCEL );
+			ShowWindow( false );
 		}
 	}
 	else if( strType == L"timer" )

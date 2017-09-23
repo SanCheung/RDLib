@@ -42,5 +42,6 @@ public:
 	CDialogBase*	_pDlgCurrent;
 
 	void		onDlgShowModal( int id );
+	void		onDlgShow( int id );
 };
 

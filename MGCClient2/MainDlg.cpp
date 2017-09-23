@@ -67,12 +67,12 @@ void CMainDlg::Init()
 	_mapDlgs.insert( make_pair( 7, new C07PayInfoDlg ) );
 	_mapDlgs.insert( make_pair( 8, new C08NetInterruptDlg ) );
 
-	//for( auto it = _mapDlgs.begin(); it != _mapDlgs.end(); ++it )
-	//{
-	//	CDialogBase	*pDlg = it->second;
-	//	pDlg->Create( m_hWnd, L"", WS_POPUPWINDOW, WS_EX_WINDOWEDGE );
-	//	pDlg->ShowWindow( false );
-	//}
+	for( auto it = _mapDlgs.begin(); it != _mapDlgs.end(); ++it )
+	{
+		CDialogBase	*pDlg = it->second;
+		pDlg->Create( m_hWnd, L"", WS_POPUPWINDOW, WS_EX_WINDOWEDGE );
+		pDlg->ShowWindow( false );
+	}
 }
 
 bool CMainDlg::OnChildEvent( void* paramters )
@@ -119,14 +119,17 @@ void CMainDlg::Notify( TNotifyUI& msg )
 
 			//C01ScanEnterDlg	dlg;
 			//dlg.DoModalNoCaption( m_hWnd );
-			onDlgShowModal(1);
+			
+			//onDlgShowModal(1);
+			onDlgShow(1);
 		}								   
 		else if( strSenderName == L"bn2" )
 		{
 			//C02GamePadDlg		dlg;
 			//dlg.DoModalNoCaption( m_hWnd );
 
-			onDlgShowModal(2);
+			//onDlgShowModal(2);
+			onDlgShow(2);
 		}
 		else if( strSenderName == L"bn3" )
 		{
@@ -140,28 +143,32 @@ void CMainDlg::Notify( TNotifyUI& msg )
 			//dlg.Create( m_hWnd, L"", WS_POPUP|WS_MAXIMIZE, WS_EX_LAYERED );
 			//dlg.ShowModal();
 
-			onDlgShowModal(4);
+			//onDlgShowModal(4);
+			onDlgShow(4);
 		}
 		else if( strSenderName == L"bn5" )
 		{
 			//C05NetErrorDlg		dlg;
 			//dlg.DoModalNoCaption( m_hWnd );
 			
-			onDlgShowModal(5);
+			//onDlgShowModal(5);
+			onDlgShow(5);
 		}			
 		else if( strSenderName == L"bn6" )
 		{
 			//C06AdminLoginDlg	dlg;
 			//dlg.DoModalNoCaption( m_hWnd );
 
-			onDlgShowModal(6);
+			//onDlgShowModal(6);
+			onDlgShow(6);
 		}
 		else if( strSenderName == L"bn7" )
 		{
 			//C07PayInfoDlg		dlg;
 			//dlg.DoModalNoCaption( m_hWnd );
 
-			onDlgShowModal(7);
+			//onDlgShowModal(7);
+			onDlgShow(7);
 		}
 		else if( strSenderName == L"bn8" )
 		{
@@ -170,7 +177,8 @@ void CMainDlg::Notify( TNotifyUI& msg )
 			////dlg.Create( m_hWnd, L"", WS_POPUP|WS_MAXIMIZE, WS_EX_LAYERED );
 			////dlg.ShowModal();
 
-			onDlgShowModal(8);
+			//onDlgShowModal(8);
+			onDlgShow(8);
 		}
 		else if( strSenderName == L"bnTask1" )
 		{
@@ -394,5 +402,25 @@ void CMainDlg::onDlgShowModal( int id )
 		pDlg->Create( m_hWnd, L"", WS_POPUPWINDOW, WS_EX_WINDOWEDGE );
 		pDlg->ShowModal();
 		_pDlgCurrent = nullptr;
+	}
+}
+
+void CMainDlg::onDlgShow( int id )
+{
+	auto	it = _mapDlgs.find( id );
+	if( it == _mapDlgs.end() )
+		return;
+
+	CDialogBase *pDlg = it->second;
+
+	if( _pDlgCurrent != pDlg )
+	{
+		if( _pDlgCurrent != nullptr )
+		{
+			_pDlgCurrent->ShowWindow( false );
+		}
+
+		_pDlgCurrent = pDlg;
+		pDlg->ShowWindow( true );
 	}
 }

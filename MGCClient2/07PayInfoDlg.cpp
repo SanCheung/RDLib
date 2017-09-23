@@ -22,7 +22,8 @@ void C07PayInfoDlg::Init()
 
 LRESULT C07PayInfoDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	EndModal( IDCANCEL );
+	//EndModal( IDCANCEL );
+	ShowWindow( false );
 	return 0;
 }
 

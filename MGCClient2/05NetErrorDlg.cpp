@@ -20,7 +20,8 @@ void C05NetErrorDlg::Init()
 
 LRESULT C05NetErrorDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled )
 {
-	EndModal( IDCANCEL );
+	//EndModal( IDCANCEL );
+	ShowWindow( false );
 	return 0;
 }
 
