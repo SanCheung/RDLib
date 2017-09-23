@@ -2,12 +2,16 @@
 #include "02GamePadDlg.h"
 #include "CategoryUI.h"
 #include "GalleryUI.h"
+#include "Gallery2UI.h"
 
 #include "02FloatWnd.h"
 
 
 C02GamePadDlg::C02GamePadDlg(void)
 	: m_nLoginState( 0 )
+	, m_category( nullptr )
+	, m_gallery( nullptr )
+	, m_gallery2( nullptr )
 {
 }
 
@@ -21,7 +25,11 @@ CControlUI* C02GamePadDlg::CreateControl( LPCTSTR pstrClass )
 	if( EQUSTR( pstrClass, L"Category" ) )
 		return new CCategoryUI;
 	else if( EQUSTR( pstrClass, L"Gallery" ) )
-		return new CGalleryUI;
+		//return new CGalleryUI;
+	{
+		m_gallery2 = CHostableWnd::CreateUI<CGallery2UI>( m_hWnd );
+		return m_gallery2->GetHostUI();
+	}
 	else if( EQUSTR(pstrClass, L"VScroll") )
 		return new CVScrollUI;
 
@@ -38,7 +46,7 @@ LRESULT C02GamePadDlg::OnClose( UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& b
 void C02GamePadDlg::Init()
 {
 	m_category	= FindCtrl<CCategoryUI>( L"category" );
-	m_gallery	= FindCtrl<CGalleryUI>( L"gallery" );
+	//m_gallery	= FindCtrl<CGalleryUI>( L"gallery" );
 
 	m_vs = FindCtrl<CVScrollUI>( L"vs" );
 	m_vs->SetHost( this );
@@ -74,7 +82,29 @@ void C02GamePadDlg::Notify( TNotifyUI& msg )
 			}
 
 			C02FloatWnd::Hide();
+
+			// sample
+			m_gallery2->clearAllItems();
+			m_gallery2->addTitleAndImageName( L"111", L"game1.png" );
+			m_gallery2->addTitleAndImageName( L"222", L"game2.png" );
+			m_gallery2->addTitleAndImageName( L"333", L"game3.png" );
+			m_gallery2->addTitleAndImageName( L"444", L"game2.png" );
+			m_gallery2->addTitleAndImageName( L"555", L"game1.png" );
+			m_gallery2->resetAllItems();
 		}
+	}
+	else if( strType == L"itemClick" )
+	{
+		int nCatIndex = (int)msg.wParam;
+		MsgBox( m_category->getItemText( nCatIndex ) );
+
+		// sample
+		m_gallery2->clearAllItems();
+		m_gallery2->addTitleAndImageName( L"111", L"game1.png" );
+		m_gallery2->addTitleAndImageName( L"222", L"game2.png" );
+		m_gallery2->addTitleAndImageName( L"333", L"game3.png" );
+		m_gallery2->addTitleAndImageName( L"444", L"game2.png" );
+		m_gallery2->resetAllItems();
 	}
 	else if( strType == L"hover-loginbutton" )
 	{
@@ -105,11 +135,15 @@ LRESULT C02GamePadDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	else if( WM_GLY_CLICK_LEFT == uMsg )
 	{
-		ATLTRACE( L"WM_GLY_CLICK_LEFT %d\n", wParam );
+		CStringW	str;
+		str.Format( L"WM_GLY_CLICK_LEFT %d\n", wParam );
+		MsgBox( str );
 	}
 	else if( WM_GLY_CLICK_RIGHT == uMsg )
 	{
-		ATLTRACE( L"WM_GLY_CLICK_RIGHT %d\n", wParam );
+		CStringW	str;
+		str.Format( L"WM_GLY_CLICK_RIGHT %d\n", wParam );
+		MsgBox( str );
 	}
 
 	return CDialogBase::HandleMessage(uMsg, wParam, lParam);
@@ -122,7 +156,9 @@ void C02GamePadDlg::Data2UI()
 void C02GamePadDlg::OnSetRatio( PointF pt )
 {
 	//ATLTRACE( L"%.2f %.2f\n", pt.X, pt.Y );
-	m_gallery->SetVSRatio( pt.Y );
+	ATLTRACE( L"%.2f\n", pt.Y );
+	//m_gallery->SetVSRatio( pt.Y );
+	m_gallery2->SetVSRatio( pt.Y );
 }
 
 bool C02GamePadDlg::OnButtonLoginEvent( void* paramters )

@@ -28,6 +28,8 @@ CCategoryUI::CCategoryUI(void)
 	m_asText.push_back( L"像素风" );
 	m_asText.push_back( L"动作冒险" );
 	m_asText.push_back( L"推塔" );
+
+	m_nIndexSelected = 0;
 }
 
 

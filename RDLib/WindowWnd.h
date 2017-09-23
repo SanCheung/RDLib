@@ -139,6 +139,7 @@ public:
     //void ResizeClient(int cx = -1, int cy = -1);
 	bool MoveWindow(int x, int y, int width, int height, bool repaint=true);
 
+	void	Invalidate( BOOL bErase = FALSE );
 
 protected:
 	virtual LPCTSTR GetWindowClassName() const = 0;
@@ -191,6 +192,19 @@ public:
 	
 	CControlUI* GetHostUI()				{ return m_pHost; }
 	void SetHostUI(CControlUI* pHost)	{ m_pHost = pHost; }
+
+
+	template< class T >	
+	static T* CreateUI( HWND hWnd )
+	{
+		T* pThis = new T;
+		pThis->Create( hWnd, L"", UI_WNDSTYLE_CHILD, 0 );
+
+		CControlUI *pControl = new CWndUI( pThis );
+		pThis->m_pHost = pControl;
+
+		return pThis;
+	}
 
 protected:
 	CControlUI*			m_pHost;

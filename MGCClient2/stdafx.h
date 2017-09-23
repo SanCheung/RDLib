@@ -57,6 +57,12 @@ using namespace Gdiplus;
 #define		WM_SHOW_WINDOW		(WM_APP+100)
 
 
+// 画廊 自己滚动后，需要发送此消息 告诉 滚动条
+#define		WM_GLY_SETVS_RATIO		WM_APP+1000
+#define		WM_GLY_CLICK_LEFT		WM_APP+1001
+#define		WM_GLY_CLICK_RIGHT		WM_APP+1002
+
+
 #if defined _M_IX86
 #pragma comment(linker, "/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #elif defined _M_IA64

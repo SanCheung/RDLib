@@ -17,6 +17,14 @@ public:
 		m_asText.push_back( strText );
 	}
 
+	CStringW getItemText( int nIndex )
+	{
+		if( nIndex < 0 || nIndex >= m_asText.size() )
+			return L"";
+
+		return m_asText[nIndex];
+	}
+
 private:
 	void	draw( Bitmap *pBmp );
 	void	drawItem( Graphics &g, RectF rt, int index );

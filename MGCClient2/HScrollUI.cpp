@@ -208,7 +208,7 @@ void CVScrollUI::Event( TEventUI& evt )
 
 				PointF	ptF;
 				ptF.X = -1;
-				ptF.Y = _yDown*1.f/(h-100);
+				ptF.Y = _y*1.f/(h-100);
 
 				ptF.Y = CLAMP( ptF.Y, 0, 1 );
 				//::SendMessage( GetManager()->GetPaintWindow(), WM_MAINDLG_SETRATIO, (WPARAM)&ptF, 0 );

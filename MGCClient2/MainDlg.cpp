@@ -413,7 +413,8 @@ void CMainDlg::onDlgShow( int id )
 
 	CDialogBase *pDlg = it->second;
 
-	if( _pDlgCurrent != pDlg )
+	if( _pDlgCurrent != pDlg || 
+		(_pDlgCurrent != nullptr && !::IsWindowVisible(_pDlgCurrent->GetHWND()) )  )
 	{
 		if( _pDlgCurrent != nullptr )
 		{

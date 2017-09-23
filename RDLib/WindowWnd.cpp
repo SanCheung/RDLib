@@ -559,6 +559,11 @@ void CWindowWnd::OnFinalMessage(HWND /*hWnd*/)
 {
 }
 
+void CWindowWnd::Invalidate( BOOL bErase )
+{
+	::InvalidateRect( m_hWnd, nullptr, bErase );
+}
+
 //UINT CWindowWnd::ShowModal()
 //{
 //	ASSERT(::IsWindow(m_hWnd));

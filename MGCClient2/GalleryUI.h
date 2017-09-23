@@ -1,9 +1,9 @@
 #pragma once
 
-// 画廊 自己滚动后，需要发送此消息 告诉 滚动条
-#define		WM_GLY_SETVS_RATIO		WM_USER+100
-#define		WM_GLY_CLICK_LEFT		WM_USER+101
-#define		WM_GLY_CLICK_RIGHT		WM_USER+102
+//// 画廊 自己滚动后，需要发送此消息 告诉 滚动条
+//#define		WM_GLY_SETVS_RATIO		WM_USER+100
+//#define		WM_GLY_CLICK_LEFT		WM_USER+101
+//#define		WM_GLY_CLICK_RIGHT		WM_USER+102
 
 class CGalleryUI : public CControlUI
 {

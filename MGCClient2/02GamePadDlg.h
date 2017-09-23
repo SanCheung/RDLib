@@ -3,6 +3,7 @@
 
 class CGalleryUI;
 class CCategoryUI;
+class CGallery2UI;
 class C02GamePadDlg : public CDialogBase
 					, public IScrollHost
 {
@@ -24,6 +25,7 @@ private:
 
 	CCategoryUI		*m_category;
 	CGalleryUI		*m_gallery;
+	CGallery2UI		*m_gallery2;
 	CVScrollUI		*m_vs;
 
 	// 0: Î´µÇÂ¼		1: ÒÑµÇÂ¼

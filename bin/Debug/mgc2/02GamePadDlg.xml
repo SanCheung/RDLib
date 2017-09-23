@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<Window size="1366,768" caption="0,0,0,48" sizebox="4,4,6,6" >
+<Window size="1366,768" sizebox="4,4,6,6" >
   <Font name="Microsoft YaHei" size="30" bold="true" />
   <Font name="Microsoft YaHei" size="20" bold="true" />
   <Font name="Microsoft YaHei" size="30" />
@@ -28,7 +28,7 @@
     <VBox>
       <p height="40" />
       <HBox>
-        <Gallery name="gallery" />
+        <Gallery name="gallery" visible11="false" />
         <VScroll name="vs" width="40" />
       </HBox>
     </VBox>

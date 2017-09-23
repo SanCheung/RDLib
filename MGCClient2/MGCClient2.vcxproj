@@ -95,6 +95,10 @@
     <ClInclude Include="07PayInfoDlg.h" />
     <ClInclude Include="08NetInterruptDlg.h" />
     <ClInclude Include="CategoryUI.h" />
+    <ClInclude Include="D2dEngine.h" />
+    <ClInclude Include="D2dObjectLib.h" />
+    <ClInclude Include="D2HostableWnd.h" />
+    <ClInclude Include="Gallery2UI.h" />
     <ClInclude Include="GalleryUI.h" />
     <ClInclude Include="HScrollUI.h" />
     <ClInclude Include="LayeredDialogBase.h" />
@@ -121,6 +125,10 @@
     <ClCompile Include="07PayInfoDlg.cpp" />
     <ClCompile Include="08NetInterruptDlg.cpp" />
     <ClCompile Include="CategoryUI.cpp" />
+    <ClCompile Include="D2dEngine.cpp" />
+    <ClCompile Include="D2dObjectLib.cpp" />
+    <ClCompile Include="D2HostableWnd.cpp" />
+    <ClCompile Include="Gallery2UI.cpp" />
     <ClCompile Include="GalleryUI.cpp" />
     <ClCompile Include="HScrollUI.cpp" />
     <ClCompile Include="LayeredDialogBase.cpp" />

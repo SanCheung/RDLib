@@ -96,6 +96,18 @@
     <ClInclude Include="04ConfirmWnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Gallery2UI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D2dEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D2dObjectLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D2HostableWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -162,6 +174,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="04ConfirmWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gallery2UI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D2dEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D2dObjectLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D2HostableWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
