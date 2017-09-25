@@ -259,22 +259,16 @@ void CGallery2UI::dh_BuildAllBitmap()
 	m_arSGImage.push_back( _de.dl_getImage( m_strImageFolder + L"startgame1-hover.png" ) );
 	m_arSGImage.push_back( _de.dl_getImage( m_strImageFolder + L"startgame1-pushed.png" ) );
 
-
-
-
-
-	addTitleAndImageName( L"NBA2018",	L"game1.png" );
-	addTitleAndImageName( L"星露谷物语", L"game2.png" );
-	addTitleAndImageName( L"极速狂飙",	L"game3.png" );
-	addTitleAndImageName( L"星际争霸II", L"game2.png" );
-	addTitleAndImageName( L"旅途",		L"game1.png" );
-	addTitleAndImageName( L"愤怒的小鸟", L"game3.png" );
-	addTitleAndImageName( L"无双大蛇",	L"game2.png" );
-	addTitleAndImageName( L"黏土世界",	L"game3.png" );
-	addTitleAndImageName( L"上古卷轴7",	L"game1.png" );
-	addTitleAndImageName( L"文明6",		L"game3.png" );
-
-
+	//addTitleAndImageName( L"NBA2018",	L"game1.png" );
+	//addTitleAndImageName( L"星露谷物语", L"game2.png" );
+	//addTitleAndImageName( L"极速狂飙",	L"game3.png" );
+	//addTitleAndImageName( L"星际争霸II", L"game2.png" );
+	//addTitleAndImageName( L"旅途",		L"game1.png" );
+	//addTitleAndImageName( L"愤怒的小鸟", L"game3.png" );
+	//addTitleAndImageName( L"无双大蛇",	L"game2.png" );
+	//addTitleAndImageName( L"黏土世界",	L"game3.png" );
+	//addTitleAndImageName( L"上古卷轴7",	L"game1.png" );
+	//addTitleAndImageName( L"文明6",		L"game3.png" );
 
 
 	reCalcLimit();
@@ -283,8 +277,10 @@ void CGallery2UI::dh_BuildAllBitmap()
 
 
 
-void CGallery2UI::reCalcLimit()
+bool CGallery2UI::reCalcLimit()
 {
+	m_offsetY = 0;
+
 	int n = (int)m_asTitle.size();
 
 	int nLine = n/3;
@@ -295,7 +291,12 @@ void CGallery2UI::reCalcLimit()
 	m_offsetMax = nRealHeight - m_rt.Height();
 
 	if( m_offsetMax < 0 )
+	{
 		m_offsetMax = 0;
+		return false;
+	}
+
+	return true;
 }
 
 
@@ -395,8 +396,24 @@ void CGallery2UI::clearAllItems()
 	m_arImage.clear();
 }
 
-void CGallery2UI::resetAllItems()
+bool CGallery2UI::resetAllItems()
 {
-	reCalcLimit();
+	bool bScrollEnable = reCalcLimit();
 	Invalidate();
+	return bScrollEnable;
+}
+
+void CGallery2UI::setData( const vector<mgcGameInfo> &arGameInfo )
+{
+	clearAllItems();
+
+	int n = (int)arGameInfo.size();
+	for( int i = 0; i < n; ++i )
+	{
+		const mgcGameInfo &gi = arGameInfo[i];
+
+		CStringW	strText  = gi.gameName.c_str();
+		CStringW	strImage = gi.gameCover.c_str();
+		addTitleAndImageName( strText, strImage );
+	}
 }

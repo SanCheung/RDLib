@@ -1,8 +1,8 @@
 #pragma once
 #include "HScrollUI.h"
 
-class CGalleryUI;
 class CCategoryUI;
+//class CGalleryUI;
 class CGallery2UI;
 class C02GamePadDlg : public CDialogBase
 					, public IScrollHost
@@ -24,7 +24,7 @@ private:
 	virtual void OnSetRatio( PointF pt );
 
 	CCategoryUI		*m_category;
-	CGalleryUI		*m_gallery;
+	//CGalleryUI	*m_gallery;
 	CGallery2UI		*m_gallery2;
 	CVScrollUI		*m_vs;
 

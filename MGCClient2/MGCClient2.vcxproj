@@ -98,8 +98,8 @@
     <ClInclude Include="D2dEngine.h" />
     <ClInclude Include="D2dObjectLib.h" />
     <ClInclude Include="D2HostableWnd.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="Gallery2UI.h" />
-    <ClInclude Include="GalleryUI.h" />
     <ClInclude Include="HScrollUI.h" />
     <ClInclude Include="LayeredDialogBase.h" />
     <ClInclude Include="LayeredWindowDrawer.h" />
@@ -129,7 +129,6 @@
     <ClCompile Include="D2dObjectLib.cpp" />
     <ClCompile Include="D2HostableWnd.cpp" />
     <ClCompile Include="Gallery2UI.cpp" />
-    <ClCompile Include="GalleryUI.cpp" />
     <ClCompile Include="HScrollUI.cpp" />
     <ClCompile Include="LayeredDialogBase.cpp" />
     <ClCompile Include="LayeredWindowDrawer.cpp" />

@@ -28,8 +28,8 @@
     <VBox>
       <p height="40" />
       <HBox>
-        <Gallery name="gallery" visible11="false" />
-        <VScroll name="vs" width="40" />
+        <Gallery name="gallery" />
+        <VScroll name="vs" width="40" visible="false" />
       </HBox>
     </VBox>
     

@@ -26,7 +26,9 @@ public:
 
 	// clearAllItem + addTitleAndImageName.... + resetAllItems;
 	void	clearAllItems();
-	void	resetAllItems();
+	bool	resetAllItems();
+
+	void	setData( const vector<mgcGameInfo>  &arGameInfo );
 
 private:
 	//void	draw( Bitmap *pBmp );
@@ -41,7 +43,7 @@ private:
 	CDUIPoint	eventPointToLogic( CDUIPoint pt );
 
 	int			hitTest( CDUIPoint pt );
-	void		reCalcLimit();
+	bool		reCalcLimit();
 
 	//Image*		addImageToLib( CStringW strImage );
 

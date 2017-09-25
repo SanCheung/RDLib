@@ -20,14 +20,14 @@ CCategoryUI::CCategoryUI(void)
 	, m_offsetY( 0 )
 	, m_offsetMax( 0 )
 {
-	m_asText.push_back( L"推荐游戏" );
-	m_asText.push_back( L"射击" );
-	m_asText.push_back( L"动作" );
-	m_asText.push_back( L"双人对战" );
-	m_asText.push_back( L"解密" );
-	m_asText.push_back( L"像素风" );
-	m_asText.push_back( L"动作冒险" );
-	m_asText.push_back( L"推塔" );
+	//m_asText.push_back( L"推荐游戏" );
+	//m_asText.push_back( L"射击" );
+	//m_asText.push_back( L"动作" );
+	//m_asText.push_back( L"双人对战" );
+	//m_asText.push_back( L"解密" );
+	//m_asText.push_back( L"像素风" );
+	//m_asText.push_back( L"动作冒险" );
+	//m_asText.push_back( L"推塔" );
 
 	m_nIndexSelected = 0;
 }
@@ -192,6 +192,23 @@ void CCategoryUI::SetPos( RECT rc )
 {
 	CControlUI::SetPos( rc );
 	reCalcLimit();
+}
+
+void CCategoryUI::setData( const vector<mgcGameFamilyInfo> &arFamilyInfo )
+{
+	clearAll();
+
+	int n = (int)arFamilyInfo.size();
+	for( int i = 0; i < n; ++i )
+	{
+		const mgcGameFamilyInfo &gfi = arFamilyInfo[i];
+
+		CStringW	strText = gfi.familyName.c_str();
+		addText( strText, gfi.familyId.c_str() );
+	}
+
+	reCalcLimit();
+	Invalidate();
 }
 
 
