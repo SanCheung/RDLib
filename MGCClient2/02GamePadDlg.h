@@ -19,6 +19,7 @@ public:
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 private:
+	vector<mgcGameInfo>		m_gi;
 	void	Data2UI();
 
 	virtual void OnSetRatio( PointF pt );

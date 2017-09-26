@@ -28,7 +28,7 @@ public:
 	void	clearAllItems();
 	bool	resetAllItems();
 
-	void	setData( const vector<mgcGameInfo>  &arGameInfo );
+	void	setData( const vector<mgcGameInfo>  &arGameInfo, CStringW strType );
 
 private:
 	//void	draw( Bitmap *pBmp );

@@ -55,29 +55,6 @@ void C02GamePadDlg::Init()
 	m_pBnLogin->OnEvent += MakeDelegate(this, &C02GamePadDlg::OnButtonLoginEvent );
 
 	::ShowWindow( m_hWnd, SW_MAXIMIZE );
-
-
-	//todo
-	// sample
-
-	mgcGameFamilyInfo agfi[] = 
-	{ 
-		{"1", "1", "推荐游戏", "111"},
-		{"2", "1", "射击", "222"},
-		{"3", "1", "动作", "333"},
-		{"4", "1", "双人对战", "444"},
-		{"5", "1", "解密", "444"},
-		{"6", "1", "像素风", "444"},
-		{"7", "1", "动作冒险", "444"},
-		{"8", "1", "推塔", "444"}
-	};
-
-	int n = sizeof(agfi)/sizeof(mgcGameFamilyInfo);
-	vector<mgcGameFamilyInfo>	fi;
-	fi.resize( n );
-	copy( agfi, agfi+n, fi.begin() );
-	m_category->setData( fi );
-
 }
 
 void C02GamePadDlg::Notify( TNotifyUI& msg )
@@ -87,41 +64,7 @@ void C02GamePadDlg::Notify( TNotifyUI& msg )
 
 	if( strType == L"windowinit")
 	{
-		//string gameId;
-		//string gameName;
-		//string gamePath;
-		//string gameFamily;
-		//string operationMode;
-		//string gameCover;
-		//string gameVideo;
-
-		mgcGameInfo agi[] = 
-		{ 
-			{"1", "NBA2018", "", "", "", "game1.png", "1.mp4"},
-			{"2", "星露谷物语", "", "", "", "game2.png", "1.mp4"},
-			{"3", "极速狂飙", "", "", "", "game3.png", "1.mp4"},
-			{"4", "星际争霸II", "", "", "", "game3.png", "1.mp4"},
-			{"5", "旅途", "", "", "", "game2.png", "1.mp4"},
-			{"6", "愤怒的小鸟", "", "", "", "game1.png", "1.mp4"},
-			{"7", "无双大蛇", "", "", "", "game2.png", "1.mp4"},
-			{"8", "黏土世界", "", "", "", "game1.png", "1.mp4"},
-			{"9", "上古卷轴7", "", "", "", "game3.png", "1.mp4"},
-			{"10", "文明6", "", "", "", "game1.png", "1.mp4"}
-		};
-
-		int n = sizeof(agi)/sizeof(mgcGameInfo);
-
-		vector<mgcGameInfo>	gi;
-		gi.resize( n );
-		copy( agi, agi+n, gi.begin() );
-
-		m_gallery2->setData( gi );
-
-		bool bScrollEnable = m_gallery2->resetAllItems();
-		m_vs->SetVisible( bScrollEnable );
-		if( bScrollEnable )
-			m_vs->SetRatio( 0 );
-
+		Data2UI();
 	}
 	else if( strType == L"click")
 	{
@@ -140,25 +83,6 @@ void C02GamePadDlg::Notify( TNotifyUI& msg )
 				m_pBnLogin->SetNormalImage( L"startlogin-normal.png" );
 				m_pBnLogin->SetHotImage( L"startlogin-hover.png" );
 				m_pBnLogin->SetPushedImage( L"startlogin-pushed.png" );
-
-				//// sample
-				//m_gallery2->clearAllItems();
-
-				//m_gallery2->addTitleAndImageName( L"NBA2018",	L"game1.png" );
-				//m_gallery2->addTitleAndImageName( L"星露谷物语", L"game2.png" );
-				//m_gallery2->addTitleAndImageName( L"极速狂飙",	L"game3.png" );
-				//m_gallery2->addTitleAndImageName( L"星际争霸II", L"game2.png" );
-				//m_gallery2->addTitleAndImageName( L"旅途",		L"game1.png" );
-				//m_gallery2->addTitleAndImageName( L"愤怒的小鸟", L"game3.png" );
-				//m_gallery2->addTitleAndImageName( L"无双大蛇",	L"game2.png" );
-				//m_gallery2->addTitleAndImageName( L"黏土世界",	L"game3.png" );
-				//m_gallery2->addTitleAndImageName( L"上古卷轴7",	L"game1.png" );
-				//m_gallery2->addTitleAndImageName( L"文明6",		L"game3.png" );
-
-				//bool bScrollEnable = m_gallery2->resetAllItems();
-				//m_vs->SetVisible( bScrollEnable );
-				//if( bScrollEnable )
-				//	m_vs->SetRatio( 0 );
 			}
 
 			C02FloatWnd::Hide();
@@ -170,19 +94,15 @@ void C02GamePadDlg::Notify( TNotifyUI& msg )
 		if( -1 == nCatIndex )
 			return;
 
-		MsgBox( m_category->getItemText( nCatIndex ) );
+		//MsgBox( m_category->getItemText( nCatIndex ) );
+		CStringW strCate = m_category->getItemText( nCatIndex );
 
-		//// sample
-		//m_gallery2->clearAllItems();
+		m_gallery2->setData( m_gi, strCate );
 
-		//for( int i = 0; i < nCatIndex+1; ++i )
-		//	m_gallery2->addTitleAndImageName( L"111", L"game1.png" );
-	
-		//
-		//bool bScrollEnable = m_gallery2->resetAllItems();
-		//m_vs->SetVisible( bScrollEnable );
-		//if( bScrollEnable )
-		//	m_vs->SetRatio( 0 );
+		bool bScrollEnable = m_gallery2->resetAllItems();
+		m_vs->SetVisible( bScrollEnable );
+		if( bScrollEnable )
+			m_vs->SetRatio( 0 );
 	}
 	else if( strType == L"hover-loginbutton" )
 	{
@@ -229,6 +149,61 @@ LRESULT C02GamePadDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 void C02GamePadDlg::Data2UI()
 {
+	// sample
+	mgcGameFamilyInfo agfi[] = 
+	{ 
+		{"1", "1", "推荐游戏", "111"},
+		{"2", "1", "射击", "222"},
+		{"3", "1", "动作", "333"},
+		{"4", "1", "双人对战", "444"},
+		{"5", "1", "解密", "444"},
+		{"6", "1", "像素风", "444"},
+		{"7", "1", "动作冒险", "444"},
+		{"8", "1", "推塔", "444"}
+	};
+
+	int n = sizeof(agfi)/sizeof(mgcGameFamilyInfo);
+	vector<mgcGameFamilyInfo>	fi;
+	fi.resize( n );
+	copy( agfi, agfi+n, fi.begin() );
+	m_category->setData( fi );
+
+
+
+	//string gameId;
+	//string gameName;
+	//string gamePath;
+	//string gameFamily;
+	//string operationMode;
+	//string gameCover;
+	//string gameVideo;
+
+	mgcGameInfo agi[] = 
+	{ 
+		{"1", "NBA2018", "",	"推荐游戏,动作,双人对战,", "", "game1.png", "1.mp4"},
+		{"2", "星露谷物语", "",	"动作冒险,推塔,", "", "game2.png", "1.mp4"},
+		{"3", "极速狂飙", "",	"推荐游戏,动作冒险,", "", "game3.png", "1.mp4"},
+		{"4", "星际争霸II", "",	"推荐游戏,推塔,", "", "game3.png", "1.mp4"},
+		{"5", "旅途", "",		"推荐游戏,动作,", "", "game2.png", "1.mp4"},
+		{"6", "愤怒的小鸟",	"", "解密,射击,", "", "game1.png", "1.mp4"},
+		{"7", "无双大蛇", "",	"推荐游戏,动作,", "", "game2.png", "1.mp4"},
+		{"8", "黏土世界", "",	"像素风,动作冒险,", "", "game1.png", "1.mp4"},
+		{"9", "上古卷轴7", "",	"推荐游戏,解密,", "", "game3.png", "1.mp4"},
+		{"10", "文明6", "",		"推荐游戏,推塔,", "", "game1.png", "1.mp4"},
+		{"11", "王者荣耀", "",	"推塔,", "", "game1.png", "1.mp4"}
+	};
+
+	int n2 = sizeof(agi)/sizeof(mgcGameInfo);
+
+	m_gi.resize( n2 );
+	copy( agi, agi+n2, m_gi.begin() );
+
+	m_gallery2->setData( m_gi, L"推荐游戏" );
+
+	bool bScrollEnable = m_gallery2->resetAllItems();
+	m_vs->SetVisible( bScrollEnable );
+	if( bScrollEnable )
+		m_vs->SetRatio( 0 );
 }
 
 void C02GamePadDlg::OnSetRatio( PointF pt )

@@ -403,7 +403,7 @@ bool CGallery2UI::resetAllItems()
 	return bScrollEnable;
 }
 
-void CGallery2UI::setData( const vector<mgcGameInfo> &arGameInfo )
+void CGallery2UI::setData( const vector<mgcGameInfo> &arGameInfo, CStringW strType )
 {
 	clearAllItems();
 
@@ -414,6 +414,8 @@ void CGallery2UI::setData( const vector<mgcGameInfo> &arGameInfo )
 
 		CStringW	strText  = gi.gameName.c_str();
 		CStringW	strImage = gi.gameCover.c_str();
-		addTitleAndImageName( strText, strImage );
+		CStringW	strFamily = gi.gameFamily.c_str();
+		if( -1 != strFamily.Find( strType+L"," ) )
+			addTitleAndImageName( strText, strImage );
 	}
 }
