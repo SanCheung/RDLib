@@ -108,6 +108,9 @@
     <ClInclude Include="Define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SampleWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -183,6 +186,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="D2HostableWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

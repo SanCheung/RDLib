@@ -1,5 +1,6 @@
 #pragma once
 #include "D2HostableWnd.h"
+#include "SampleWnd.h"
 
 class CGallery2UI	: public CD2HostableWnd
 {
@@ -74,5 +75,7 @@ private:
 	int		m_offsetMax;
 
 	bool	m_bMouseTracking;
+
+	CSampleWnd		*m_pVideoWnd;
 };
 

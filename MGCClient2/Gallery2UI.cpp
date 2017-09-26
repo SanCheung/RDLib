@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "Gallery2UI.h"
+#include "SampleWnd.h"
 
 #define		ITEM_WIDTH		496
 
@@ -56,9 +57,9 @@ void CGallery2UI::DoDraw()
 	for( i = 0; i < n; i++ )
 	{
 		CDUIRect	rt = getItemRect( i );
-		//if( rt.top < -LINEHEIGHT || rt.top > h )
-		//	continue;
-		//	
+		if( rt.top < -ITEM_HEIGHT || rt.top > h )
+			continue;
+			
 		drawItem( rt, i );
 	}
 }
@@ -112,7 +113,12 @@ void CGallery2UI::drawItem( CDUIRect rt, int index )
 
 LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
-	if( WM_MOUSELEAVE == uMsg )
+	if( WM_CREATE == uMsg )
+	{
+		m_pVideoWnd = new CSampleWnd;
+		m_pVideoWnd->Create( m_hWnd, L"", UI_WNDSTYLE_CHILD, 0 );
+	}
+	else if( WM_MOUSELEAVE == uMsg )
 	{
 		if( m_bMouseTracking ) 
 			::SendMessage(m_hWnd, WM_MOUSEMOVE, 0, (LPARAM) -1);
@@ -172,9 +178,21 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		int nNewHover = hitTest( pt );
 		if( nNewHover != m_nIndexHover )
 		{
+			if( nNewHover == -1 )
+			{
+				m_pVideoWnd->ShowWindow( false );
+			}
+			else
+			{
+				CDUIRect	rtItem = getItemRect( nNewHover );
+				m_pVideoWnd->MoveWindow( rtItem.left, rtItem.top, ITEM_WIDTH, ITEM_IMAGE_HEIGHT );
+				if( !::IsWindowVisible( m_pVideoWnd->GetHWND() ) )
+					m_pVideoWnd->ShowWindow( true );
+			}
+
 			m_nIndexHover = nNewHover;
 			//Invalidate();
-			////ATLTRACE( L"%d\n", nNewHover );
+			//ATLTRACE( L"%d\n", nNewHover );
 		}
 
 		if( nNewHover != -1 )
@@ -361,7 +379,11 @@ int CGallery2UI::hitTest( CDUIPoint pt )
 		return -1;
 
 
-	return vIndex*3 + hIndex;
+	int index = vIndex*3 + hIndex;
+	if( index >= (int)m_asTitle.size() )
+		return -1;
+
+	return index;
 }
 
 void CGallery2UI::SetVSRatio( float f )

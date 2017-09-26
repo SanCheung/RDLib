@@ -107,6 +107,7 @@
     <ClInclude Include="MainHelper.h" />
     <ClInclude Include="MGCClient2.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SampleWnd.h" />
     <ClInclude Include="SettingMgr.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -135,6 +136,7 @@
     <ClCompile Include="MainDlg.cpp" />
     <ClCompile Include="MainHelper.cpp" />
     <ClCompile Include="MGCClient2.cpp" />
+    <ClCompile Include="SampleWnd.cpp" />
     <ClCompile Include="SettingMgr.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
