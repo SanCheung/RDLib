@@ -122,6 +122,7 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	{
 		if( m_bMouseTracking ) 
 			::SendMessage(m_hWnd, WM_MOUSEMOVE, 0, (LPARAM) -1);
+
 		m_bMouseTracking = false;
 
 		m_nIndexHover = -1;
@@ -160,8 +161,7 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	else if( WM_MOUSEMOVE == uMsg )
 	{
-		SetFocus( m_hWnd );
-
+		//SetFocus( m_hWnd );
 		if( !m_bMouseTracking )
 		{
 			TRACKMOUSEEVENT tme = { 0 };
@@ -173,8 +173,12 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			m_bMouseTracking = true;
 		}
 
-
 		CDUIPoint	pt( LOWORD(lParam), HIWORD(lParam) );
+		if( !PtInRect( m_rt, pt ) )
+			ReleaseCapture();
+		else
+			SetCapture( m_hWnd );
+
 		int nNewHover = hitTest( pt );
 		if( nNewHover != m_nIndexHover )
 		{
