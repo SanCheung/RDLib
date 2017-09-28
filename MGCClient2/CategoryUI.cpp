@@ -175,7 +175,12 @@ int CCategoryUI::hitTest( CDUIPoint pt )
 
 	int		index = y / LINEHEIGHT;
 	if( y > index*LINEHEIGHT && y < index*LINEHEIGHT + TFontSize+10 )
+	{
+		if( index >= m_asText.size() || index < 0 )
+			return -1;
+
 		return index;
+	}
 
 	return -1;
 }

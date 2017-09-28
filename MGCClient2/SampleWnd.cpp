@@ -29,6 +29,16 @@ LRESULT CSampleWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			&sf, &SolidBrush(Color::Black) );
 		::EndPaint(m_hWnd, &ps);
 	}
+	else if( WM_MOUSEMOVE == uMsg )
+	{
+		CDUIPoint	pt( LOWORD(lParam), HIWORD(lParam) );
+		ClientToScreen( m_hWnd, &pt );
+		
+		HWND	hParentWnd = GetParent(m_hWnd);
+		ScreenToClient( hParentWnd, &pt );
+
+		::SendMessage( hParentWnd, WM_MOUSEMOVE, wParam, MAKELPARAM(pt.x, pt.y ) );
+	}
 
 	return CWindowWnd::HandleMessage( uMsg, wParam, lParam );
 }

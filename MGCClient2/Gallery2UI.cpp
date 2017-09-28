@@ -113,10 +113,14 @@ void CGallery2UI::drawItem( CDUIRect rt, int index )
 
 LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 {
+	bool bHandled = false;
+
 	if( WM_CREATE == uMsg )
 	{
 		m_pVideoWnd = new CSampleWnd;
 		m_pVideoWnd->Create( m_hWnd, L"", UI_WNDSTYLE_CHILD, 0 );
+
+		bHandled = true;
 	}
 	else if( WM_MOUSELEAVE == uMsg )
 	{
@@ -129,6 +133,8 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		m_nLButtonState = -1;
 		m_nRButtonState = -1;
 		Invalidate();
+
+		bHandled = true;
 	}
 	else if( WM_MOUSEWHEEL == uMsg )
 	{
@@ -158,6 +164,8 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 				::SendMessage( GetParent( m_hWnd ), WM_GLY_SETVS_RATIO, pc, 0 );
 			}
 		}
+
+		bHandled = true;
 	}
 	else if( WM_MOUSEMOVE == uMsg )
 	{
@@ -174,25 +182,29 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		}
 
 		CDUIPoint	pt( LOWORD(lParam), HIWORD(lParam) );
-		if( !PtInRect( m_rt, pt ) )
-			ReleaseCapture();
-		else
-			SetCapture( m_hWnd );
+		//if( !PtInRect( m_rt, pt ) )
+		//	ReleaseCapture();
+		//else
+		//	SetCapture( m_hWnd );
 
 		int nNewHover = hitTest( pt );
 		if( nNewHover != m_nIndexHover )
 		{
-			if( nNewHover == -1 )
-			{
-				m_pVideoWnd->ShowWindow( false );
-			}
-			else
-			{
-				CDUIRect	rtItem = getItemRect( nNewHover );
-				m_pVideoWnd->MoveWindow( rtItem.left, rtItem.top, ITEM_WIDTH, ITEM_IMAGE_HEIGHT );
-				if( !::IsWindowVisible( m_pVideoWnd->GetHWND() ) )
-					m_pVideoWnd->ShowWindow( true );
-			}
+			//if( nNewHover == -1 )
+			//{
+			//	//m_pVideoWnd->ShowWindow( false );
+			//	//ReleaseCapture();
+			//}
+			//else
+			//{
+			//	CDUIRect	rtItem = getItemRect( nNewHover );
+			//	m_pVideoWnd->MoveWindow( rtItem.left, rtItem.top, ITEM_WIDTH, ITEM_IMAGE_HEIGHT );
+			//	if( !::IsWindowVisible( m_pVideoWnd->GetHWND() ) )
+			//		//m_pVideoWnd->ShowWindow( true );
+			//		::ShowWindow( m_pVideoWnd->GetHWND(), SW_SHOW );
+			//}
+
+			PostMessage( WM_GL_SHOWVIDEOWND, nNewHover );
 
 			m_nIndexHover = nNewHover;
 			//Invalidate();
@@ -215,9 +227,12 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 				m_nRButtonState = 1;
 			else
 				m_nRButtonState = -1;
+
+			PostMessage( WM_GL_SHOWVIDEOWND, nNewHover );
 		}
 
 		Invalidate();
+		bHandled = true;
 	}
 	else if( WM_LBUTTONDOWN == uMsg )
 	{
@@ -242,6 +257,8 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 			Invalidate();
 		}
+
+		bHandled = true;
 	}
 	else if( WM_LBUTTONUP == uMsg )
 	{
@@ -260,9 +277,31 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			if( PtInRect( rtR, ptLogic ) )
 				::SendMessage( GetParent( m_hWnd ), WM_GLY_CLICK_RIGHT, nNewHover, 0 );
 		}
+
+		bHandled = true;
+	}
+	else if( WM_GL_SHOWVIDEOWND == uMsg )
+	{
+		int nNewHover = (int)wParam;
+		if( nNewHover == -1 )
+		{
+			m_pVideoWnd->ShowWindow( false );
+			//ReleaseCapture();
+		}
+		else
+		{
+			CDUIRect	rtItem = getItemRect( nNewHover );
+			m_pVideoWnd->MoveWindow( rtItem.left, rtItem.top, ITEM_WIDTH, ITEM_IMAGE_HEIGHT );
+			if( !::IsWindowVisible( m_pVideoWnd->GetHWND() ) )
+				m_pVideoWnd->ShowWindow( true );
+		}
+
+		bHandled = true;
 	}
 
 
+	if( bHandled )
+		return 0;
 
 	return CD2HostableWnd::HandleMessage( uMsg, wParam, lParam );
 }

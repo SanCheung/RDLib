@@ -61,6 +61,8 @@ using namespace Gdiplus;
 #define		WM_GLY_SETVS_RATIO		WM_APP+1000
 #define		WM_GLY_CLICK_LEFT		WM_APP+1001
 #define		WM_GLY_CLICK_RIGHT		WM_APP+1002
+#define		WM_GL_SHOWVIDEOWND		WM_APP+1003
+
 
 #include "Define.h"
 using namespace MGCDataDefine;

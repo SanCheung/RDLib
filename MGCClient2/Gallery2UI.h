@@ -14,7 +14,6 @@ public:
 	virtual LRESULT HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam );
 
 
-
 	void	SetVSRatio( float f );
 
 
