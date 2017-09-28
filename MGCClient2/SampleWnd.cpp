@@ -37,6 +37,7 @@ LRESULT CSampleWnd::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		HWND	hParentWnd = GetParent(m_hWnd);
 		ScreenToClient( hParentWnd, &pt );
 
+		//TRACE( L"Sample mousemove: %d %d\n", pt.x, pt.y );
 		::SendMessage( hParentWnd, WM_MOUSEMOVE, wParam, MAKELPARAM(pt.x, pt.y ) );
 	}
 

@@ -143,6 +143,11 @@ LRESULT C02GamePadDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		str.Format( L"WM_GLY_CLICK_RIGHT %d\n", wParam );
 		MsgBox( str );
 	}
+	else if( WM_MOUSEMOVE == uMsg )
+	{
+		SetFocus( m_hWnd );
+		m_gallery2->PostMessage( WM_GL_SHOWVIDEOWND, -1 );
+	}
 
 	return CDialogBase::HandleMessage(uMsg, wParam, lParam);
 }

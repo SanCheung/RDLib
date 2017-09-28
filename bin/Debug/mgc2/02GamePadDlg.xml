@@ -4,7 +4,7 @@
   <Font name="Microsoft YaHei" size="20" bold="true" />
   <Font name="Microsoft YaHei" size="30" />
   
-  <HBox bkimage="bg.png">
+  <HBox bkimage="bg.jpg">
     <p width="40" />
     <VBox width="252">
       <p height="40" />
@@ -12,7 +12,10 @@
 
       <p height="46" />
 
-      <Category name="category" />
+      <!--80 x 9 + 20-->
+      <Category name="category" height="420" />
+
+      <p />
       
       <p height="40" />
       <Button name="bnLogin" height="60" 

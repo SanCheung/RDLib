@@ -176,8 +176,8 @@ bool D2dEngine::d2Draw( IDrawer *drawer )
 		return false;
 
 	_render_target->BeginDraw();
-	//Çå³ı±³¾°
-	_render_target->Clear(D2D1::ColorF(D2D1::ColorF::Blue));  
+	////Çå³ı±³¾°
+	////_render_target->Clear(D2D1::ColorF(D2D1::ColorF::Blue));  
 	drawer->DoDraw();
 	_render_target->EndDraw();
 	return true;

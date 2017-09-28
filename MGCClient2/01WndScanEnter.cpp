@@ -4,7 +4,7 @@
 
 C01WndScanEnter::C01WndScanEnter(void)
 {
-	_spImageBK.reset( new Image( CAppData::GetInstancePath() + L"mgc2/bg.png" ) );
+	_spImageBK.reset( new Image( CAppData::GetInstancePath() + L"mgc2/bg.jpg" ) );
 	_spImage2w.reset( new Image( CAppData::GetInstancePath() + L"mgc2/info2w.jpg" ) );
 	_spImageBn.reset( new Image( CAppData::GetInstancePath() + L"mgc2/btn-1.png" ) );
 

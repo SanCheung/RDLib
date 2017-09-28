@@ -7,11 +7,11 @@
 
 C04ConfirmWnd::C04ConfirmWnd(void)
 {
-	_spCancel1.reset( new Image( CAppData::GetInstancePath() + L"mgc2/bg.png" ) );
+	_spCancel1.reset( new Image( CAppData::GetInstancePath() + L"mgc2/bg.jpg" ) );
 	_spCancel1.reset( new Image( CAppData::GetInstancePath() + L"mgc2/info2w.jpg" ) );
 	_spCancel1.reset( new Image( CAppData::GetInstancePath() + L"mgc2/btn-1.png" ) );
 
-	_spOK1.reset( new Image( CAppData::GetInstancePath() + L"mgc2/bg.png" ) );
+	_spOK1.reset( new Image( CAppData::GetInstancePath() + L"mgc2/bg.jpg" ) );
 	_spOK1.reset( new Image( CAppData::GetInstancePath() + L"mgc2/info2w.jpg" ) );
 	_spOK1.reset( new Image( CAppData::GetInstancePath() + L"mgc2/btn-1.png" ) );
 }

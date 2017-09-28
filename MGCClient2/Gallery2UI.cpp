@@ -35,40 +35,43 @@ CGallery2UI::~CGallery2UI(void)
 
 void CGallery2UI::DoDraw()
 {
+	HWND		hWndMain = GetHostUI()->GetManager()->GetPaintWindow();
+	
+	CDUIRect	rtMain;
+	GetClientRect( hWndMain, &rtMain );
+
 	CDUIRect	rt;
 	GetWindowRect( m_hWnd, &rt );
-
-	int w = m_rt.GetWidth();
-	int h = m_rt.GetHeight();
 
 	float iw  = m_pBg->GetPixelSize().width;
 	float ih  = m_pBg->GetPixelSize().height;
 
-	float x = rt.left * (iw/w);
-	float y = rt.top *(ih/h);
+	float rw = iw * 1.f/rtMain.Width();
+	float rh = ih * 1.f/rtMain.Height();
 
+	float l = rt.left * rw;
+	float t = rt.top * rh;
+	float r = rt.right * rw;
+	float b = rt.bottom * rh;
 
-	D2D1_RECT_F d2rt1 = { 0, 0, w, h };
-	D2D1_RECT_F d2rt2 = { x, y, iw, ih };
+	D2D1_RECT_F d2rt1 = { 0, 0, rt.Width(), rt.Height() };
+	D2D1_RECT_F d2rt2 = { l, t, r, b };
 	_de._render_target->DrawBitmap( m_pBg, &d2rt1, 1.f, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR, &d2rt2 );
 
 	int n = (int)m_asTitle.size();
 	int i;
 	for( i = 0; i < n; i++ )
 	{
-		CDUIRect	rt = getItemRect( i );
-		if( rt.top < -ITEM_HEIGHT || rt.top > h )
+		CDUIRect	rtItem = getItemRect( i );
+		if( rtItem.top < -ITEM_HEIGHT || rtItem.top > rt.Height() )
 			continue;
-			
-		drawItem( rt, i );
+
+		drawItem( rtItem, i );
 	}
 }
 
 void CGallery2UI::drawItem( CDUIRect rt, int index )
 {
-	ID2D1Bitmap* pBmp = m_arImage[index];
-	_de.d2DrawBitmap( pBmp, rt.left, rt.top, ITEM_WIDTH, ITEM_IMAGE_HEIGHT );
-
 	if( m_nIndexHover == index )
 	{
 		ID2D1Bitmap *pBmpFS = m_arFSImage[0];
@@ -100,6 +103,10 @@ void CGallery2UI::drawItem( CDUIRect rt, int index )
 	}
 	else
 	{
+		ID2D1Bitmap* pBmp = m_arImage[index];
+		_de.d2DrawBitmap( pBmp, rt.left, rt.top, ITEM_WIDTH, ITEM_IMAGE_HEIGHT );
+
+
 		IDWriteTextFormat* font = _de.dl_getFont( TFontFace, 24, 700 );
 
 		D2D1_COLOR_F	d2Color = {1.f, 1.f, 1.f, .5f};
@@ -122,20 +129,20 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 
 		bHandled = true;
 	}
-	else if( WM_MOUSELEAVE == uMsg )
-	{
-		if( m_bMouseTracking ) 
-			::SendMessage(m_hWnd, WM_MOUSEMOVE, 0, (LPARAM) -1);
+	//else if( WM_MOUSELEAVE == uMsg )
+	//{
+	//	if( m_bMouseTracking ) 
+	//		::SendMessage(m_hWnd, WM_MOUSEMOVE, 0, (LPARAM) -1);
 
-		m_bMouseTracking = false;
+	//	m_bMouseTracking = false;
 
-		m_nIndexHover = -1;
-		m_nLButtonState = -1;
-		m_nRButtonState = -1;
-		Invalidate();
+	//	m_nIndexHover = -1;
+	//	m_nLButtonState = -1;
+	//	m_nRButtonState = -1;
+	//	Invalidate();
 
-		bHandled = true;
-	}
+	//	bHandled = true;
+	//}
 	else if( WM_MOUSEWHEEL == uMsg )
 	{
 		POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
@@ -158,10 +165,10 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 				if( m_offsetY > m_offsetMax )
 					m_offsetY = m_offsetMax;
 
-				Invalidate();
-
 				int pc = int( m_offsetY*100.f/m_offsetMax);
-				::SendMessage( GetParent( m_hWnd ), WM_GLY_SETVS_RATIO, pc, 0 );
+				::PostMessage( GetParent( m_hWnd ), WM_GLY_SETVS_RATIO, pc, 0 );
+				PostMessage( WM_GL_SHOWVIDEOWND, -1 );
+				Invalidate();
 			}
 		}
 
@@ -169,17 +176,17 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 	}
 	else if( WM_MOUSEMOVE == uMsg )
 	{
-		//SetFocus( m_hWnd );
-		if( !m_bMouseTracking )
-		{
-			TRACKMOUSEEVENT tme = { 0 };
-			tme.cbSize = sizeof(TRACKMOUSEEVENT);
-			tme.dwFlags = TME_HOVER | TME_LEAVE;
-			tme.hwndTrack = m_hWnd;
-			tme.dwHoverTime = 500;
-			_TrackMouseEvent(&tme);
-			m_bMouseTracking = true;
-		}
+		SetFocus( m_hWnd );
+		//if( !m_bMouseTracking )
+		//{
+		//	TRACKMOUSEEVENT tme = { 0 };
+		//	tme.cbSize = sizeof(TRACKMOUSEEVENT);
+		//	tme.dwFlags = TME_LEAVE;
+		//	tme.hwndTrack = m_hWnd;
+		//	tme.dwHoverTime = 1000;
+		//	_TrackMouseEvent(&tme);
+		//	m_bMouseTracking = true;
+		//}
 
 		CDUIPoint	pt( LOWORD(lParam), HIWORD(lParam) );
 		//if( !PtInRect( m_rt, pt ) )
@@ -205,7 +212,6 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			//}
 
 			PostMessage( WM_GL_SHOWVIDEOWND, nNewHover );
-
 			m_nIndexHover = nNewHover;
 			//Invalidate();
 			//ATLTRACE( L"%d\n", nNewHover );
@@ -287,6 +293,13 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 		{
 			m_pVideoWnd->ShowWindow( false );
 			//ReleaseCapture();
+
+			m_bMouseTracking = false;
+
+			m_nIndexHover = -1;
+			m_nLButtonState = -1;
+			m_nRButtonState = -1;
+			Invalidate();
 		}
 		else
 		{
@@ -310,7 +323,7 @@ void CGallery2UI::dh_BuildAllBitmap()
 {
 	::GetClientRect( m_hWnd, m_rt );
 
-	m_pBg = _de.dl_getImage( m_strImageFolder + L"bg.png" );
+	m_pBg = _de.dl_getImage( m_strImageFolder + L"bg.jpg" );
 
 	m_arFSImage.push_back( _de.dl_getImage( m_strImageFolder + L"fullvideo-normal.png" ) );
 	m_arFSImage.push_back( _de.dl_getImage( m_strImageFolder + L"fullvideo-hover.png" ) );
