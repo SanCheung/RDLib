@@ -277,11 +277,19 @@ LRESULT CGallery2UI::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam )
 			CDUIRect	rtL, rtR;
 			getItemButtonsRect( nNewHover, rtL, rtR );
 
-			if( PtInRect( rtL, ptLogic ) )
-				::SendMessage( GetParent( m_hWnd ), WM_GLY_CLICK_LEFT, nNewHover, 0 );
 
-			if( PtInRect( rtR, ptLogic ) )
-				::SendMessage( GetParent( m_hWnd ), WM_GLY_CLICK_RIGHT, nNewHover, 0 );
+			if( nNewHover >= 0 && nNewHover < (int)m_anIndex.size() )
+			{
+				int index = m_anIndex[nNewHover];
+
+				if( PtInRect( rtL, ptLogic ) )
+					::SendMessage( GetParent( m_hWnd ), WM_GLY_CLICK_LEFT, index, 0 );
+
+				if( PtInRect( rtR, ptLogic ) )
+					::SendMessage( GetParent( m_hWnd ), WM_GLY_CLICK_RIGHT, index, 0 );
+			}
+
+
 		}
 
 		bHandled = true;
@@ -456,20 +464,36 @@ void CGallery2UI::SetVSRatio( float f )
 	}
 }
 
-void CGallery2UI::addTitleAndImageName( CStringW strTitle, CStringW strImageName )
+//void CGallery2UI::addTitleAndImageName( CStringW strTitle, CStringW strImageName )
+//{
+//	CStringW	strFullPath = m_strImageFolder + strImageName;
+//	ID2D1Bitmap* d2Bmp = _de.dl_getImage( strFullPath );
+//
+//	if( d2Bmp != nullptr )
+//	{
+//		m_asTitle.push_back( strTitle );
+//		m_arImage.push_back( d2Bmp );
+//	}
+//}
+
+
+void CGallery2UI::addItem( int nIndex, CStringW strTitle, CStringW strImageName )
 {
 	CStringW	strFullPath = m_strImageFolder + strImageName;
 	ID2D1Bitmap* d2Bmp = _de.dl_getImage( strFullPath );
-
+	
 	if( d2Bmp != nullptr )
 	{
+		m_anIndex.push_back( nIndex );
 		m_asTitle.push_back( strTitle );
 		m_arImage.push_back( d2Bmp );
 	}
 }
 
+
 void CGallery2UI::clearAllItems()
 {
+	m_anIndex.clear();
 	m_asTitle.clear();
 	m_arImage.clear();
 }
@@ -493,7 +517,9 @@ void CGallery2UI::setData( const vector<mgcGameInfo> &arGameInfo, CStringW strTy
 		CStringW	strText  = gi.gameName.c_str();
 		CStringW	strImage = gi.gameCover.c_str();
 		CStringW	strFamily = gi.gameFamily.c_str();
+		strFamily += L",";
 		if( -1 != strFamily.Find( strType+L"," ) )
-			addTitleAndImageName( strText, strImage );
+			//addTitleAndImageName( strText, strImage );
+			addItem( i, strText, strImage );
 	}
 }

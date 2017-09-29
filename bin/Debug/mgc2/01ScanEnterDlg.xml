@@ -17,7 +17,7 @@
 
     <HBox height="300" >
       <p />
-      <Label bkimage="info2w.jpg" width="300" />
+      <Label name="lbQR" bkimage="info2w.jpg" width="300" />
       <p />
     </HBox>
     <p />

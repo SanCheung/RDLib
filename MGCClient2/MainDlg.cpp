@@ -122,6 +122,9 @@ void CMainDlg::Notify( TNotifyUI& msg )
 			
 			//onDlgShowModal(1);
 			onDlgShow(1);
+
+			C01ScanEnterDlg *pDlg = (C01ScanEnterDlg *)_mapDlgs[1];
+			pDlg->setQRCode( L"download\\QR.jpg");
 		}								   
 		else if( strSenderName == L"bn2" )
 		{

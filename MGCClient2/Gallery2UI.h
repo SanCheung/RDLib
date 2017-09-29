@@ -22,7 +22,9 @@ public:
 	{
 		m_strImageFolder = strFolder;
 	}
-	void	addTitleAndImageName( CStringW strTitle, CStringW strImageName );
+	
+	//void	addTitleAndImageName( CStringW strTitle, CStringW strImageName );
+	void	addItem( int nIndex, CStringW strTitle, CStringW strImageName );
 
 	// clearAllItem + addTitleAndImageName.... + resetAllItems;
 	void	clearAllItems();
@@ -50,6 +52,7 @@ private:
 private:
 	CDUIRect				m_rt;
 
+	vector< int>			m_anIndex;
 	vector< CStringW >		m_asTitle;
 	vector< ID2D1Bitmap* >	m_arImage;
 

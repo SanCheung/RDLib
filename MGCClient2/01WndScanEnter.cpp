@@ -154,7 +154,7 @@ LRESULT C01WndScanEnter::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam 
 			CStringW		str;
 			str.Format( L"·µ»ØÊ×Ò³£¨%ds£©", _time );
 
-			gr.DrawString( str, str.GetLength(), &ft, RectF(w-iw+20,10,iw,ih), &sf, &sbLabel );
+			gr.DrawString( str, str.GetLength(), &ft, RectF(w-iw+20.f,10.f,(float)iw,(float)ih), &sf, &sbLabel );
 
 			g.DrawImage( &bmp, 0, 0 );
 
@@ -255,4 +255,9 @@ LRESULT C01ScanEnterDlg::HandleMessage( UINT uMsg, WPARAM wParam, LPARAM lParam 
 	}
 
 	return CDialogBase::HandleMessage(uMsg, wParam, lParam);
+}
+
+void C01ScanEnterDlg::setQRCode( CStringW strImageFile )
+{
+	FindCtrl( L"lbQR")->SetBkImage( strImageFile );
 }

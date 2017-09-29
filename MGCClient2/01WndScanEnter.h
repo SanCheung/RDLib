@@ -33,4 +33,6 @@ public:
 
 	int		_time;
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+	void	setQRCode( CStringW strImageFile );
 };
